@@ -2,7 +2,7 @@ const api = require('express').Router();
 
 api
   .use('/user', require('./user'))
-  .use('/message', require('./message'))
+  .use('/egg', require('./egg'))
 
 // Send along any errors
 api.use((err, req, res, next) => {

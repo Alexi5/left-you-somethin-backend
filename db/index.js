@@ -1,13 +1,13 @@
 'use strict';
 
 const User = require('./user');
-const Message = require('./message');
+const Egg = require('./egg');
 
 
-Message.belongsTo(User, { as: 'sender'})
-Message.belongsTo(User, { as: 'receiver'})
+Egg.belongsTo(User, { as: 'sender'})
+Egg.belongsTo(User, { as: 'receiver'})
 
 
 module.exports = {
-    User, Message
+    User, Egg
 };

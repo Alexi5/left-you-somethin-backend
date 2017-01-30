@@ -28,6 +28,10 @@
     "json-loader": "^0.5.4",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
+    "pg": "^6.1.2",
+    "pg-hstore": "^2.3.2",
+    "pg-native": "^1.10.0",
+    "react": "^15.4.2",
     "sequelize": "^3.27.0",
     "webpack": "^1.14.0"
   },

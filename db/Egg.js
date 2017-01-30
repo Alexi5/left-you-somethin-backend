@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-const messageSchema = {
+const eggSchema = {
     goHereImage: {
         type: Sequelize.STRING,
 
@@ -22,11 +22,16 @@ const messageSchema = {
         type: Sequelize.STRING,
 
     },
+    payloadType: {
+        type: Sequelize.ENUM('Text', 'Audio', 'Video'),
+        defaultValue: 'Text',
+        allowNull: false
+    }
 };
 
-const messageConfig = {};
+const eggConfig = {};
 
-const Message = db.define('message', messageSchema, messageConfig);
+const Egg = db.define('egg', eggSchema, eggConfig);
 
 
-module.exports = Message;
+module.exports = Egg;
