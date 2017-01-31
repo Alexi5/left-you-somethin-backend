@@ -27423,22 +27423,21 @@
 	
 	
 	router.post('/',function(req,res,next){
-	console.log('got here');
+	
 	Egg.create({
 	goHereText:req.body.goHereText,
 	payloadType:req.body.payloadType,
 	latitude:req.body.latitude,
-	longitude:req.body.longitude}).
+	longitude:req.body.longitude,
+	goHereImage:null}).
 	
 	then(function(egg){
-	console.log('here is the egg ID',egg.id);
-	console.log('here is req.body.goHereImage.uri',req.body.goHereImage.uri);
-	console.log('here is req.body.goHereImageBuffer',req.body.goHereImageBuffer);
-	fs.writeFile('../images',req.body.goHereImageBuffer,'binary',function(err){
-	if(err)throw err;
-	console.log('It\'s saved!');
+	var path=''+egg.id+'.txt';
+	var writeStream=fs.createWriteStream(path);
+	writeStream.write(req.body.goHereImageBuffer);
+	writeStream.end();
+	egg.goHereImage='hello';
 	return egg;
-	});
 	}).
 	then(function(egg){return res.send(egg);});
 	});

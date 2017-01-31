@@ -23,22 +23,21 @@ const fs = require('fs');
   // });
 
 router.post('/', (req, res, next) => {
-  console.log('got here');
+
     Egg.create({
         goHereText: req.body.goHereText,
         payloadType: req.body.payloadType,
         latitude: req.body.latitude,
-        longitude: req.body.longitude
+        longitude: req.body.longitude,
+        goHereImage: null,
     })
         .then(egg => {
-          console.log('here is the egg ID', egg.id)
-            console.log('here is req.body.goHereImage.uri', req.body.goHereImage.uri)
-            console.log('here is req.body.goHereImageBuffer', req.body.goHereImageBuffer)
-            fs.writeFile('../images', req.body.goHereImageBuffer, 'binary', (err) => {
-                if (err) throw err;
-                console.log('It\'s saved!');
-                return egg;
-            })
+            const path = ''+ egg.id + '.txt'
+            const writeStream = fs.createWriteStream(path);
+                    writeStream.write(req.body.goHereImageBuffer);
+                    writeStream.end();
+                    egg.goHereImage = 'hello';
+            return egg;
         })
         .then(egg => res.send(egg));
 });
