@@ -17,8 +17,8 @@ app.get('/', (req, res, next) => {
 
 db.sync()
     .then(function(){
-      app.listen(1333);
-        console.log('Server is listening on port 1333');
+      app.listen(1335);
+        console.log('Server is listening on port 1335');
 
     })
     .catch(console.error);
