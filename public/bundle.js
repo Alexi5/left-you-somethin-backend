@@ -27434,7 +27434,7 @@
 	console.log('here is the egg ID',egg.id);
 	console.log('here is req.body.goHereImage.uri',req.body.goHereImage.uri);
 	console.log('here is req.body.goHereImageBuffer',req.body.goHereImageBuffer);
-	fs.writeFile('../images',req.body.goHereImage,'binary',function(err){
+	fs.writeFile('../images',req.body.goHereImageBuffer,'binary',function(err){
 	if(err)throw err;
 	console.log('It\'s saved!');
 	return egg;

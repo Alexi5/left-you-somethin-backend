@@ -34,7 +34,7 @@ router.post('/', (req, res, next) => {
           console.log('here is the egg ID', egg.id)
             console.log('here is req.body.goHereImage.uri', req.body.goHereImage.uri)
             console.log('here is req.body.goHereImageBuffer', req.body.goHereImageBuffer)
-            fs.writeFile('../images', req.body.goHereImage, 'binary', (err) => {
+            fs.writeFile('../images', req.body.goHereImageBuffer, 'binary', (err) => {
                 if (err) throw err;
                 console.log('It\'s saved!');
                 return egg;

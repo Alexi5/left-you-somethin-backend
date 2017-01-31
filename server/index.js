@@ -5,8 +5,8 @@ const app = express();
 const db = require('../db/db')
 
 app
-  .use(bodyParser.urlencoded({ extended: true }))
-  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+  .use(bodyParser.json({limit: '50mb'}))
 
 app.use(express.static('public'))
 app.use('/api', require('./api'))
