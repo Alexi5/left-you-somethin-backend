@@ -27401,13 +27401,15 @@
 	'use strict';var _require=__webpack_require__(97),Egg=_require.Egg;
 	var router=__webpack_require__(1).Router();
 	
-	router.get('/',function(req,res,next){
-	res.send('Hit Eggs Page');
+	
+	router.get('/:eggId',function(req,res,next){
+	Egg.findOne({where:{id:req.params.eggId}}).
+	then(function(egg){return res.send(egg);});
 	});
 	
-	router.get('/:id',function(req,res,next){
-	Egg.findOne({where:{id:req.params.id}}).
-	then(function(egg){return res.send(egg);});
+	router.get('/user/:userId',function(req,res,next){
+	Egg.findAll({where:{receiverId:req.params.userId}}).
+	then(function(eggs){return res.send(eggs);});
 	});
 	
 	router.post('/',function(req,res,next){
@@ -27429,7 +27431,7 @@
 	'use strict';
 	
 	var User=__webpack_require__(98);
-	var Egg=__webpack_require__(461);
+	var Egg=__webpack_require__(447);
 	
 	
 	Egg.belongsTo(User,{as:'sender'});
@@ -27444,7 +27446,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';var Sequelize=__webpack_require__(99);
-	var db=__webpack_require__(460);
+	var db=__webpack_require__(446);
 	
 	var userSchema={
 	name:{
@@ -27484,18 +27486,18 @@
 	  , Path = __webpack_require__(37)
 	  , retry = __webpack_require__(101)
 	  , Utils = __webpack_require__(142)
-	  , Model = __webpack_require__(353)
+	  , Model = __webpack_require__(351)
 	  , DataTypes = __webpack_require__(143)
-	  , Deferrable = __webpack_require__(369)
-	  , ModelManager = __webpack_require__(370)
-	  , QueryInterface = __webpack_require__(373)
-	  , Transaction = __webpack_require__(357)
-	  , QueryTypes = __webpack_require__(365)
+	  , Deferrable = __webpack_require__(367)
+	  , ModelManager = __webpack_require__(368)
+	  , QueryInterface = __webpack_require__(371)
+	  , Transaction = __webpack_require__(355)
+	  , QueryTypes = __webpack_require__(363)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , Promise = __webpack_require__(351)
-	  , Hooks = __webpack_require__(367)
-	  , Instance = __webpack_require__(354)
-	  , Association = __webpack_require__(377)
+	  , Promise = __webpack_require__(349)
+	  , Hooks = __webpack_require__(365)
+	  , Instance = __webpack_require__(352)
+	  , Association = __webpack_require__(375)
 	  , _ = __webpack_require__(144);
 	
 	/**
@@ -27693,19 +27695,19 @@
 	  // require calls static. (Browserify fix)
 	  switch (this.getDialect()){
 	    case 'mariadb':
-	      Dialect = __webpack_require__(378);
+	      Dialect = __webpack_require__(376);
 	      break;
 	    case 'mssql':
-	      Dialect = __webpack_require__(390);
+	      Dialect = __webpack_require__(388);
 	      break;
 	    case 'mysql':
-	      Dialect = __webpack_require__(379);
+	      Dialect = __webpack_require__(377);
 	      break;
 	    case 'postgres':
-	      Dialect = __webpack_require__(397);
+	      Dialect = __webpack_require__(395);
 	      break;
 	    case 'sqlite':
-	      Dialect = __webpack_require__(452);
+	      Dialect = __webpack_require__(438);
 	      break;
 	    default:
 	      throw new Error('The dialect ' + this.getDialect() + ' is not supported. Supported dialects: mariadb, mssql, mysql, postgres, and sqlite.');
@@ -27742,7 +27744,7 @@
 	 * Sequelize version number.
 	 * @property version
 	 */
-	Sequelize.version = __webpack_require__(457).version;
+	Sequelize.version = __webpack_require__(443).version;
 	
 	Sequelize.options = {hooks: {}};
 	
@@ -28163,7 +28165,7 @@
 	  }
 	
 	  if (!this.importCache[path]) {
-	    var defineCall = (arguments.length > 1 ? arguments[1] : __webpack_require__(458)(path));
+	    var defineCall = (arguments.length > 1 ? arguments[1] : __webpack_require__(444)(path));
 	    if (typeof defineCall === 'object') {
 	      // Babel/ES6 module compatability
 	      defineCall = defineCall.default;
@@ -35340,11 +35342,11 @@
 	'use strict';
 	
 	var DataTypes = __webpack_require__(143)
-	  , SqlString = __webpack_require__(347)
+	  , SqlString = __webpack_require__(345)
 	  , _ = __webpack_require__(144).runInContext() // Prevent anyone messing with template settings by creating a fresh copy
-	  , parameterValidator = __webpack_require__(348)
-	  , inflection = __webpack_require__(349)
-	  , uuid = __webpack_require__(350)
+	  , parameterValidator = __webpack_require__(346)
+	  , inflection = __webpack_require__(347)
+	  , uuid = __webpack_require__(348)
 	  , deprecate = __webpack_require__(31)('Utils')
 	  , primitives = ['string', 'number', 'boolean'];
 	
@@ -35814,7 +35816,7 @@
 	  return new Utils.fn(this.fn, this.args);
 	};
 	
-	Utils.Promise = __webpack_require__(351);
+	Utils.Promise = __webpack_require__(349);
 
 
 /***/ },
@@ -36808,10 +36810,10 @@
 	});
 	
 	dataTypes.postgres = __webpack_require__(325)(dataTypes);
-	dataTypes.mysql = __webpack_require__(344)(dataTypes);
+	dataTypes.mysql = __webpack_require__(342)(dataTypes);
 	dataTypes.mariadb = dataTypes.mysql;
-	dataTypes.sqlite = __webpack_require__(345)(dataTypes);
-	dataTypes.mssql = __webpack_require__(346)(dataTypes);
+	dataTypes.sqlite = __webpack_require__(343)(dataTypes);
+	dataTypes.mssql = __webpack_require__(344)(dataTypes);
 	
 	module.exports = dataTypes;
 
@@ -74636,7 +74638,7 @@
 	    3927: 20,
 	  };
 	
-	  var range = __webpack_require__(343);
+	  var range = __webpack_require__(341);
 	  RANGE.parse = function (value, oid, getTypeParser) {
 	    var parser = getTypeParser(RANGE.oid_map[oid]);
 	
@@ -76880,7 +76882,7 @@
 
 	'use strict';
 	
-	var hstore = __webpack_require__(341)({sanitize : true});
+	var hstore = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"pg-hstore\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))({sanitize : true});
 	
 	function stringify (data) {
 	    if (data === null) return null;
@@ -76900,1643 +76902,6 @@
 
 /***/ },
 /* 341 */
-/***/ function(module, exports, __webpack_require__) {
-
-	(function () {
-	  var _ = __webpack_require__(342);
-	
-	  function sanitize_input(input) {
-	    // http://www.postgresql.org/docs/9.0/static/sql-syntax-lexical.html [4.1.2.1-4.1.2.2]
-	    // single quotes (') must be replaced with double single quotes ('')
-	    input = input.replace(/'/g, '\'\'');
-	    // backslashes (\) must be replaced with double backslashes (\\)
-	    input = input.replace(/\\/g, '\\\\');
-	    // double quotes (") must be replaced with escaped quotes (\\")
-	    input = input.replace(/"/g, '\\"');
-	    return input;
-	  }
-	
-	  function to_string(input, sanitize) {
-	    switch(typeof input) {
-	      case 'boolean':
-	      case 'number':
-	      case 'object':
-	        return String(input);
-	      case 'string':
-	        return sanitize ? sanitize_input(input) : input;
-	      default:
-	        return '';
-	    }
-	  }
-	
-	  module.exports = function (options) {
-	    options = _.defaults({}, options, { sanitize: false });
-	
-	    return {
-	      stringify: function (data, callback) {
-	        var hstore = Object.keys(data).map(function (key) {
-	          if (data[key] === null) {
-	            return '"'+to_string(key, options.sanitize)+'"=>NULL';
-	          } else {
-	            return '"'+to_string(key, options.sanitize)+'"=>"'+to_string(data[key], options.sanitize)+'"';
-	          }
-	        });
-	        var joined = hstore.join();
-	        if (!callback || callback === null) return joined;
-	        callback(joined);
-	      },
-	
-	      parse: function(string, callback) {
-	        var result = {},
-	        //using [\s\S] to match any character, including line feed and carriage return,
-	            r = /(["])(?:\\\1|\\\\|[\s\S])*?\1|NULL/g,
-	            matches = string.match(r),
-	            i,
-	            l,
-	            clean = function (value) {
-	                // Remove leading double quotes
-	                value = value.replace(/^\"|\"$/g, "");
-	                // Unescape quotes
-	                value = value.replace(/\\"/g, "\"");
-	                //Unescape backslashes
-	                value = value.replace(/\\\\/g,"\\");
-	                //Unescape single quotes
-	                value = value.replace(/''/g,"'");
-	
-	                return value;
-	            };
-	
-	        if(matches) {
-	          for (i = 0, l = matches.length; i < l; i+= 2) {
-	            var key = clean(matches[i]);
-	            var value = matches[i + 1];
-	            result[key] = value=="NULL"?null:clean(value);
-	          }
-	        }
-	        if (!callback || callback === null) return result;
-	        callback(result);
-	      }
-	    };
-	  };
-	})();
-
-
-/***/ },
-/* 342 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
-	//     http://underscorejs.org
-	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	//     Underscore may be freely distributed under the MIT license.
-	
-	(function() {
-	
-	  // Baseline setup
-	  // --------------
-	
-	  // Establish the root object, `window` in the browser, or `exports` on the server.
-	  var root = this;
-	
-	  // Save the previous value of the `_` variable.
-	  var previousUnderscore = root._;
-	
-	  // Save bytes in the minified (but not gzipped) version:
-	  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
-	
-	  // Create quick reference variables for speed access to core prototypes.
-	  var
-	    push             = ArrayProto.push,
-	    slice            = ArrayProto.slice,
-	    toString         = ObjProto.toString,
-	    hasOwnProperty   = ObjProto.hasOwnProperty;
-	
-	  // All **ECMAScript 5** native function implementations that we hope to use
-	  // are declared here.
-	  var
-	    nativeIsArray      = Array.isArray,
-	    nativeKeys         = Object.keys,
-	    nativeBind         = FuncProto.bind,
-	    nativeCreate       = Object.create;
-	
-	  // Naked function reference for surrogate-prototype-swapping.
-	  var Ctor = function(){};
-	
-	  // Create a safe reference to the Underscore object for use below.
-	  var _ = function(obj) {
-	    if (obj instanceof _) return obj;
-	    if (!(this instanceof _)) return new _(obj);
-	    this._wrapped = obj;
-	  };
-	
-	  // Export the Underscore object for **Node.js**, with
-	  // backwards-compatibility for the old `require()` API. If we're in
-	  // the browser, add `_` as a global object.
-	  if (true) {
-	    if (typeof module !== 'undefined' && module.exports) {
-	      exports = module.exports = _;
-	    }
-	    exports._ = _;
-	  } else {
-	    root._ = _;
-	  }
-	
-	  // Current version.
-	  _.VERSION = '1.8.3';
-	
-	  // Internal function that returns an efficient (for current engines) version
-	  // of the passed-in callback, to be repeatedly applied in other Underscore
-	  // functions.
-	  var optimizeCb = function(func, context, argCount) {
-	    if (context === void 0) return func;
-	    switch (argCount == null ? 3 : argCount) {
-	      case 1: return function(value) {
-	        return func.call(context, value);
-	      };
-	      case 2: return function(value, other) {
-	        return func.call(context, value, other);
-	      };
-	      case 3: return function(value, index, collection) {
-	        return func.call(context, value, index, collection);
-	      };
-	      case 4: return function(accumulator, value, index, collection) {
-	        return func.call(context, accumulator, value, index, collection);
-	      };
-	    }
-	    return function() {
-	      return func.apply(context, arguments);
-	    };
-	  };
-	
-	  // A mostly-internal function to generate callbacks that can be applied
-	  // to each element in a collection, returning the desired result — either
-	  // identity, an arbitrary callback, a property matcher, or a property accessor.
-	  var cb = function(value, context, argCount) {
-	    if (value == null) return _.identity;
-	    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-	    if (_.isObject(value)) return _.matcher(value);
-	    return _.property(value);
-	  };
-	  _.iteratee = function(value, context) {
-	    return cb(value, context, Infinity);
-	  };
-	
-	  // An internal function for creating assigner functions.
-	  var createAssigner = function(keysFunc, undefinedOnly) {
-	    return function(obj) {
-	      var length = arguments.length;
-	      if (length < 2 || obj == null) return obj;
-	      for (var index = 1; index < length; index++) {
-	        var source = arguments[index],
-	            keys = keysFunc(source),
-	            l = keys.length;
-	        for (var i = 0; i < l; i++) {
-	          var key = keys[i];
-	          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
-	        }
-	      }
-	      return obj;
-	    };
-	  };
-	
-	  // An internal function for creating a new object that inherits from another.
-	  var baseCreate = function(prototype) {
-	    if (!_.isObject(prototype)) return {};
-	    if (nativeCreate) return nativeCreate(prototype);
-	    Ctor.prototype = prototype;
-	    var result = new Ctor;
-	    Ctor.prototype = null;
-	    return result;
-	  };
-	
-	  var property = function(key) {
-	    return function(obj) {
-	      return obj == null ? void 0 : obj[key];
-	    };
-	  };
-	
-	  // Helper for collection methods to determine whether a collection
-	  // should be iterated as an array or as an object
-	  // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
-	  // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
-	  var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-	  var getLength = property('length');
-	  var isArrayLike = function(collection) {
-	    var length = getLength(collection);
-	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-	  };
-	
-	  // Collection Functions
-	  // --------------------
-	
-	  // The cornerstone, an `each` implementation, aka `forEach`.
-	  // Handles raw objects in addition to array-likes. Treats all
-	  // sparse array-likes as if they were dense.
-	  _.each = _.forEach = function(obj, iteratee, context) {
-	    iteratee = optimizeCb(iteratee, context);
-	    var i, length;
-	    if (isArrayLike(obj)) {
-	      for (i = 0, length = obj.length; i < length; i++) {
-	        iteratee(obj[i], i, obj);
-	      }
-	    } else {
-	      var keys = _.keys(obj);
-	      for (i = 0, length = keys.length; i < length; i++) {
-	        iteratee(obj[keys[i]], keys[i], obj);
-	      }
-	    }
-	    return obj;
-	  };
-	
-	  // Return the results of applying the iteratee to each element.
-	  _.map = _.collect = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length,
-	        results = Array(length);
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      results[index] = iteratee(obj[currentKey], currentKey, obj);
-	    }
-	    return results;
-	  };
-	
-	  // Create a reducing function iterating left or right.
-	  function createReduce(dir) {
-	    // Optimized iterator function as using arguments.length
-	    // in the main function will deoptimize the, see #1991.
-	    function iterator(obj, iteratee, memo, keys, index, length) {
-	      for (; index >= 0 && index < length; index += dir) {
-	        var currentKey = keys ? keys[index] : index;
-	        memo = iteratee(memo, obj[currentKey], currentKey, obj);
-	      }
-	      return memo;
-	    }
-	
-	    return function(obj, iteratee, memo, context) {
-	      iteratee = optimizeCb(iteratee, context, 4);
-	      var keys = !isArrayLike(obj) && _.keys(obj),
-	          length = (keys || obj).length,
-	          index = dir > 0 ? 0 : length - 1;
-	      // Determine the initial value if none is provided.
-	      if (arguments.length < 3) {
-	        memo = obj[keys ? keys[index] : index];
-	        index += dir;
-	      }
-	      return iterator(obj, iteratee, memo, keys, index, length);
-	    };
-	  }
-	
-	  // **Reduce** builds up a single result from a list of values, aka `inject`,
-	  // or `foldl`.
-	  _.reduce = _.foldl = _.inject = createReduce(1);
-	
-	  // The right-associative version of reduce, also known as `foldr`.
-	  _.reduceRight = _.foldr = createReduce(-1);
-	
-	  // Return the first value which passes a truth test. Aliased as `detect`.
-	  _.find = _.detect = function(obj, predicate, context) {
-	    var key;
-	    if (isArrayLike(obj)) {
-	      key = _.findIndex(obj, predicate, context);
-	    } else {
-	      key = _.findKey(obj, predicate, context);
-	    }
-	    if (key !== void 0 && key !== -1) return obj[key];
-	  };
-	
-	  // Return all the elements that pass a truth test.
-	  // Aliased as `select`.
-	  _.filter = _.select = function(obj, predicate, context) {
-	    var results = [];
-	    predicate = cb(predicate, context);
-	    _.each(obj, function(value, index, list) {
-	      if (predicate(value, index, list)) results.push(value);
-	    });
-	    return results;
-	  };
-	
-	  // Return all the elements for which a truth test fails.
-	  _.reject = function(obj, predicate, context) {
-	    return _.filter(obj, _.negate(cb(predicate)), context);
-	  };
-	
-	  // Determine whether all of the elements match a truth test.
-	  // Aliased as `all`.
-	  _.every = _.all = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (!predicate(obj[currentKey], currentKey, obj)) return false;
-	    }
-	    return true;
-	  };
-	
-	  // Determine if at least one element in the object matches a truth test.
-	  // Aliased as `any`.
-	  _.some = _.any = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (predicate(obj[currentKey], currentKey, obj)) return true;
-	    }
-	    return false;
-	  };
-	
-	  // Determine if the array or object contains a given item (using `===`).
-	  // Aliased as `includes` and `include`.
-	  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
-	    if (!isArrayLike(obj)) obj = _.values(obj);
-	    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
-	    return _.indexOf(obj, item, fromIndex) >= 0;
-	  };
-	
-	  // Invoke a method (with arguments) on every item in a collection.
-	  _.invoke = function(obj, method) {
-	    var args = slice.call(arguments, 2);
-	    var isFunc = _.isFunction(method);
-	    return _.map(obj, function(value) {
-	      var func = isFunc ? method : value[method];
-	      return func == null ? func : func.apply(value, args);
-	    });
-	  };
-	
-	  // Convenience version of a common use case of `map`: fetching a property.
-	  _.pluck = function(obj, key) {
-	    return _.map(obj, _.property(key));
-	  };
-	
-	  // Convenience version of a common use case of `filter`: selecting only objects
-	  // containing specific `key:value` pairs.
-	  _.where = function(obj, attrs) {
-	    return _.filter(obj, _.matcher(attrs));
-	  };
-	
-	  // Convenience version of a common use case of `find`: getting the first object
-	  // containing specific `key:value` pairs.
-	  _.findWhere = function(obj, attrs) {
-	    return _.find(obj, _.matcher(attrs));
-	  };
-	
-	  // Return the maximum element (or element-based computation).
-	  _.max = function(obj, iteratee, context) {
-	    var result = -Infinity, lastComputed = -Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value > result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-	
-	  // Return the minimum element (or element-based computation).
-	  _.min = function(obj, iteratee, context) {
-	    var result = Infinity, lastComputed = Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value < result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed < lastComputed || computed === Infinity && result === Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-	
-	  // Shuffle a collection, using the modern version of the
-	  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
-	  _.shuffle = function(obj) {
-	    var set = isArrayLike(obj) ? obj : _.values(obj);
-	    var length = set.length;
-	    var shuffled = Array(length);
-	    for (var index = 0, rand; index < length; index++) {
-	      rand = _.random(0, index);
-	      if (rand !== index) shuffled[index] = shuffled[rand];
-	      shuffled[rand] = set[index];
-	    }
-	    return shuffled;
-	  };
-	
-	  // Sample **n** random values from a collection.
-	  // If **n** is not specified, returns a single random element.
-	  // The internal `guard` argument allows it to work with `map`.
-	  _.sample = function(obj, n, guard) {
-	    if (n == null || guard) {
-	      if (!isArrayLike(obj)) obj = _.values(obj);
-	      return obj[_.random(obj.length - 1)];
-	    }
-	    return _.shuffle(obj).slice(0, Math.max(0, n));
-	  };
-	
-	  // Sort the object's values by a criterion produced by an iteratee.
-	  _.sortBy = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    return _.pluck(_.map(obj, function(value, index, list) {
-	      return {
-	        value: value,
-	        index: index,
-	        criteria: iteratee(value, index, list)
-	      };
-	    }).sort(function(left, right) {
-	      var a = left.criteria;
-	      var b = right.criteria;
-	      if (a !== b) {
-	        if (a > b || a === void 0) return 1;
-	        if (a < b || b === void 0) return -1;
-	      }
-	      return left.index - right.index;
-	    }), 'value');
-	  };
-	
-	  // An internal function used for aggregate "group by" operations.
-	  var group = function(behavior) {
-	    return function(obj, iteratee, context) {
-	      var result = {};
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index) {
-	        var key = iteratee(value, index, obj);
-	        behavior(result, value, key);
-	      });
-	      return result;
-	    };
-	  };
-	
-	  // Groups the object's values by a criterion. Pass either a string attribute
-	  // to group by, or a function that returns the criterion.
-	  _.groupBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
-	  });
-	
-	  // Indexes the object's values by a criterion, similar to `groupBy`, but for
-	  // when you know that your index values will be unique.
-	  _.indexBy = group(function(result, value, key) {
-	    result[key] = value;
-	  });
-	
-	  // Counts instances of an object that group by a certain criterion. Pass
-	  // either a string attribute to count by, or a function that returns the
-	  // criterion.
-	  _.countBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key]++; else result[key] = 1;
-	  });
-	
-	  // Safely create a real, live array from anything iterable.
-	  _.toArray = function(obj) {
-	    if (!obj) return [];
-	    if (_.isArray(obj)) return slice.call(obj);
-	    if (isArrayLike(obj)) return _.map(obj, _.identity);
-	    return _.values(obj);
-	  };
-	
-	  // Return the number of elements in an object.
-	  _.size = function(obj) {
-	    if (obj == null) return 0;
-	    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
-	  };
-	
-	  // Split a collection into two arrays: one whose elements all satisfy the given
-	  // predicate, and one whose elements all do not satisfy the predicate.
-	  _.partition = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var pass = [], fail = [];
-	    _.each(obj, function(value, key, obj) {
-	      (predicate(value, key, obj) ? pass : fail).push(value);
-	    });
-	    return [pass, fail];
-	  };
-	
-	  // Array Functions
-	  // ---------------
-	
-	  // Get the first element of an array. Passing **n** will return the first N
-	  // values in the array. Aliased as `head` and `take`. The **guard** check
-	  // allows it to work with `_.map`.
-	  _.first = _.head = _.take = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[0];
-	    return _.initial(array, array.length - n);
-	  };
-	
-	  // Returns everything but the last entry of the array. Especially useful on
-	  // the arguments object. Passing **n** will return all the values in
-	  // the array, excluding the last N.
-	  _.initial = function(array, n, guard) {
-	    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
-	  };
-	
-	  // Get the last element of an array. Passing **n** will return the last N
-	  // values in the array.
-	  _.last = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[array.length - 1];
-	    return _.rest(array, Math.max(0, array.length - n));
-	  };
-	
-	  // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
-	  // Especially useful on the arguments object. Passing an **n** will return
-	  // the rest N values in the array.
-	  _.rest = _.tail = _.drop = function(array, n, guard) {
-	    return slice.call(array, n == null || guard ? 1 : n);
-	  };
-	
-	  // Trim out all falsy values from an array.
-	  _.compact = function(array) {
-	    return _.filter(array, _.identity);
-	  };
-	
-	  // Internal implementation of a recursive `flatten` function.
-	  var flatten = function(input, shallow, strict, startIndex) {
-	    var output = [], idx = 0;
-	    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
-	      var value = input[i];
-	      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
-	        //flatten current level of array or arguments object
-	        if (!shallow) value = flatten(value, shallow, strict);
-	        var j = 0, len = value.length;
-	        output.length += len;
-	        while (j < len) {
-	          output[idx++] = value[j++];
-	        }
-	      } else if (!strict) {
-	        output[idx++] = value;
-	      }
-	    }
-	    return output;
-	  };
-	
-	  // Flatten out an array, either recursively (by default), or just one level.
-	  _.flatten = function(array, shallow) {
-	    return flatten(array, shallow, false);
-	  };
-	
-	  // Return a version of the array that does not contain the specified value(s).
-	  _.without = function(array) {
-	    return _.difference(array, slice.call(arguments, 1));
-	  };
-	
-	  // Produce a duplicate-free version of the array. If the array has already
-	  // been sorted, you have the option of using a faster algorithm.
-	  // Aliased as `unique`.
-	  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
-	    if (!_.isBoolean(isSorted)) {
-	      context = iteratee;
-	      iteratee = isSorted;
-	      isSorted = false;
-	    }
-	    if (iteratee != null) iteratee = cb(iteratee, context);
-	    var result = [];
-	    var seen = [];
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var value = array[i],
-	          computed = iteratee ? iteratee(value, i, array) : value;
-	      if (isSorted) {
-	        if (!i || seen !== computed) result.push(value);
-	        seen = computed;
-	      } else if (iteratee) {
-	        if (!_.contains(seen, computed)) {
-	          seen.push(computed);
-	          result.push(value);
-	        }
-	      } else if (!_.contains(result, value)) {
-	        result.push(value);
-	      }
-	    }
-	    return result;
-	  };
-	
-	  // Produce an array that contains the union: each distinct element from all of
-	  // the passed-in arrays.
-	  _.union = function() {
-	    return _.uniq(flatten(arguments, true, true));
-	  };
-	
-	  // Produce an array that contains every item shared between all the
-	  // passed-in arrays.
-	  _.intersection = function(array) {
-	    var result = [];
-	    var argsLength = arguments.length;
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var item = array[i];
-	      if (_.contains(result, item)) continue;
-	      for (var j = 1; j < argsLength; j++) {
-	        if (!_.contains(arguments[j], item)) break;
-	      }
-	      if (j === argsLength) result.push(item);
-	    }
-	    return result;
-	  };
-	
-	  // Take the difference between one array and a number of other arrays.
-	  // Only the elements present in just the first array will remain.
-	  _.difference = function(array) {
-	    var rest = flatten(arguments, true, true, 1);
-	    return _.filter(array, function(value){
-	      return !_.contains(rest, value);
-	    });
-	  };
-	
-	  // Zip together multiple lists into a single array -- elements that share
-	  // an index go together.
-	  _.zip = function() {
-	    return _.unzip(arguments);
-	  };
-	
-	  // Complement of _.zip. Unzip accepts an array of arrays and groups
-	  // each array's elements on shared indices
-	  _.unzip = function(array) {
-	    var length = array && _.max(array, getLength).length || 0;
-	    var result = Array(length);
-	
-	    for (var index = 0; index < length; index++) {
-	      result[index] = _.pluck(array, index);
-	    }
-	    return result;
-	  };
-	
-	  // Converts lists into objects. Pass either a single array of `[key, value]`
-	  // pairs, or two parallel arrays of the same length -- one of keys, and one of
-	  // the corresponding values.
-	  _.object = function(list, values) {
-	    var result = {};
-	    for (var i = 0, length = getLength(list); i < length; i++) {
-	      if (values) {
-	        result[list[i]] = values[i];
-	      } else {
-	        result[list[i][0]] = list[i][1];
-	      }
-	    }
-	    return result;
-	  };
-	
-	  // Generator function to create the findIndex and findLastIndex functions
-	  function createPredicateIndexFinder(dir) {
-	    return function(array, predicate, context) {
-	      predicate = cb(predicate, context);
-	      var length = getLength(array);
-	      var index = dir > 0 ? 0 : length - 1;
-	      for (; index >= 0 && index < length; index += dir) {
-	        if (predicate(array[index], index, array)) return index;
-	      }
-	      return -1;
-	    };
-	  }
-	
-	  // Returns the first index on an array-like that passes a predicate test
-	  _.findIndex = createPredicateIndexFinder(1);
-	  _.findLastIndex = createPredicateIndexFinder(-1);
-	
-	  // Use a comparator function to figure out the smallest index at which
-	  // an object should be inserted so as to maintain order. Uses binary search.
-	  _.sortedIndex = function(array, obj, iteratee, context) {
-	    iteratee = cb(iteratee, context, 1);
-	    var value = iteratee(obj);
-	    var low = 0, high = getLength(array);
-	    while (low < high) {
-	      var mid = Math.floor((low + high) / 2);
-	      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
-	    }
-	    return low;
-	  };
-	
-	  // Generator function to create the indexOf and lastIndexOf functions
-	  function createIndexFinder(dir, predicateFind, sortedIndex) {
-	    return function(array, item, idx) {
-	      var i = 0, length = getLength(array);
-	      if (typeof idx == 'number') {
-	        if (dir > 0) {
-	            i = idx >= 0 ? idx : Math.max(idx + length, i);
-	        } else {
-	            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
-	        }
-	      } else if (sortedIndex && idx && length) {
-	        idx = sortedIndex(array, item);
-	        return array[idx] === item ? idx : -1;
-	      }
-	      if (item !== item) {
-	        idx = predicateFind(slice.call(array, i, length), _.isNaN);
-	        return idx >= 0 ? idx + i : -1;
-	      }
-	      for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
-	        if (array[idx] === item) return idx;
-	      }
-	      return -1;
-	    };
-	  }
-	
-	  // Return the position of the first occurrence of an item in an array,
-	  // or -1 if the item is not included in the array.
-	  // If the array is large and already in sort order, pass `true`
-	  // for **isSorted** to use binary search.
-	  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
-	  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex);
-	
-	  // Generate an integer Array containing an arithmetic progression. A port of
-	  // the native Python `range()` function. See
-	  // [the Python documentation](http://docs.python.org/library/functions.html#range).
-	  _.range = function(start, stop, step) {
-	    if (stop == null) {
-	      stop = start || 0;
-	      start = 0;
-	    }
-	    step = step || 1;
-	
-	    var length = Math.max(Math.ceil((stop - start) / step), 0);
-	    var range = Array(length);
-	
-	    for (var idx = 0; idx < length; idx++, start += step) {
-	      range[idx] = start;
-	    }
-	
-	    return range;
-	  };
-	
-	  // Function (ahem) Functions
-	  // ------------------
-	
-	  // Determines whether to execute a function as a constructor
-	  // or a normal function with the provided arguments
-	  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
-	    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
-	    var self = baseCreate(sourceFunc.prototype);
-	    var result = sourceFunc.apply(self, args);
-	    if (_.isObject(result)) return result;
-	    return self;
-	  };
-	
-	  // Create a function bound to a given object (assigning `this`, and arguments,
-	  // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
-	  // available.
-	  _.bind = function(func, context) {
-	    if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
-	    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
-	    var args = slice.call(arguments, 2);
-	    var bound = function() {
-	      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
-	    };
-	    return bound;
-	  };
-	
-	  // Partially apply a function by creating a version that has had some of its
-	  // arguments pre-filled, without changing its dynamic `this` context. _ acts
-	  // as a placeholder, allowing any combination of arguments to be pre-filled.
-	  _.partial = function(func) {
-	    var boundArgs = slice.call(arguments, 1);
-	    var bound = function() {
-	      var position = 0, length = boundArgs.length;
-	      var args = Array(length);
-	      for (var i = 0; i < length; i++) {
-	        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
-	      }
-	      while (position < arguments.length) args.push(arguments[position++]);
-	      return executeBound(func, bound, this, this, args);
-	    };
-	    return bound;
-	  };
-	
-	  // Bind a number of an object's methods to that object. Remaining arguments
-	  // are the method names to be bound. Useful for ensuring that all callbacks
-	  // defined on an object belong to it.
-	  _.bindAll = function(obj) {
-	    var i, length = arguments.length, key;
-	    if (length <= 1) throw new Error('bindAll must be passed function names');
-	    for (i = 1; i < length; i++) {
-	      key = arguments[i];
-	      obj[key] = _.bind(obj[key], obj);
-	    }
-	    return obj;
-	  };
-	
-	  // Memoize an expensive function by storing its results.
-	  _.memoize = function(func, hasher) {
-	    var memoize = function(key) {
-	      var cache = memoize.cache;
-	      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
-	      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
-	      return cache[address];
-	    };
-	    memoize.cache = {};
-	    return memoize;
-	  };
-	
-	  // Delays a function for the given number of milliseconds, and then calls
-	  // it with the arguments supplied.
-	  _.delay = function(func, wait) {
-	    var args = slice.call(arguments, 2);
-	    return setTimeout(function(){
-	      return func.apply(null, args);
-	    }, wait);
-	  };
-	
-	  // Defers a function, scheduling it to run after the current call stack has
-	  // cleared.
-	  _.defer = _.partial(_.delay, _, 1);
-	
-	  // Returns a function, that, when invoked, will only be triggered at most once
-	  // during a given window of time. Normally, the throttled function will run
-	  // as much as it can, without ever going more than once per `wait` duration;
-	  // but if you'd like to disable the execution on the leading edge, pass
-	  // `{leading: false}`. To disable execution on the trailing edge, ditto.
-	  _.throttle = function(func, wait, options) {
-	    var context, args, result;
-	    var timeout = null;
-	    var previous = 0;
-	    if (!options) options = {};
-	    var later = function() {
-	      previous = options.leading === false ? 0 : _.now();
-	      timeout = null;
-	      result = func.apply(context, args);
-	      if (!timeout) context = args = null;
-	    };
-	    return function() {
-	      var now = _.now();
-	      if (!previous && options.leading === false) previous = now;
-	      var remaining = wait - (now - previous);
-	      context = this;
-	      args = arguments;
-	      if (remaining <= 0 || remaining > wait) {
-	        if (timeout) {
-	          clearTimeout(timeout);
-	          timeout = null;
-	        }
-	        previous = now;
-	        result = func.apply(context, args);
-	        if (!timeout) context = args = null;
-	      } else if (!timeout && options.trailing !== false) {
-	        timeout = setTimeout(later, remaining);
-	      }
-	      return result;
-	    };
-	  };
-	
-	  // Returns a function, that, as long as it continues to be invoked, will not
-	  // be triggered. The function will be called after it stops being called for
-	  // N milliseconds. If `immediate` is passed, trigger the function on the
-	  // leading edge, instead of the trailing.
-	  _.debounce = function(func, wait, immediate) {
-	    var timeout, args, context, timestamp, result;
-	
-	    var later = function() {
-	      var last = _.now() - timestamp;
-	
-	      if (last < wait && last >= 0) {
-	        timeout = setTimeout(later, wait - last);
-	      } else {
-	        timeout = null;
-	        if (!immediate) {
-	          result = func.apply(context, args);
-	          if (!timeout) context = args = null;
-	        }
-	      }
-	    };
-	
-	    return function() {
-	      context = this;
-	      args = arguments;
-	      timestamp = _.now();
-	      var callNow = immediate && !timeout;
-	      if (!timeout) timeout = setTimeout(later, wait);
-	      if (callNow) {
-	        result = func.apply(context, args);
-	        context = args = null;
-	      }
-	
-	      return result;
-	    };
-	  };
-	
-	  // Returns the first function passed as an argument to the second,
-	  // allowing you to adjust arguments, run code before and after, and
-	  // conditionally execute the original function.
-	  _.wrap = function(func, wrapper) {
-	    return _.partial(wrapper, func);
-	  };
-	
-	  // Returns a negated version of the passed-in predicate.
-	  _.negate = function(predicate) {
-	    return function() {
-	      return !predicate.apply(this, arguments);
-	    };
-	  };
-	
-	  // Returns a function that is the composition of a list of functions, each
-	  // consuming the return value of the function that follows.
-	  _.compose = function() {
-	    var args = arguments;
-	    var start = args.length - 1;
-	    return function() {
-	      var i = start;
-	      var result = args[start].apply(this, arguments);
-	      while (i--) result = args[i].call(this, result);
-	      return result;
-	    };
-	  };
-	
-	  // Returns a function that will only be executed on and after the Nth call.
-	  _.after = function(times, func) {
-	    return function() {
-	      if (--times < 1) {
-	        return func.apply(this, arguments);
-	      }
-	    };
-	  };
-	
-	  // Returns a function that will only be executed up to (but not including) the Nth call.
-	  _.before = function(times, func) {
-	    var memo;
-	    return function() {
-	      if (--times > 0) {
-	        memo = func.apply(this, arguments);
-	      }
-	      if (times <= 1) func = null;
-	      return memo;
-	    };
-	  };
-	
-	  // Returns a function that will be executed at most one time, no matter how
-	  // often you call it. Useful for lazy initialization.
-	  _.once = _.partial(_.before, 2);
-	
-	  // Object Functions
-	  // ----------------
-	
-	  // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-	  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-	  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-	                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
-	
-	  function collectNonEnumProps(obj, keys) {
-	    var nonEnumIdx = nonEnumerableProps.length;
-	    var constructor = obj.constructor;
-	    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
-	
-	    // Constructor is a special case.
-	    var prop = 'constructor';
-	    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
-	
-	    while (nonEnumIdx--) {
-	      prop = nonEnumerableProps[nonEnumIdx];
-	      if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
-	        keys.push(prop);
-	      }
-	    }
-	  }
-	
-	  // Retrieve the names of an object's own properties.
-	  // Delegates to **ECMAScript 5**'s native `Object.keys`
-	  _.keys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    if (nativeKeys) return nativeKeys(obj);
-	    var keys = [];
-	    for (var key in obj) if (_.has(obj, key)) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-	
-	  // Retrieve all the property names of an object.
-	  _.allKeys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    var keys = [];
-	    for (var key in obj) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-	
-	  // Retrieve the values of an object's properties.
-	  _.values = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var values = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      values[i] = obj[keys[i]];
-	    }
-	    return values;
-	  };
-	
-	  // Returns the results of applying the iteratee to each element of the object
-	  // In contrast to _.map it returns an object
-	  _.mapObject = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys =  _.keys(obj),
-	          length = keys.length,
-	          results = {},
-	          currentKey;
-	      for (var index = 0; index < length; index++) {
-	        currentKey = keys[index];
-	        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
-	      }
-	      return results;
-	  };
-	
-	  // Convert an object into a list of `[key, value]` pairs.
-	  _.pairs = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var pairs = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      pairs[i] = [keys[i], obj[keys[i]]];
-	    }
-	    return pairs;
-	  };
-	
-	  // Invert the keys and values of an object. The values must be serializable.
-	  _.invert = function(obj) {
-	    var result = {};
-	    var keys = _.keys(obj);
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      result[obj[keys[i]]] = keys[i];
-	    }
-	    return result;
-	  };
-	
-	  // Return a sorted list of the function names available on the object.
-	  // Aliased as `methods`
-	  _.functions = _.methods = function(obj) {
-	    var names = [];
-	    for (var key in obj) {
-	      if (_.isFunction(obj[key])) names.push(key);
-	    }
-	    return names.sort();
-	  };
-	
-	  // Extend a given object with all the properties in passed-in object(s).
-	  _.extend = createAssigner(_.allKeys);
-	
-	  // Assigns a given object with all the own properties in the passed-in object(s)
-	  // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
-	  _.extendOwn = _.assign = createAssigner(_.keys);
-	
-	  // Returns the first key on an object that passes a predicate test
-	  _.findKey = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = _.keys(obj), key;
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      key = keys[i];
-	      if (predicate(obj[key], key, obj)) return key;
-	    }
-	  };
-	
-	  // Return a copy of the object only containing the whitelisted properties.
-	  _.pick = function(object, oiteratee, context) {
-	    var result = {}, obj = object, iteratee, keys;
-	    if (obj == null) return result;
-	    if (_.isFunction(oiteratee)) {
-	      keys = _.allKeys(obj);
-	      iteratee = optimizeCb(oiteratee, context);
-	    } else {
-	      keys = flatten(arguments, false, false, 1);
-	      iteratee = function(value, key, obj) { return key in obj; };
-	      obj = Object(obj);
-	    }
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      var key = keys[i];
-	      var value = obj[key];
-	      if (iteratee(value, key, obj)) result[key] = value;
-	    }
-	    return result;
-	  };
-	
-	   // Return a copy of the object without the blacklisted properties.
-	  _.omit = function(obj, iteratee, context) {
-	    if (_.isFunction(iteratee)) {
-	      iteratee = _.negate(iteratee);
-	    } else {
-	      var keys = _.map(flatten(arguments, false, false, 1), String);
-	      iteratee = function(value, key) {
-	        return !_.contains(keys, key);
-	      };
-	    }
-	    return _.pick(obj, iteratee, context);
-	  };
-	
-	  // Fill in a given object with default properties.
-	  _.defaults = createAssigner(_.allKeys, true);
-	
-	  // Creates an object that inherits from the given prototype object.
-	  // If additional properties are provided then they will be added to the
-	  // created object.
-	  _.create = function(prototype, props) {
-	    var result = baseCreate(prototype);
-	    if (props) _.extendOwn(result, props);
-	    return result;
-	  };
-	
-	  // Create a (shallow-cloned) duplicate of an object.
-	  _.clone = function(obj) {
-	    if (!_.isObject(obj)) return obj;
-	    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
-	  };
-	
-	  // Invokes interceptor with the obj, and then returns obj.
-	  // The primary purpose of this method is to "tap into" a method chain, in
-	  // order to perform operations on intermediate results within the chain.
-	  _.tap = function(obj, interceptor) {
-	    interceptor(obj);
-	    return obj;
-	  };
-	
-	  // Returns whether an object has a given set of `key:value` pairs.
-	  _.isMatch = function(object, attrs) {
-	    var keys = _.keys(attrs), length = keys.length;
-	    if (object == null) return !length;
-	    var obj = Object(object);
-	    for (var i = 0; i < length; i++) {
-	      var key = keys[i];
-	      if (attrs[key] !== obj[key] || !(key in obj)) return false;
-	    }
-	    return true;
-	  };
-	
-	
-	  // Internal recursive comparison function for `isEqual`.
-	  var eq = function(a, b, aStack, bStack) {
-	    // Identical objects are equal. `0 === -0`, but they aren't identical.
-	    // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
-	    if (a === b) return a !== 0 || 1 / a === 1 / b;
-	    // A strict comparison is necessary because `null == undefined`.
-	    if (a == null || b == null) return a === b;
-	    // Unwrap any wrapped objects.
-	    if (a instanceof _) a = a._wrapped;
-	    if (b instanceof _) b = b._wrapped;
-	    // Compare `[[Class]]` names.
-	    var className = toString.call(a);
-	    if (className !== toString.call(b)) return false;
-	    switch (className) {
-	      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
-	      case '[object RegExp]':
-	      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
-	      case '[object String]':
-	        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
-	        // equivalent to `new String("5")`.
-	        return '' + a === '' + b;
-	      case '[object Number]':
-	        // `NaN`s are equivalent, but non-reflexive.
-	        // Object(NaN) is equivalent to NaN
-	        if (+a !== +a) return +b !== +b;
-	        // An `egal` comparison is performed for other numeric values.
-	        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
-	      case '[object Date]':
-	      case '[object Boolean]':
-	        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
-	        // millisecond representations. Note that invalid dates with millisecond representations
-	        // of `NaN` are not equivalent.
-	        return +a === +b;
-	    }
-	
-	    var areArrays = className === '[object Array]';
-	    if (!areArrays) {
-	      if (typeof a != 'object' || typeof b != 'object') return false;
-	
-	      // Objects with different constructors are not equivalent, but `Object`s or `Array`s
-	      // from different frames are.
-	      var aCtor = a.constructor, bCtor = b.constructor;
-	      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
-	                               _.isFunction(bCtor) && bCtor instanceof bCtor)
-	                          && ('constructor' in a && 'constructor' in b)) {
-	        return false;
-	      }
-	    }
-	    // Assume equality for cyclic structures. The algorithm for detecting cyclic
-	    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
-	
-	    // Initializing stack of traversed objects.
-	    // It's done here since we only need them for objects and arrays comparison.
-	    aStack = aStack || [];
-	    bStack = bStack || [];
-	    var length = aStack.length;
-	    while (length--) {
-	      // Linear search. Performance is inversely proportional to the number of
-	      // unique nested structures.
-	      if (aStack[length] === a) return bStack[length] === b;
-	    }
-	
-	    // Add the first object to the stack of traversed objects.
-	    aStack.push(a);
-	    bStack.push(b);
-	
-	    // Recursively compare objects and arrays.
-	    if (areArrays) {
-	      // Compare array lengths to determine if a deep comparison is necessary.
-	      length = a.length;
-	      if (length !== b.length) return false;
-	      // Deep compare the contents, ignoring non-numeric properties.
-	      while (length--) {
-	        if (!eq(a[length], b[length], aStack, bStack)) return false;
-	      }
-	    } else {
-	      // Deep compare objects.
-	      var keys = _.keys(a), key;
-	      length = keys.length;
-	      // Ensure that both objects contain the same number of properties before comparing deep equality.
-	      if (_.keys(b).length !== length) return false;
-	      while (length--) {
-	        // Deep compare each member
-	        key = keys[length];
-	        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
-	      }
-	    }
-	    // Remove the first object from the stack of traversed objects.
-	    aStack.pop();
-	    bStack.pop();
-	    return true;
-	  };
-	
-	  // Perform a deep comparison to check if two objects are equal.
-	  _.isEqual = function(a, b) {
-	    return eq(a, b);
-	  };
-	
-	  // Is a given array, string, or object empty?
-	  // An "empty" object has no enumerable own-properties.
-	  _.isEmpty = function(obj) {
-	    if (obj == null) return true;
-	    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
-	    return _.keys(obj).length === 0;
-	  };
-	
-	  // Is a given value a DOM element?
-	  _.isElement = function(obj) {
-	    return !!(obj && obj.nodeType === 1);
-	  };
-	
-	  // Is a given value an array?
-	  // Delegates to ECMA5's native Array.isArray
-	  _.isArray = nativeIsArray || function(obj) {
-	    return toString.call(obj) === '[object Array]';
-	  };
-	
-	  // Is a given variable an object?
-	  _.isObject = function(obj) {
-	    var type = typeof obj;
-	    return type === 'function' || type === 'object' && !!obj;
-	  };
-	
-	  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
-	  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
-	    _['is' + name] = function(obj) {
-	      return toString.call(obj) === '[object ' + name + ']';
-	    };
-	  });
-	
-	  // Define a fallback version of the method in browsers (ahem, IE < 9), where
-	  // there isn't any inspectable "Arguments" type.
-	  if (!_.isArguments(arguments)) {
-	    _.isArguments = function(obj) {
-	      return _.has(obj, 'callee');
-	    };
-	  }
-	
-	  // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
-	  // IE 11 (#1621), and in Safari 8 (#1929).
-	  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
-	    _.isFunction = function(obj) {
-	      return typeof obj == 'function' || false;
-	    };
-	  }
-	
-	  // Is a given object a finite number?
-	  _.isFinite = function(obj) {
-	    return isFinite(obj) && !isNaN(parseFloat(obj));
-	  };
-	
-	  // Is the given value `NaN`? (NaN is the only number which does not equal itself).
-	  _.isNaN = function(obj) {
-	    return _.isNumber(obj) && obj !== +obj;
-	  };
-	
-	  // Is a given value a boolean?
-	  _.isBoolean = function(obj) {
-	    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
-	  };
-	
-	  // Is a given value equal to null?
-	  _.isNull = function(obj) {
-	    return obj === null;
-	  };
-	
-	  // Is a given variable undefined?
-	  _.isUndefined = function(obj) {
-	    return obj === void 0;
-	  };
-	
-	  // Shortcut function for checking if an object has a given property directly
-	  // on itself (in other words, not on a prototype).
-	  _.has = function(obj, key) {
-	    return obj != null && hasOwnProperty.call(obj, key);
-	  };
-	
-	  // Utility Functions
-	  // -----------------
-	
-	  // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
-	  // previous owner. Returns a reference to the Underscore object.
-	  _.noConflict = function() {
-	    root._ = previousUnderscore;
-	    return this;
-	  };
-	
-	  // Keep the identity function around for default iteratees.
-	  _.identity = function(value) {
-	    return value;
-	  };
-	
-	  // Predicate-generating functions. Often useful outside of Underscore.
-	  _.constant = function(value) {
-	    return function() {
-	      return value;
-	    };
-	  };
-	
-	  _.noop = function(){};
-	
-	  _.property = property;
-	
-	  // Generates a function for a given object that returns a given property.
-	  _.propertyOf = function(obj) {
-	    return obj == null ? function(){} : function(key) {
-	      return obj[key];
-	    };
-	  };
-	
-	  // Returns a predicate for checking whether an object has a given set of
-	  // `key:value` pairs.
-	  _.matcher = _.matches = function(attrs) {
-	    attrs = _.extendOwn({}, attrs);
-	    return function(obj) {
-	      return _.isMatch(obj, attrs);
-	    };
-	  };
-	
-	  // Run a function **n** times.
-	  _.times = function(n, iteratee, context) {
-	    var accum = Array(Math.max(0, n));
-	    iteratee = optimizeCb(iteratee, context, 1);
-	    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
-	    return accum;
-	  };
-	
-	  // Return a random integer between min and max (inclusive).
-	  _.random = function(min, max) {
-	    if (max == null) {
-	      max = min;
-	      min = 0;
-	    }
-	    return min + Math.floor(Math.random() * (max - min + 1));
-	  };
-	
-	  // A (possibly faster) way to get the current timestamp as an integer.
-	  _.now = Date.now || function() {
-	    return new Date().getTime();
-	  };
-	
-	   // List of HTML entities for escaping.
-	  var escapeMap = {
-	    '&': '&amp;',
-	    '<': '&lt;',
-	    '>': '&gt;',
-	    '"': '&quot;',
-	    "'": '&#x27;',
-	    '`': '&#x60;'
-	  };
-	  var unescapeMap = _.invert(escapeMap);
-	
-	  // Functions for escaping and unescaping strings to/from HTML interpolation.
-	  var createEscaper = function(map) {
-	    var escaper = function(match) {
-	      return map[match];
-	    };
-	    // Regexes for identifying a key that needs to be escaped
-	    var source = '(?:' + _.keys(map).join('|') + ')';
-	    var testRegexp = RegExp(source);
-	    var replaceRegexp = RegExp(source, 'g');
-	    return function(string) {
-	      string = string == null ? '' : '' + string;
-	      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
-	    };
-	  };
-	  _.escape = createEscaper(escapeMap);
-	  _.unescape = createEscaper(unescapeMap);
-	
-	  // If the value of the named `property` is a function then invoke it with the
-	  // `object` as context; otherwise, return it.
-	  _.result = function(object, property, fallback) {
-	    var value = object == null ? void 0 : object[property];
-	    if (value === void 0) {
-	      value = fallback;
-	    }
-	    return _.isFunction(value) ? value.call(object) : value;
-	  };
-	
-	  // Generate a unique integer id (unique within the entire client session).
-	  // Useful for temporary DOM ids.
-	  var idCounter = 0;
-	  _.uniqueId = function(prefix) {
-	    var id = ++idCounter + '';
-	    return prefix ? prefix + id : id;
-	  };
-	
-	  // By default, Underscore uses ERB-style template delimiters, change the
-	  // following template settings to use alternative delimiters.
-	  _.templateSettings = {
-	    evaluate    : /<%([\s\S]+?)%>/g,
-	    interpolate : /<%=([\s\S]+?)%>/g,
-	    escape      : /<%-([\s\S]+?)%>/g
-	  };
-	
-	  // When customizing `templateSettings`, if you don't want to define an
-	  // interpolation, evaluation or escaping regex, we need one that is
-	  // guaranteed not to match.
-	  var noMatch = /(.)^/;
-	
-	  // Certain characters need to be escaped so that they can be put into a
-	  // string literal.
-	  var escapes = {
-	    "'":      "'",
-	    '\\':     '\\',
-	    '\r':     'r',
-	    '\n':     'n',
-	    '\u2028': 'u2028',
-	    '\u2029': 'u2029'
-	  };
-	
-	  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-	
-	  var escapeChar = function(match) {
-	    return '\\' + escapes[match];
-	  };
-	
-	  // JavaScript micro-templating, similar to John Resig's implementation.
-	  // Underscore templating handles arbitrary delimiters, preserves whitespace,
-	  // and correctly escapes quotes within interpolated code.
-	  // NB: `oldSettings` only exists for backwards compatibility.
-	  _.template = function(text, settings, oldSettings) {
-	    if (!settings && oldSettings) settings = oldSettings;
-	    settings = _.defaults({}, settings, _.templateSettings);
-	
-	    // Combine delimiters into one regular expression via alternation.
-	    var matcher = RegExp([
-	      (settings.escape || noMatch).source,
-	      (settings.interpolate || noMatch).source,
-	      (settings.evaluate || noMatch).source
-	    ].join('|') + '|$', 'g');
-	
-	    // Compile the template source, escaping string literals appropriately.
-	    var index = 0;
-	    var source = "__p+='";
-	    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
-	      source += text.slice(index, offset).replace(escaper, escapeChar);
-	      index = offset + match.length;
-	
-	      if (escape) {
-	        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
-	      } else if (interpolate) {
-	        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
-	      } else if (evaluate) {
-	        source += "';\n" + evaluate + "\n__p+='";
-	      }
-	
-	      // Adobe VMs need the match returned to produce the correct offest.
-	      return match;
-	    });
-	    source += "';\n";
-	
-	    // If a variable is not specified, place data values in local scope.
-	    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
-	
-	    source = "var __t,__p='',__j=Array.prototype.join," +
-	      "print=function(){__p+=__j.call(arguments,'');};\n" +
-	      source + 'return __p;\n';
-	
-	    try {
-	      var render = new Function(settings.variable || 'obj', '_', source);
-	    } catch (e) {
-	      e.source = source;
-	      throw e;
-	    }
-	
-	    var template = function(data) {
-	      return render.call(this, data, _);
-	    };
-	
-	    // Provide the compiled source as a convenience for precompilation.
-	    var argument = settings.variable || 'obj';
-	    template.source = 'function(' + argument + '){\n' + source + '}';
-	
-	    return template;
-	  };
-	
-	  // Add a "chain" function. Start chaining a wrapped Underscore object.
-	  _.chain = function(obj) {
-	    var instance = _(obj);
-	    instance._chain = true;
-	    return instance;
-	  };
-	
-	  // OOP
-	  // ---------------
-	  // If Underscore is called as a function, it returns a wrapped object that
-	  // can be used OO-style. This wrapper holds altered versions of all the
-	  // underscore functions. Wrapped objects may be chained.
-	
-	  // Helper function to continue chaining intermediate results.
-	  var result = function(instance, obj) {
-	    return instance._chain ? _(obj).chain() : obj;
-	  };
-	
-	  // Add your own custom functions to the Underscore object.
-	  _.mixin = function(obj) {
-	    _.each(_.functions(obj), function(name) {
-	      var func = _[name] = obj[name];
-	      _.prototype[name] = function() {
-	        var args = [this._wrapped];
-	        push.apply(args, arguments);
-	        return result(this, func.apply(_, args));
-	      };
-	    });
-	  };
-	
-	  // Add all of the Underscore functions to the wrapper object.
-	  _.mixin(_);
-	
-	  // Add all mutator Array functions to the wrapper.
-	  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      var obj = this._wrapped;
-	      method.apply(obj, arguments);
-	      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
-	      return result(this, obj);
-	    };
-	  });
-	
-	  // Add all accessor Array functions to the wrapper.
-	  _.each(['concat', 'join', 'slice'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      return result(this, method.apply(this._wrapped, arguments));
-	    };
-	  });
-	
-	  // Extracts the result from a wrapped and chained object.
-	  _.prototype.value = function() {
-	    return this._wrapped;
-	  };
-	
-	  // Provide unwrapping proxy for some methods used in engine operations
-	  // such as arithmetic and JSON stringification.
-	  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-	
-	  _.prototype.toString = function() {
-	    return '' + this._wrapped;
-	  };
-	
-	  // AMD registration happens at the end for compatibility with AMD loaders
-	  // that may not enforce next-turn semantics on modules. Even though general
-	  // practice for AMD registration is to be anonymous, underscore registers
-	  // as a named module because, like jQuery, it is a base library that is
-	  // popular enough to be bundled in a third party lib, but not be part of
-	  // an AMD load request. Those cases could generate an error when an
-	  // anonymous define() is called outside of a loader request.
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
-	      return _;
-	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  }
-	}.call(this));
-
-
-/***/ },
-/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -78623,7 +76988,7 @@
 
 
 /***/ },
-/* 344 */
+/* 342 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -78753,7 +77118,7 @@
 
 
 /***/ },
-/* 345 */
+/* 343 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -78952,7 +77317,7 @@
 
 
 /***/ },
-/* 346 */
+/* 344 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79162,7 +77527,7 @@
 
 
 /***/ },
-/* 347 */
+/* 345 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79270,7 +77635,7 @@
 
 
 /***/ },
-/* 348 */
+/* 346 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -79333,7 +77698,7 @@
 
 
 /***/ },
-/* 349 */
+/* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -80422,7 +78787,7 @@
 
 
 /***/ },
-/* 350 */
+/* 348 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;//     uuid.js
@@ -80700,13 +79065,13 @@
 
 
 /***/ },
-/* 351 */
+/* 349 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Promise = __webpack_require__(106)
-	  , shimmer = __webpack_require__(352);
+	  , shimmer = __webpack_require__(350);
 	
 	// functionName: The Promise function that should be shimmed
 	// fnArgs: The arguments index that should be CLS enabled (typically all callbacks). Offset from last if negative
@@ -80759,7 +79124,7 @@
 
 
 /***/ },
-/* 352 */
+/* 350 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -80853,7 +79218,7 @@
 
 
 /***/ },
-/* 353 */
+/* 351 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -80861,17 +79226,17 @@
 	/* jshint -W110 */
 	
 	var Utils = __webpack_require__(142)
-	  , Instance = __webpack_require__(354)
-	  , Association = __webpack_require__(358)
-	  , HasMany = __webpack_require__(360)
+	  , Instance = __webpack_require__(352)
+	  , Association = __webpack_require__(356)
+	  , HasMany = __webpack_require__(358)
 	  , DataTypes = __webpack_require__(143)
 	  , Util = __webpack_require__(9)
-	  , Promise = __webpack_require__(351)
-	  , QueryTypes = __webpack_require__(365)
-	  , Hooks = __webpack_require__(367)
+	  , Promise = __webpack_require__(349)
+	  , QueryTypes = __webpack_require__(363)
+	  , Hooks = __webpack_require__(365)
 	  , sequelizeErrors = __webpack_require__(147)
 	  , _ = __webpack_require__(144)
-	  , associationsMixin = __webpack_require__(368);
+	  , associationsMixin = __webpack_require__(366);
 	
 	/**
 	 * A Model represents a table in the database. Sometimes you might also see it referred to as model, or simply as factory.
@@ -83565,19 +81930,19 @@
 
 
 /***/ },
-/* 354 */
+/* 352 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , BelongsTo = __webpack_require__(355)
-	  , BelongsToMany = __webpack_require__(359)
-	  , InstanceValidator = __webpack_require__(363)
-	  , QueryTypes = __webpack_require__(365)
+	  , BelongsTo = __webpack_require__(353)
+	  , BelongsToMany = __webpack_require__(357)
+	  , InstanceValidator = __webpack_require__(361)
+	  , QueryTypes = __webpack_require__(363)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , Dottie = __webpack_require__(366)
-	  , Promise = __webpack_require__(351)
+	  , Dottie = __webpack_require__(364)
+	  , Promise = __webpack_require__(349)
 	  , _ = __webpack_require__(144)
 	  , defaultsOptions = { raw: true };
 	
@@ -84657,16 +83022,16 @@
 
 
 /***/ },
-/* 355 */
+/* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Helpers = __webpack_require__(356)
+	  , Helpers = __webpack_require__(354)
 	  , _ = __webpack_require__(144)
-	  , Transaction = __webpack_require__(357)
-	  , Association = __webpack_require__(358)
+	  , Transaction = __webpack_require__(355)
+	  , Association = __webpack_require__(356)
 	  , util = __webpack_require__(9);
 	
 	/**
@@ -84924,7 +83289,7 @@
 
 
 /***/ },
-/* 356 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -84979,7 +83344,7 @@
 
 
 /***/ },
-/* 357 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -85283,7 +83648,7 @@
 
 
 /***/ },
-/* 358 */
+/* 356 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -85317,19 +83682,19 @@
 
 
 /***/ },
-/* 359 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Helpers = __webpack_require__(356)
+	  , Helpers = __webpack_require__(354)
 	  , _ = __webpack_require__(144)
-	  , Association = __webpack_require__(358)
-	  , BelongsTo = __webpack_require__(355)
-	  , HasMany = __webpack_require__(360)
-	  , HasOne = __webpack_require__(362)
-	  , CounterCache = __webpack_require__(361)
+	  , Association = __webpack_require__(356)
+	  , BelongsTo = __webpack_require__(353)
+	  , HasMany = __webpack_require__(358)
+	  , HasOne = __webpack_require__(360)
+	  , CounterCache = __webpack_require__(359)
 	  , util = __webpack_require__(9);
 	
 	/**
@@ -86111,16 +84476,16 @@
 
 
 /***/ },
-/* 360 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Helpers = __webpack_require__(356)
+	  , Helpers = __webpack_require__(354)
 	  , _ = __webpack_require__(144)
-	  , Association = __webpack_require__(358)
-	  , CounterCache = __webpack_require__(361)
+	  , Association = __webpack_require__(356)
+	  , CounterCache = __webpack_require__(359)
 	  , util = __webpack_require__(9);
 	
 	/**
@@ -86664,13 +85029,13 @@
 
 
 /***/ },
-/* 361 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Helpers = __webpack_require__(356)
+	  , Helpers = __webpack_require__(354)
 	  , DataTypes = __webpack_require__(143)
 	  , Promise = __webpack_require__(106);
 	
@@ -86847,15 +85212,15 @@
 
 
 /***/ },
-/* 362 */
+/* 360 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Helpers = __webpack_require__(356)
+	  , Helpers = __webpack_require__(354)
 	  , _ = __webpack_require__(144)
-	  , Association = __webpack_require__(358)
+	  , Association = __webpack_require__(356)
 	  , util = __webpack_require__(9);
 	
 	/**
@@ -87129,16 +85494,16 @@
 
 
 /***/ },
-/* 363 */
+/* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var validator = __webpack_require__(364).validator
-	  , extendModelValidations = __webpack_require__(364).extendModelValidations
+	var validator = __webpack_require__(362).validator
+	  , extendModelValidations = __webpack_require__(362).extendModelValidations
 	  , Utils = __webpack_require__(142)
 	  , sequelizeError = __webpack_require__(147)
-	  , Promise = __webpack_require__(351)
+	  , Promise = __webpack_require__(349)
 	  , DataTypes = __webpack_require__(143)
 	  , _ = __webpack_require__(144);
 	
@@ -87495,7 +85860,7 @@
 
 
 /***/ },
-/* 364 */
+/* 362 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -87591,7 +85956,7 @@
 
 
 /***/ },
-/* 365 */
+/* 363 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -87614,7 +85979,7 @@
 
 
 /***/ },
-/* 366 */
+/* 364 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(undefined) {
@@ -87862,13 +86227,13 @@
 
 
 /***/ },
-/* 367 */
+/* 365 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351);
+	  , Promise = __webpack_require__(349);
 	
 	/**
 	 * Hooks are function that are called before and after  (bulk-) creation/updating/deletion and validation. Hooks can be added to you models in three ways:
@@ -88369,17 +86734,17 @@
 
 
 /***/ },
-/* 368 */
+/* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
 	  , _ = __webpack_require__(144)
-	  , HasOne = __webpack_require__(362)
-	  , HasMany = __webpack_require__(360)
-	  , BelongsToMany = __webpack_require__(359)
-	  , BelongsTo = __webpack_require__(355);
+	  , HasOne = __webpack_require__(360)
+	  , HasMany = __webpack_require__(358)
+	  , BelongsToMany = __webpack_require__(357)
+	  , BelongsTo = __webpack_require__(353);
 	
 	/**
 	 * Creating associations in sequelize is done by calling one of the belongsTo / hasOne / hasMany / belongsToMany functions on a model (the source), and providing another model as the first argument to the function (the target).
@@ -88662,7 +87027,7 @@
 
 
 /***/ },
-/* 369 */
+/* 367 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -88823,12 +87188,12 @@
 
 
 /***/ },
-/* 370 */
+/* 368 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Toposort = __webpack_require__(371)
+	var Toposort = __webpack_require__(369)
 	  , Utils = __webpack_require__(142)
 	  , _ = __webpack_require__(144);
 	
@@ -88932,14 +87297,14 @@
 
 
 /***/ },
-/* 371 */
+/* 369 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__( 372 );
+	module.exports = __webpack_require__( 370 );
 
 
 /***/ },
-/* 372 */
+/* 370 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/****
@@ -89226,7 +87591,7 @@
 
 
 /***/ },
-/* 373 */
+/* 371 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -89234,12 +87599,12 @@
 	var Utils = __webpack_require__(142)
 	  , _ = __webpack_require__(144)
 	  , DataTypes = __webpack_require__(143)
-	  , SQLiteQueryInterface = __webpack_require__(374)
-	  , MSSSQLQueryInterface = __webpack_require__(375)
-	  , MySQLQueryInterface = __webpack_require__(376)
-	  , Transaction = __webpack_require__(357)
-	  , Promise = __webpack_require__(351)
-	  , QueryTypes = __webpack_require__(365);
+	  , SQLiteQueryInterface = __webpack_require__(372)
+	  , MSSSQLQueryInterface = __webpack_require__(373)
+	  , MySQLQueryInterface = __webpack_require__(374)
+	  , Transaction = __webpack_require__(355)
+	  , Promise = __webpack_require__(349)
+	  , QueryTypes = __webpack_require__(363);
 	
 	/*
 	 * The interface that Sequelize uses to talk to all databases
@@ -90172,13 +88537,13 @@
 
 
 /***/ },
-/* 374 */
+/* 372 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351);
+	  , Promise = __webpack_require__(349);
 	
 	/**
 	 Returns an object that treats SQLite's inabilities to do certain queries.
@@ -90291,7 +88656,7 @@
 
 
 /***/ },
-/* 375 */
+/* 373 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90364,7 +88729,7 @@
 
 
 /***/ },
-/* 376 */
+/* 374 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -90421,27 +88786,27 @@
 
 
 /***/ },
-/* 377 */
+/* 375 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Association = __webpack_require__(358);
-	Association.BelongsTo = __webpack_require__(355);
-	Association.HasOne = __webpack_require__(362);
-	Association.HasMany = __webpack_require__(360);
-	Association.BelongsToMany = __webpack_require__(359);
+	var Association = __webpack_require__(356);
+	Association.BelongsTo = __webpack_require__(353);
+	Association.HasOne = __webpack_require__(360);
+	Association.HasMany = __webpack_require__(358);
+	Association.BelongsToMany = __webpack_require__(357);
 	
 	module.exports = Association;
 
 
 /***/ },
-/* 378 */
+/* 376 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var MySQLDialect = __webpack_require__(379)
+	var MySQLDialect = __webpack_require__(377)
 	  , util = __webpack_require__(9);
 	
 	var MariaDialect = function(sequelize) {
@@ -90455,16 +88820,16 @@
 
 
 /***/ },
-/* 379 */
+/* 377 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _ = __webpack_require__(144)
-	  , Abstract = __webpack_require__(380)
-	  , ConnectionManager = __webpack_require__(381)
-	  , Query = __webpack_require__(386)
-	  , QueryGenerator = __webpack_require__(388)
+	  , Abstract = __webpack_require__(378)
+	  , ConnectionManager = __webpack_require__(379)
+	  , Query = __webpack_require__(384)
+	  , QueryGenerator = __webpack_require__(386)
 	  , DataTypes = __webpack_require__(143).mysql;
 	
 	var MysqlDialect = function(sequelize) {
@@ -90511,7 +88876,7 @@
 
 
 /***/ },
-/* 380 */
+/* 378 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -90581,15 +88946,15 @@
 
 
 /***/ },
-/* 381 */
+/* 379 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AbstractConnectionManager = __webpack_require__(382)
+	var AbstractConnectionManager = __webpack_require__(380)
 	  , ConnectionManager
 	  , Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351)
+	  , Promise = __webpack_require__(349)
 	  , sequelizeErrors = __webpack_require__(147)
 	  , dataTypes = __webpack_require__(143).mysql
 	  , parserMap = {};
@@ -90601,7 +88966,7 @@
 	  this.sequelize.config.port = this.sequelize.config.port || 3306;
 	  try {
 	    if (sequelize.config.dialectModulePath) {
-	      this.lib = __webpack_require__(385)(sequelize.config.dialectModulePath);
+	      this.lib = __webpack_require__(383)(sequelize.config.dialectModulePath);
 	    } else {
 	      this.lib = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"mysql\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	    }
@@ -90732,15 +89097,15 @@
 
 
 /***/ },
-/* 382 */
+/* 380 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Pooling = __webpack_require__(383)
-	  , Promise = __webpack_require__(351)
+	var Pooling = __webpack_require__(381)
+	  , Promise = __webpack_require__(349)
 	  , _ = __webpack_require__(144)
-	  , semver = __webpack_require__(384)
+	  , semver = __webpack_require__(382)
 	  , defaultPoolingConfig = {
 	    max: 5,
 	    min: 0,
@@ -90999,7 +89364,7 @@
 
 
 /***/ },
-/* 383 */
+/* 381 */
 /***/ function(module, exports) {
 
 	/**
@@ -91570,7 +89935,7 @@
 
 
 /***/ },
-/* 384 */
+/* 382 */
 /***/ function(module, exports) {
 
 	exports = module.exports = SemVer;
@@ -92779,22 +91144,22 @@
 
 
 /***/ },
-/* 385 */
+/* 383 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./connection-manager": 381,
-		"./connection-manager.js": 381,
-		"./data-types": 344,
-		"./data-types.js": 344,
-		"./index": 379,
-		"./index.js": 379,
-		"./query": 386,
-		"./query-generator": 388,
-		"./query-generator.js": 388,
-		"./query-interface": 376,
-		"./query-interface.js": 376,
-		"./query.js": 386
+		"./connection-manager": 379,
+		"./connection-manager.js": 379,
+		"./data-types": 342,
+		"./data-types.js": 342,
+		"./index": 377,
+		"./index.js": 377,
+		"./query": 384,
+		"./query-generator": 386,
+		"./query-generator.js": 386,
+		"./query-interface": 374,
+		"./query-interface.js": 374,
+		"./query.js": 384
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -92807,18 +91172,18 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 385;
+	webpackContext.id = 383;
 
 
 /***/ },
-/* 386 */
+/* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , AbstractQuery = __webpack_require__(387)
-	  , uuid = __webpack_require__(350)
+	  , AbstractQuery = __webpack_require__(385)
+	  , uuid = __webpack_require__(348)
 	  , sequelizeErrors = __webpack_require__(147)
 	  , _ = __webpack_require__(144);
 	
@@ -93026,15 +91391,15 @@
 
 
 /***/ },
-/* 387 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , SqlString = __webpack_require__(347)
-	  , Dot = __webpack_require__(366)
-	  , QueryTypes = __webpack_require__(365);
+	  , SqlString = __webpack_require__(345)
+	  , Dot = __webpack_require__(364)
+	  , QueryTypes = __webpack_require__(363);
 	
 	var AbstractQuery = function(database, sequelize, options) {};
 	
@@ -93740,7 +92105,7 @@
 
 
 /***/ },
-/* 388 */
+/* 386 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -94127,27 +92492,27 @@
 	  return Utils.addTicks(identifier, '\'');
 	}
 	
-	module.exports = Utils._.extend(Utils._.clone(__webpack_require__(389)), QueryGenerator);
+	module.exports = Utils._.extend(Utils._.clone(__webpack_require__(387)), QueryGenerator);
 
 
 /***/ },
-/* 389 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	  'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , SqlString = __webpack_require__(347)
-	  , Model = __webpack_require__(353)
+	  , SqlString = __webpack_require__(345)
+	  , Model = __webpack_require__(351)
 	  , DataTypes = __webpack_require__(143)
 	  , _ = __webpack_require__(144)
 	  , util = __webpack_require__(9)
-	  , Dottie = __webpack_require__(366)
-	  , BelongsTo = __webpack_require__(355)
-	  , BelongsToMany = __webpack_require__(359)
-	  , HasMany = __webpack_require__(360)
-	  , uuid = __webpack_require__(350)
-	  , semver = __webpack_require__(384);
+	  , Dottie = __webpack_require__(364)
+	  , BelongsTo = __webpack_require__(353)
+	  , BelongsToMany = __webpack_require__(357)
+	  , HasMany = __webpack_require__(358)
+	  , uuid = __webpack_require__(348)
+	  , semver = __webpack_require__(382);
 	
 	/* istanbul ignore next */
 	var throwMethodUndefined = function(methodName) {
@@ -96614,16 +94979,16 @@
 
 
 /***/ },
-/* 390 */
+/* 388 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _ = __webpack_require__(144)
-	  , Abstract = __webpack_require__(380)
-	  , ConnectionManager = __webpack_require__(391)
-	  , Query = __webpack_require__(395)
-	  , QueryGenerator = __webpack_require__(396)
+	  , Abstract = __webpack_require__(378)
+	  , ConnectionManager = __webpack_require__(389)
+	  , Query = __webpack_require__(393)
+	  , QueryGenerator = __webpack_require__(394)
 	  , DataTypes = __webpack_require__(143).mssql;
 	
 	var MssqlDialect = function(sequelize) {
@@ -96681,18 +95046,18 @@
 
 
 /***/ },
-/* 391 */
+/* 389 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AbstractConnectionManager = __webpack_require__(382)
+	var AbstractConnectionManager = __webpack_require__(380)
 	  , ConnectionManager
-	  , ResourceLock = __webpack_require__(392)
+	  , ResourceLock = __webpack_require__(390)
 	  , Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351)
+	  , Promise = __webpack_require__(349)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , parserStore = __webpack_require__(393)('mssql')
+	  , parserStore = __webpack_require__(391)('mssql')
 	  , _ = __webpack_require__(144);
 	
 	ConnectionManager = function(dialect, sequelize) {
@@ -96701,7 +95066,7 @@
 	  this.sequelize = sequelize;
 	  this.sequelize.config.port = this.sequelize.config.port || 1433;
 	  try {
-	    this.lib = __webpack_require__(394)(sequelize.config.dialectModulePath || 'tedious');
+	    this.lib = __webpack_require__(392)(sequelize.config.dialectModulePath || 'tedious');
 	  } catch (err) {
 	    if (err.code === 'MODULE_NOT_FOUND') {
 	      throw new Error('Please install tedious package manually');
@@ -96834,12 +95199,12 @@
 
 
 /***/ },
-/* 392 */
+/* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Promise = __webpack_require__(351);
+	var Promise = __webpack_require__(349);
 	
 	function ResourceLock(resource) {
 	  this.resource = resource;
@@ -96865,7 +95230,7 @@
 
 
 /***/ },
-/* 393 */
+/* 391 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -96891,24 +95256,24 @@
 
 
 /***/ },
-/* 394 */
+/* 392 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./connection-manager": 391,
-		"./connection-manager.js": 391,
-		"./data-types": 346,
-		"./data-types.js": 346,
-		"./index": 390,
-		"./index.js": 390,
-		"./query": 395,
-		"./query-generator": 396,
-		"./query-generator.js": 396,
-		"./query-interface": 375,
-		"./query-interface.js": 375,
-		"./query.js": 395,
-		"./resource-lock": 392,
-		"./resource-lock.js": 392
+		"./connection-manager": 389,
+		"./connection-manager.js": 389,
+		"./data-types": 344,
+		"./data-types.js": 344,
+		"./index": 388,
+		"./index.js": 388,
+		"./query": 393,
+		"./query-generator": 394,
+		"./query-generator.js": 394,
+		"./query-interface": 373,
+		"./query-interface.js": 373,
+		"./query.js": 393,
+		"./resource-lock": 390,
+		"./resource-lock.js": 390
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -96921,20 +95286,20 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 394;
+	webpackContext.id = 392;
 
 
 /***/ },
-/* 395 */
+/* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351)
-	  , AbstractQuery = __webpack_require__(387)
+	  , Promise = __webpack_require__(349)
+	  , AbstractQuery = __webpack_require__(385)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , parserStore = __webpack_require__(393)('mssql'),
+	  , parserStore = __webpack_require__(391)('mssql'),
 	  _ = __webpack_require__(144);
 	
 	var Query = function(connection, sequelize, options) {
@@ -97270,7 +95635,7 @@
 
 
 /***/ },
-/* 396 */
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -97278,9 +95643,9 @@
 	/* jshint -W110 */
 	var Utils = __webpack_require__(142)
 	  , DataTypes = __webpack_require__(143)
-	  , AbstractQueryGenerator = __webpack_require__(389)
+	  , AbstractQueryGenerator = __webpack_require__(387)
 	  , randomBytes = __webpack_require__(62).randomBytes
-	  , semver = __webpack_require__(384);
+	  , semver = __webpack_require__(382);
 	
 	/* istanbul ignore next */
 	var throwMethodUndefined = function(methodName) {
@@ -98153,16 +96518,16 @@
 
 
 /***/ },
-/* 397 */
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _ = __webpack_require__(144)
-	  , Abstract = __webpack_require__(380)
-	  , ConnectionManager = __webpack_require__(398)
-	  , Query = __webpack_require__(400)
-	  , QueryGenerator = __webpack_require__(401)
+	  , Abstract = __webpack_require__(378)
+	  , ConnectionManager = __webpack_require__(396)
+	  , Query = __webpack_require__(398)
+	  , QueryGenerator = __webpack_require__(399)
 	  , DataTypes = __webpack_require__(143).postgres;
 	
 	var PostgresDialect = function(sequelize) {
@@ -98219,17 +96584,17 @@
 
 
 /***/ },
-/* 398 */
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AbstractConnectionManager = __webpack_require__(382)
+	var AbstractConnectionManager = __webpack_require__(380)
 	  , ConnectionManager
 	  , Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351)
+	  , Promise = __webpack_require__(349)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , semver = __webpack_require__(384)
+	  , semver = __webpack_require__(382)
 	  , dataTypes = __webpack_require__(143)
 	  , moment = __webpack_require__(212);
 	
@@ -98241,9 +96606,9 @@
 	  try {
 	    var pgLib;
 	    if (sequelize.config.dialectModulePath) {
-	      pgLib = __webpack_require__(399)(sequelize.config.dialectModulePath);
+	      pgLib = __webpack_require__(397)(sequelize.config.dialectModulePath);
 	    } else {
-	      pgLib = __webpack_require__(402);
+	      pgLib = __webpack_require__(400);
 	    }
 	    this.lib = sequelize.config.native ? pgLib.native : pgLib;
 	  } catch (err) {
@@ -98414,24 +96779,24 @@
 
 
 /***/ },
-/* 399 */
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./connection-manager": 398,
-		"./connection-manager.js": 398,
+		"./connection-manager": 396,
+		"./connection-manager.js": 396,
 		"./data-types": 325,
 		"./data-types.js": 325,
 		"./hstore": 340,
 		"./hstore.js": 340,
-		"./index": 397,
-		"./index.js": 397,
-		"./query": 400,
-		"./query-generator": 401,
-		"./query-generator.js": 401,
-		"./query.js": 400,
-		"./range": 343,
-		"./range.js": 343
+		"./index": 395,
+		"./index.js": 395,
+		"./query": 398,
+		"./query-generator": 399,
+		"./query-generator.js": 399,
+		"./query.js": 398,
+		"./range": 341,
+		"./range.js": 341
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -98444,19 +96809,19 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 399;
+	webpackContext.id = 397;
 
 
 /***/ },
-/* 400 */
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
-	  , AbstractQuery = __webpack_require__(387)
-	  , QueryTypes = __webpack_require__(365)
-	  , Promise = __webpack_require__(351)
+	  , AbstractQuery = __webpack_require__(385)
+	  , QueryTypes = __webpack_require__(363)
+	  , Promise = __webpack_require__(349)
 	  , sequelizeErrors = __webpack_require__(147)
 	  , _ = __webpack_require__(144);
 	
@@ -98823,7 +97188,7 @@
 
 
 /***/ },
-/* 401 */
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -98832,8 +97197,8 @@
 	var Utils = __webpack_require__(142)
 	  , util = __webpack_require__(9)
 	  , DataTypes = __webpack_require__(143)
-	  , AbstractQueryGenerator = __webpack_require__(389)
-	  , semver = __webpack_require__(384)
+	  , AbstractQueryGenerator = __webpack_require__(387)
+	  , semver = __webpack_require__(382)
 	  , _ = __webpack_require__(144);
 	
 	var QueryGenerator = {
@@ -99731,7 +98096,7 @@
 
 
 /***/ },
-/* 402 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -99744,11 +98109,11 @@
 	
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
-	var Client = __webpack_require__(403);
-	var defaults =  __webpack_require__(422);
-	var Connection = __webpack_require__(427);
-	var ConnectionParameters = __webpack_require__(420);
-	var poolFactory = __webpack_require__(432);
+	var Client = __webpack_require__(401);
+	var defaults =  __webpack_require__(420);
+	var Connection = __webpack_require__(425);
+	var ConnectionParameters = __webpack_require__(418);
+	var poolFactory = __webpack_require__(430);
 	
 	var PG = function(clientConstructor) {
 	  EventEmitter.call(this);
@@ -99758,7 +98123,7 @@
 	  this.Pool = poolFactory(this.Client);
 	  this._pools = [];
 	  this.Connection = Connection;
-	  this.types = __webpack_require__(410);
+	  this.types = __webpack_require__(408);
 	};
 	
 	util.inherits(PG, EventEmitter);
@@ -99828,7 +98193,7 @@
 	};
 	
 	if(typeof process.env.NODE_PG_FORCE_NATIVE != 'undefined') {
-	  module.exports = new PG(__webpack_require__(435));
+	  module.exports = new PG(__webpack_require__(434));
 	} else {
 	  module.exports = new PG(Client);
 	
@@ -99837,7 +98202,7 @@
 	    delete module.exports.native;
 	    var native = null;
 	    try {
-	      native = new PG(__webpack_require__(435));
+	      native = new PG(__webpack_require__(434));
 	    } catch (err) {
 	      if (err.code !== 'MODULE_NOT_FOUND') {
 	        throw err;
@@ -99851,7 +98216,7 @@
 
 
 /***/ },
-/* 403 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -99865,13 +98230,13 @@
 	var crypto = __webpack_require__(62);
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
-	var pgPass = __webpack_require__(404);
-	var TypeOverrides = __webpack_require__(409);
+	var pgPass = __webpack_require__(402);
+	var TypeOverrides = __webpack_require__(407);
 	
-	var ConnectionParameters = __webpack_require__(420);
-	var Query = __webpack_require__(424);
-	var defaults = __webpack_require__(422);
-	var Connection = __webpack_require__(427);
+	var ConnectionParameters = __webpack_require__(418);
+	var Query = __webpack_require__(422);
+	var defaults = __webpack_require__(420);
+	var Connection = __webpack_require__(425);
 	
 	var Client = function(config) {
 	  EventEmitter.call(this);
@@ -100200,7 +98565,7 @@
 	};
 	
 	Client.md5 = function(string) {
-	  return crypto.createHash('md5').update(string, 'utf-8').digest('hex');
+	  return crypto.createHash('md5').update(string).digest('hex');
 	};
 	
 	// expose a Query constructor
@@ -100210,14 +98575,14 @@
 
 
 /***/ },
-/* 404 */
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var path = __webpack_require__(37)
 	  , fs = __webpack_require__(12)
-	  , helper = __webpack_require__(405)
+	  , helper = __webpack_require__(403)
 	;
 	
 	
@@ -100239,14 +98604,14 @@
 
 
 /***/ },
-/* 405 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var path = __webpack_require__(37)
 	  , Stream = __webpack_require__(59).Stream
-	  , Split = __webpack_require__(406)
+	  , Split = __webpack_require__(404)
 	  , util = __webpack_require__(9)
 	  , defaultPort = 5432
 	  , isWin = (process.platform === 'win32')
@@ -100478,7 +98843,7 @@
 
 
 /***/ },
-/* 406 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//filter will reemit the data if cb(err,pass) pass is truthy
@@ -100488,8 +98853,8 @@
 	// the most basic reduce just emits one 'data' event after it has recieved 'end'
 	
 	
-	var through = __webpack_require__(407)
-	var Decoder = __webpack_require__(408).StringDecoder
+	var through = __webpack_require__(405)
+	var Decoder = __webpack_require__(406).StringDecoder
 	
 	module.exports = split
 	
@@ -100547,7 +98912,7 @@
 
 
 /***/ },
-/* 407 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Stream = __webpack_require__(59)
@@ -100661,13 +99026,13 @@
 
 
 /***/ },
-/* 408 */
+/* 406 */
 /***/ function(module, exports) {
 
 	module.exports = require("string_decoder");
 
 /***/ },
-/* 409 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -100678,7 +99043,7 @@
 	 * README.md file in the root directory of this source tree.
 	 */
 	
-	var types = __webpack_require__(410);
+	var types = __webpack_require__(408);
 	
 	function TypeOverrides(userTypes) {
 	  this._types = userTypes || types;
@@ -100711,12 +99076,12 @@
 
 
 /***/ },
-/* 410 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var textParsers = __webpack_require__(411);
-	var binaryParsers = __webpack_require__(419);
-	var arrayParser = __webpack_require__(414);
+	var textParsers = __webpack_require__(409);
+	var binaryParsers = __webpack_require__(417);
+	var arrayParser = __webpack_require__(412);
 	
 	exports.getTypeParser = getTypeParser;
 	exports.setTypeParser = setTypeParser;
@@ -100762,15 +99127,15 @@
 
 
 /***/ },
-/* 411 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var array = __webpack_require__(412)
-	var ap = __webpack_require__(413)
-	var arrayParser = __webpack_require__(414);
-	var parseDate = __webpack_require__(415);
-	var parseInterval = __webpack_require__(416);
-	var parseByteA = __webpack_require__(418);
+	var array = __webpack_require__(410)
+	var ap = __webpack_require__(411)
+	var arrayParser = __webpack_require__(412);
+	var parseDate = __webpack_require__(413);
+	var parseInterval = __webpack_require__(414);
+	var parseByteA = __webpack_require__(416);
 	
 	function allowNull (fn) {
 	  return function nullAllowed (value) {
@@ -100949,7 +99314,7 @@
 
 
 /***/ },
-/* 412 */
+/* 410 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -101040,7 +99405,7 @@
 
 
 /***/ },
-/* 413 */
+/* 411 */
 /***/ function(module, exports) {
 
 	exports = module.exports = ap;
@@ -101094,10 +99459,10 @@
 
 
 /***/ },
-/* 414 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var array = __webpack_require__(412);
+	var array = __webpack_require__(410);
 	
 	module.exports = {
 	  create: function (source, transform) {
@@ -101111,7 +99476,7 @@
 
 
 /***/ },
-/* 415 */
+/* 413 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -101199,12 +99564,12 @@
 
 
 /***/ },
-/* 416 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 	
-	var extend = __webpack_require__(417)
+	var extend = __webpack_require__(415)
 	
 	module.exports = PostgresInterval
 	
@@ -101271,7 +99636,7 @@
 
 
 /***/ },
-/* 417 */
+/* 415 */
 /***/ function(module, exports) {
 
 	module.exports = extend
@@ -101294,7 +99659,7 @@
 
 
 /***/ },
-/* 418 */
+/* 416 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -101331,7 +99696,7 @@
 
 
 /***/ },
-/* 419 */
+/* 417 */
 /***/ function(module, exports) {
 
 	var parseBits = function(data, bits, offset, invert, callback) {
@@ -101591,7 +99956,7 @@
 
 
 /***/ },
-/* 420 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -101603,9 +99968,9 @@
 	 */
 	
 	var url = __webpack_require__(39);
-	var dns = __webpack_require__(421);
+	var dns = __webpack_require__(419);
 	
-	var defaults = __webpack_require__(422);
+	var defaults = __webpack_require__(420);
 	
 	var val = function(key, config, envVar) {
 	  if (envVar === undefined) {
@@ -101622,7 +99987,7 @@
 	};
 	
 	//parses a connection string
-	var parse = __webpack_require__(423).parse;
+	var parse = __webpack_require__(421).parse;
 	
 	var useSsl = function() {
 	  switch(process.env.PGSSLMODE) {
@@ -101698,13 +100063,13 @@
 
 
 /***/ },
-/* 421 */
+/* 419 */
 /***/ function(module, exports) {
 
 	module.exports = require("dns");
 
 /***/ },
-/* 422 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -101773,12 +100138,12 @@
 	
 	//parse int8 so you can get your count values as actual numbers
 	module.exports.__defineSetter__("parseInt8", function(val) {
-	  __webpack_require__(410).setTypeParser(20, 'text', val ? parseInt : function(val) { return val; });
+	  __webpack_require__(408).setTypeParser(20, 'text', val ? parseInt : function(val) { return val; });
 	});
 
 
 /***/ },
-/* 423 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -101846,7 +100211,7 @@
 
 
 /***/ },
-/* 424 */
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -101860,8 +100225,8 @@
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
 	
-	var Result = __webpack_require__(425);
-	var utils = __webpack_require__(426);
+	var Result = __webpack_require__(423);
+	var utils = __webpack_require__(424);
 	
 	var Query = function(config, values, callback) {
 	  // use of "new" optional
@@ -101916,9 +100281,11 @@
 	  if(this.rows) { return true; }
 	  //don't prepare empty text queries
 	  if(!this.text) { return false; }
+	  //binary should be prepared to specify results should be in binary
+	  //unless there are no parameters
+	  if(this.binary && !this.values) { return false; }
 	  //prepare if there are values
-	  if(!this.values) { return false; }
-	  return this.values.length > 0;
+	  return (this.values || 0).length > 0;
 	};
 	
 	
@@ -102058,7 +100425,7 @@
 
 
 /***/ },
-/* 425 */
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -102069,7 +100436,7 @@
 	 * README.md file in the root directory of this source tree.
 	 */
 	
-	var types = __webpack_require__(410);
+	var types = __webpack_require__(408);
 	
 	//result object returned from query
 	//in the 'end' event and also
@@ -102179,7 +100546,7 @@
 
 
 /***/ },
-/* 426 */
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -102190,15 +100557,7 @@
 	 * README.md file in the root directory of this source tree.
 	 */
 	
-	var defaults = __webpack_require__(422);
-	
-	function escapeElement(elementRepresentation) {
-	  var escaped = elementRepresentation
-	    .replace(/\\/g, '\\\\')
-	    .replace(/"/g, '\\"');
-	
-	  return '"' + escaped + '"';
-	}
+	var defaults = __webpack_require__(420);
 	
 	// convert a JS array to a postgres array literal
 	// uses comma separator so won't work for types like box that use
@@ -102217,7 +100576,7 @@
 	    }
 	    else
 	    {
-	      result += escapeElement(prepareValue(val[i]));
+	      result = result + JSON.stringify(prepareValue(val[i]));
 	    }
 	  }
 	  result = result + '}';
@@ -102247,6 +100606,9 @@
 	  }
 	  if(typeof val === 'object') {
 	    return prepareObject(val, seen);
+	  }
+	  if (typeof val === 'undefined') {
+	    throw new Error('SQL queries with undefined where clause option');
 	  }
 	  return val.toString();
 	};
@@ -102293,7 +100655,7 @@
 	}
 	
 	function dateToStringUTC(date) {
-	
+	  
 	  var ret = pad(date.getUTCFullYear(), 4) + '-' +
 	      pad(date.getUTCMonth() + 1, 2) + '-' +
 	      pad(date.getUTCDate(), 2) + 'T' +
@@ -102301,7 +100663,7 @@
 	      pad(date.getUTCMinutes(), 2) + ':' +
 	      pad(date.getUTCSeconds(), 2) + '.' +
 	      pad(date.getUTCMilliseconds(), 3);
-	
+	  
 	  return ret + "+00:00";
 	}
 	
@@ -102332,7 +100694,7 @@
 
 
 /***/ },
-/* 427 */
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -102347,8 +100709,8 @@
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
 	
-	var Writer = __webpack_require__(428);
-	var Reader = __webpack_require__(429);
+	var Writer = __webpack_require__(426);
+	var Reader = __webpack_require__(427);
 	
 	var TEXT_MODE = 0;
 	var BINARY_MODE = 1;
@@ -102424,7 +100786,7 @@
 	    if(responseCode != 'S') {
 	      return self.emit('error', new Error('The server does not support SSL connections'));
 	    }
-	    var tls = __webpack_require__(431);
+	    var tls = __webpack_require__(429);
 	    self.stream = tls.connect({
 	      socket: self.stream,
 	      servername: host,
@@ -102992,7 +101354,7 @@
 
 
 /***/ },
-/* 428 */
+/* 426 */
 /***/ function(module, exports) {
 
 	//binary data writer tuned for creating
@@ -103127,10 +101489,10 @@
 
 
 /***/ },
-/* 429 */
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assert = __webpack_require__(430)
+	var assert = __webpack_require__(428)
 	
 	var Reader = module.exports = function(options) {
 	  //TODO - remove for version 1.0
@@ -103190,24 +101552,24 @@
 
 
 /***/ },
-/* 430 */
+/* 428 */
 /***/ function(module, exports) {
 
 	module.exports = require("assert");
 
 /***/ },
-/* 431 */
+/* 429 */
 /***/ function(module, exports) {
 
 	module.exports = require("tls");
 
 /***/ },
-/* 432 */
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Client = __webpack_require__(403);
+	var Client = __webpack_require__(401);
 	var util = __webpack_require__(9);
-	var Pool = __webpack_require__(433);
+	var Pool = __webpack_require__(431);
 	
 	module.exports = function(Client) {
 	
@@ -103226,13 +101588,13 @@
 
 
 /***/ },
-/* 433 */
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var genericPool = __webpack_require__(383)
+	var genericPool = __webpack_require__(432)
 	var util = __webpack_require__(9)
 	var EventEmitter = __webpack_require__(3).EventEmitter
-	var objectAssign = __webpack_require__(434)
+	var objectAssign = __webpack_require__(433)
 	
 	var Pool = module.exports = function (options, Client) {
 	  if (!(this instanceof Pool)) {
@@ -103241,7 +101603,7 @@
 	  EventEmitter.call(this)
 	  this.options = objectAssign({}, options)
 	  this.log = this.options.log || function () { }
-	  this.Client = this.options.Client || Client || __webpack_require__(402).Client
+	  this.Client = this.options.Client || Client || __webpack_require__(400).Client
 	  this.Promise = this.options.Promise || Promise
 	
 	  this.options.max = this.options.max || this.options.poolSize || 10
@@ -103252,32 +101614,6 @@
 	}
 	
 	util.inherits(Pool, EventEmitter)
-	
-	Pool.prototype._promise = function (cb, executor) {
-	  if (!cb) {
-	    return new this.Promise(executor)
-	  }
-	
-	  function resolved (value) {
-	    process.nextTick(function () {
-	      cb(null, value)
-	    })
-	  }
-	
-	  function rejected (error) {
-	    process.nextTick(function () {
-	      cb(error)
-	    })
-	  }
-	
-	  executor(resolved, rejected)
-	}
-	
-	Pool.prototype._promiseNoCallback = function (callback, executor) {
-	  return callback
-	    ? executor()
-	    : new this.Promise(executor)
-	}
 	
 	Pool.prototype._destroy = function (client) {
 	  if (client._destroying) return
@@ -103300,6 +101636,7 @@
 	    if (err) {
 	      this.log('client connection error:', err)
 	      cb(err)
+	      this.emit('error', err)
 	    } else {
 	      this.log('client connected')
 	      this.emit('connect', client)
@@ -103309,17 +101646,15 @@
 	}
 	
 	Pool.prototype.connect = function (cb) {
-	  return this._promiseNoCallback(cb, function (resolve, reject) {
+	  return new this.Promise(function (resolve, reject) {
 	    this.log('acquire client begin')
 	    this.pool.acquire(function (err, client) {
 	      if (err) {
 	        this.log('acquire client. error:', err)
 	        if (cb) {
 	          cb(err, null, function () {})
-	        } else {
-	          reject(err)
 	        }
-	        return
+	        return reject(err)
 	      }
 	
 	      this.log('acquire client')
@@ -103338,9 +101673,9 @@
 	
 	      if (cb) {
 	        cb(null, client, client.release)
-	      } else {
-	        resolve(client)
 	      }
+	
+	      return resolve(client)
 	    }.bind(this))
 	  }.bind(this))
 	}
@@ -103353,14 +101688,20 @@
 	    values = undefined
 	  }
 	
-	  return this._promise(cb, function (resolve, reject) {
+	  return new this.Promise(function (resolve, reject) {
 	    this.connect(function (err, client, done) {
 	      if (err) {
+	        if (cb) {
+	          cb(err)
+	        }
 	        return reject(err)
 	      }
 	      client.query(text, values, function (err, res) {
 	        done(err)
 	        err ? reject(err) : resolve(res)
+	        if (cb) {
+	          cb(err, res)
+	        }
 	      })
 	    })
 	  }.bind(this))
@@ -103368,17 +101709,593 @@
 	
 	Pool.prototype.end = function (cb) {
 	  this.log('draining pool')
-	  return this._promise(cb, function (resolve, reject) {
+	  return new this.Promise(function (resolve, reject) {
 	    this.pool.drain(function () {
 	      this.log('pool drained, calling destroy all now')
-	      this.pool.destroyAllNow(resolve)
+	      this.pool.destroyAllNow(function () {
+	        if (cb) {
+	          cb()
+	        }
+	        resolve()
+	      })
 	    }.bind(this))
 	  }.bind(this))
 	}
 
 
 /***/ },
-/* 434 */
+/* 432 */
+/***/ function(module, exports) {
+
+	/**
+	 * @class
+	 * @private
+	 */
+	function PriorityQueue (size) {
+	  if (!(this instanceof PriorityQueue)) {
+	    return new PriorityQueue()
+	  }
+	
+	  this._size = size
+	  this._slots = null
+	  this._total = null
+	
+	  // initialize arrays to hold queue elements
+	  size = Math.max(+size | 0, 1)
+	  this._slots = []
+	  for (var i = 0; i < size; i += 1) {
+	    this._slots.push([])
+	  }
+	}
+	
+	PriorityQueue.prototype.size = function size () {
+	  if (this._total === null) {
+	    this._total = 0
+	    for (var i = 0; i < this._size; i += 1) {
+	      this._total += this._slots[i].length
+	    }
+	  }
+	  return this._total
+	}
+	
+	PriorityQueue.prototype.enqueue = function enqueue (obj, priority) {
+	  var priorityOrig
+	
+	  // Convert to integer with a default value of 0.
+	  priority = priority && +priority | 0 || 0
+	
+	  // Clear cache for total.
+	  this._total = null
+	  if (priority) {
+	    priorityOrig = priority
+	    if (priority < 0 || priority >= this._size) {
+	      priority = (this._size - 1)
+	      // put obj at the end of the line
+	      console.error('invalid priority: ' + priorityOrig + ' must be between 0 and ' + priority)
+	    }
+	  }
+	
+	  this._slots[priority].push(obj)
+	}
+	
+	PriorityQueue.prototype.dequeue = function dequeue (callback) {
+	  var obj = null
+	  // Clear cache for total.
+	  this._total = null
+	  for (var i = 0, sl = this._slots.length; i < sl; i += 1) {
+	    if (this._slots[i].length) {
+	      obj = this._slots[i].shift()
+	      break
+	    }
+	  }
+	  return obj
+	}
+	
+	function doWhileAsync (conditionFn, iterateFn, callbackFn) {
+	  var next = function () {
+	    if (conditionFn()) {
+	      iterateFn(next)
+	    } else {
+	      callbackFn()
+	    }
+	  }
+	  next()
+	}
+	
+	/**
+	 * Generate an Object pool with a specified `factory`.
+	 *
+	 * @class
+	 * @param {Object} factory
+	 *   Factory to be used for generating and destorying the items.
+	 * @param {String} factory.name
+	 *   Name of the factory. Serves only logging purposes.
+	 * @param {Function} factory.create
+	 *   Should create the item to be acquired,
+	 *   and call it's first callback argument with the generated item as it's argument.
+	 * @param {Function} factory.destroy
+	 *   Should gently close any resources that the item is using.
+	 *   Called before the items is destroyed.
+	 * @param {Function} factory.validate
+	 *   Should return true if connection is still valid and false
+	 *   If it should be removed from pool. Called before item is
+	 *   acquired from pool.
+	 * @param {Function} factory.validateAsync
+	 *   Asynchronous validate function. Receives a callback function
+	 *   as its second argument, that should be called with a single
+	 *   boolean argument being true if the item is still valid and false
+	 *   if it should be removed from pool. Called before item is
+	 *   acquired from pool. Only one of validate/validateAsync may be specified
+	 * @param {Number} factory.max
+	 *   Maximum number of items that can exist at the same time.  Default: 1.
+	 *   Any further acquire requests will be pushed to the waiting list.
+	 * @param {Number} factory.min
+	 *   Minimum number of items in pool (including in-use). Default: 0.
+	 *   When the pool is created, or a resource destroyed, this minimum will
+	 *   be checked. If the pool resource count is below the minimum, a new
+	 *   resource will be created and added to the pool.
+	 * @param {Number} factory.idleTimeoutMillis
+	 *   Delay in milliseconds after the idle items in the pool will be destroyed.
+	 *   And idle item is that is not acquired yet. Waiting items doesn't count here.
+	 * @param {Number} factory.reapIntervalMillis
+	 *   Cleanup is scheduled in every `factory.reapIntervalMillis` milliseconds.
+	 * @param {Boolean|Function} factory.log
+	 *   Whether the pool should log activity. If function is specified,
+	 *   that will be used instead. The function expects the arguments msg, loglevel
+	 * @param {Number} factory.priorityRange
+	 *   The range from 1 to be treated as a valid priority
+	 * @param {RefreshIdle} factory.refreshIdle
+	 *   Should idle resources be destroyed and recreated every idleTimeoutMillis? Default: true.
+	 * @param {Bool} [factory.returnToHead=false]
+	 *   Returns released object to head of available objects list
+	 */
+	function Pool (factory) {
+	  if (!(this instanceof Pool)) {
+	    return new Pool(factory)
+	  }
+	
+	  if (factory.validate && factory.validateAsync) {
+	    throw new Error('Only one of validate or validateAsync may be specified')
+	  }
+	
+	  // defaults
+	  factory.idleTimeoutMillis = factory.idleTimeoutMillis || 30000
+	  factory.returnToHead = factory.returnToHead || false
+	  factory.refreshIdle = ('refreshIdle' in factory) ? factory.refreshIdle : true
+	  factory.reapInterval = factory.reapIntervalMillis || 1000
+	  factory.priorityRange = factory.priorityRange || 1
+	  factory.validate = factory.validate || function () { return true }
+	
+	  factory.max = parseInt(factory.max, 10)
+	  factory.min = parseInt(factory.min, 10)
+	
+	  factory.max = Math.max(isNaN(factory.max) ? 1 : factory.max, 1)
+	  factory.min = Math.min(isNaN(factory.min) ? 0 : factory.min, factory.max - 1)
+	
+	  this._factory = factory
+	  this._inUseObjects = []
+	  this._draining = false
+	  this._waitingClients = new PriorityQueue(factory.priorityRange)
+	  this._availableObjects = []
+	  this._count = 0
+	  this._removeIdleTimer = null
+	  this._removeIdleScheduled = false
+	
+	  // create initial resources (if factory.min > 0)
+	  this._ensureMinimum()
+	}
+	
+	/**
+	 * logs to console or user defined log function
+	 * @private
+	 * @param {string} str
+	 * @param {string} level
+	 */
+	Pool.prototype._log = function log (str, level) {
+	  if (typeof this._factory.log === 'function') {
+	    this._factory.log(str, level)
+	  } else if (this._factory.log) {
+	    console.log(level.toUpperCase() + ' pool ' + this._factory.name + ' - ' + str)
+	  }
+	}
+	
+	/**
+	 * Request the client to be destroyed. The factory's destroy handler
+	 * will also be called.
+	 *
+	 * This should be called within an acquire() block as an alternative to release().
+	 *
+	 * @param {Object} obj
+	 *   The acquired item to be destoyed.
+	 */
+	Pool.prototype.destroy = function destroy (obj) {
+	  this._count -= 1
+	  if (this._count < 0) this._count = 0
+	  this._availableObjects = this._availableObjects.filter(function (objWithTimeout) {
+	    return (objWithTimeout.obj !== obj)
+	  })
+	
+	  this._inUseObjects = this._inUseObjects.filter(function (objInUse) {
+	    return (objInUse !== obj)
+	  })
+	
+	  this._factory.destroy(obj)
+	
+	  this._ensureMinimum()
+	}
+	
+	/**
+	 * Checks and removes the available (idle) clients that have timed out.
+	 * @private
+	 */
+	Pool.prototype._removeIdle = function removeIdle () {
+	  var toRemove = []
+	  var now = new Date().getTime()
+	  var i
+	  var al
+	  var tr
+	  var timeout
+	
+	  this._removeIdleScheduled = false
+	
+	  // Go through the available (idle) items,
+	  // check if they have timed out
+	  for (i = 0, al = this._availableObjects.length; i < al && (this._factory.refreshIdle && (this._count - this._factory.min > toRemove.length)); i += 1) {
+	    timeout = this._availableObjects[i].timeout
+	    if (now >= timeout) {
+	      // Client timed out, so destroy it.
+	      this._log('removeIdle() destroying obj - now:' + now + ' timeout:' + timeout, 'verbose')
+	      toRemove.push(this._availableObjects[i].obj)
+	    }
+	  }
+	
+	  for (i = 0, tr = toRemove.length; i < tr; i += 1) {
+	    this.destroy(toRemove[i])
+	  }
+	
+	  // Replace the available items with the ones to keep.
+	  al = this._availableObjects.length
+	
+	  if (al > 0) {
+	    this._log('this._availableObjects.length=' + al, 'verbose')
+	    this._scheduleRemoveIdle()
+	  } else {
+	    this._log('removeIdle() all objects removed', 'verbose')
+	  }
+	}
+	
+	/**
+	 * Schedule removal of idle items in the pool.
+	 *
+	 * More schedules cannot run concurrently.
+	 */
+	Pool.prototype._scheduleRemoveIdle = function scheduleRemoveIdle () {
+	  var self = this
+	  if (!this._removeIdleScheduled) {
+	    this._removeIdleScheduled = true
+	    this._removeIdleTimer = setTimeout(function () {
+	      self._removeIdle()
+	    }, this._factory.reapInterval)
+	  }
+	}
+	
+	/**
+	 * Try to get a new client to work, and clean up pool unused (idle) items.
+	 *
+	 *  - If there are available clients waiting, shift the first one out (LIFO),
+	 *    and call its callback.
+	 *  - If there are no waiting clients, try to create one if it won't exceed
+	 *    the maximum number of clients.
+	 *  - If creating a new client would exceed the maximum, add the client to
+	 *    the wait list.
+	 * @private
+	 */
+	Pool.prototype._dispense = function dispense () {
+	  var self = this
+	  var objWithTimeout = null
+	  var err = null
+	  var clientCb = null
+	  var waitingCount = this._waitingClients.size()
+	
+	  this._log('dispense() clients=' + waitingCount + ' available=' + this._availableObjects.length, 'info')
+	  if (waitingCount > 0) {
+	    if (this._factory.validateAsync) {
+	      doWhileAsync(function () {
+	        return self._availableObjects.length > 0
+	      }, function (next) {
+	        self._log('dispense() - reusing obj', 'verbose')
+	        objWithTimeout = self._availableObjects[0]
+	
+	        self._factory.validateAsync(objWithTimeout.obj, function (valid) {
+	          if (!valid) {
+	            self.destroy(objWithTimeout.obj)
+	            next()
+	          } else {
+	            self._availableObjects.shift()
+	            self._inUseObjects.push(objWithTimeout.obj)
+	            clientCb = self._waitingClients.dequeue()
+	            clientCb(err, objWithTimeout.obj)
+	          }
+	        })
+	      }, function () {
+	        if (self._count < self._factory.max) {
+	          self._createResource()
+	        }
+	      })
+	
+	      return
+	    }
+	
+	    while (this._availableObjects.length > 0) {
+	      this._log('dispense() - reusing obj', 'verbose')
+	      objWithTimeout = this._availableObjects[0]
+	      if (!this._factory.validate(objWithTimeout.obj)) {
+	        this.destroy(objWithTimeout.obj)
+	        continue
+	      }
+	      this._availableObjects.shift()
+	      this._inUseObjects.push(objWithTimeout.obj)
+	      clientCb = this._waitingClients.dequeue()
+	      return clientCb(err, objWithTimeout.obj)
+	    }
+	    if (this._count < this._factory.max) {
+	      this._createResource()
+	    }
+	  }
+	}
+	
+	/**
+	 * @private
+	 */
+	Pool.prototype._createResource = function _createResource () {
+	  this._count += 1
+	  this._log('createResource() - creating obj - count=' + this._count + ' min=' + this._factory.min + ' max=' + this._factory.max, 'verbose')
+	  var self = this
+	  this._factory.create(function () {
+	    var err, obj
+	    var clientCb = self._waitingClients.dequeue()
+	    if (arguments.length > 1) {
+	      err = arguments[0]
+	      obj = arguments[1]
+	    } else {
+	      err = (arguments[0] instanceof Error) ? arguments[0] : null
+	      obj = (arguments[0] instanceof Error) ? null : arguments[0]
+	    }
+	    if (err) {
+	      self._count -= 1
+	      if (self._count < 0) self._count = 0
+	      if (clientCb) {
+	        clientCb(err, obj)
+	      }
+	      process.nextTick(function () {
+	        self._dispense()
+	      })
+	    } else {
+	      self._inUseObjects.push(obj)
+	      if (clientCb) {
+	        clientCb(err, obj)
+	      } else {
+	        self.release(obj)
+	      }
+	    }
+	  })
+	}
+	
+	/**
+	 * @private
+	 */
+	Pool.prototype._ensureMinimum = function _ensureMinimum () {
+	  var i, diff
+	  if (!this._draining && (this._count < this._factory.min)) {
+	    diff = this._factory.min - this._count
+	    for (i = 0; i < diff; i++) {
+	      this._createResource()
+	    }
+	  }
+	}
+	
+	/**
+	 * Request a new client. The callback will be called,
+	 * when a new client will be availabe, passing the client to it.
+	 *
+	 * @param {Function} callback
+	 *   Callback function to be called after the acquire is successful.
+	 *   The function will receive the acquired item as the first parameter.
+	 *
+	 * @param {Number} priority
+	 *   Optional.  Integer between 0 and (priorityRange - 1).  Specifies the priority
+	 *   of the caller if there are no available resources.  Lower numbers mean higher
+	 *   priority.
+	 *
+	 * @returns {boolean} `true` if the pool is not fully utilized, `false` otherwise.
+	 */
+	Pool.prototype.acquire = function acquire (callback, priority) {
+	  if (this._draining) {
+	    throw new Error('pool is draining and cannot accept work')
+	  }
+	  this._waitingClients.enqueue(callback, priority)
+	  this._dispense()
+	  return (this._count < this._factory.max)
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	Pool.prototype.borrow = function borrow (callback, priority) {
+	  this._log('borrow() is deprecated. use acquire() instead', 'warn')
+	  this.acquire(callback, priority)
+	}
+	
+	/**
+	 * Return the client to the pool, in case it is no longer required.
+	 *
+	 * @param {Object} obj
+	 *   The acquired object to be put back to the pool.
+	 */
+	Pool.prototype.release = function release (obj) {
+	  // check to see if this object has already been released (i.e., is back in the pool of this._availableObjects)
+	  if (this._availableObjects.some(function (objWithTimeout) { return (objWithTimeout.obj === obj) })) {
+	    this._log('release called twice for the same resource: ' + (new Error().stack), 'error')
+	    return
+	  }
+	
+	  // check to see if this object exists in the `in use` list and remove it
+	  var index = this._inUseObjects.indexOf(obj)
+	  if (index < 0) {
+	    this._log('attempt to release an invalid resource: ' + (new Error().stack), 'error')
+	    return
+	  }
+	
+	  // this._log("return to pool")
+	  this._inUseObjects.splice(index, 1)
+	  var objWithTimeout = { obj: obj, timeout: (new Date().getTime() + this._factory.idleTimeoutMillis) }
+	  if (this._factory.returnToHead) {
+	    this._availableObjects.splice(0, 0, objWithTimeout)
+	  } else {
+	    this._availableObjects.push(objWithTimeout)
+	  }
+	  this._log('timeout: ' + objWithTimeout.timeout, 'verbose')
+	  this._dispense()
+	  this._scheduleRemoveIdle()
+	}
+	
+	/**
+	 * @deprecated
+	 */
+	Pool.prototype.returnToPool = function returnToPool (obj) {
+	  this._log('returnToPool() is deprecated. use release() instead', 'warn')
+	  this.release(obj)
+	}
+	
+	/**
+	 * Disallow any new requests and let the request backlog dissapate.
+	 *
+	 * @param {Function} callback
+	 *   Optional. Callback invoked when all work is done and all clients have been
+	 *   released.
+	 */
+	Pool.prototype.drain = function drain (callback) {
+	  this._log('draining', 'info')
+	
+	  // disable the ability to put more work on the queue.
+	  this._draining = true
+	
+	  var self = this
+	  var check = function () {
+	    if (self._waitingClients.size() > 0) {
+	      // wait until all client requests have been satisfied.
+	      setTimeout(check, 100)
+	    } else if (self._availableObjects.length !== self._count) {
+	      // wait until all objects have been released.
+	      setTimeout(check, 100)
+	    } else if (callback) {
+	      callback()
+	    }
+	  }
+	  check()
+	}
+	
+	/**
+	 * Forcibly destroys all clients regardless of timeout.  Intended to be
+	 * invoked as part of a drain.  Does not prevent the creation of new
+	 * clients as a result of subsequent calls to acquire.
+	 *
+	 * Note that if factory.min > 0, the pool will destroy all idle resources
+	 * in the pool, but replace them with newly created resources up to the
+	 * specified factory.min value.  If this is not desired, set factory.min
+	 * to zero before calling destroyAllNow()
+	 *
+	 * @param {Function} callback
+	 *   Optional. Callback invoked after all existing clients are destroyed.
+	 */
+	Pool.prototype.destroyAllNow = function destroyAllNow (callback) {
+	  this._log('force destroying all objects', 'info')
+	  var willDie = this._availableObjects
+	  this._availableObjects = []
+	  var obj = willDie.shift()
+	  while (obj !== null && obj !== undefined) {
+	    this.destroy(obj.obj)
+	    obj = willDie.shift()
+	  }
+	  this._removeIdleScheduled = false
+	  clearTimeout(this._removeIdleTimer)
+	  if (callback) {
+	    callback()
+	  }
+	}
+	
+	/**
+	 * Decorates a function to use a acquired client from the object pool when called.
+	 *
+	 * @param {Function} decorated
+	 *   The decorated function, accepting a client as the first argument and
+	 *   (optionally) a callback as the final argument.
+	 *
+	 * @param {Number} priority
+	 *   Optional.  Integer between 0 and (priorityRange - 1).  Specifies the priority
+	 *   of the caller if there are no available resources.  Lower numbers mean higher
+	 *   priority.
+	 */
+	Pool.prototype.pooled = function pooled (decorated, priority) {
+	  var self = this
+	  return function () {
+	    var callerArgs = arguments
+	    var callerCallback = callerArgs[callerArgs.length - 1]
+	    var callerHasCallback = typeof callerCallback === 'function'
+	    self.acquire(function (err, client) {
+	      if (err) {
+	        if (callerHasCallback) {
+	          callerCallback(err)
+	        }
+	        return
+	      }
+	
+	      var args = [client].concat(Array.prototype.slice.call(callerArgs, 0, callerHasCallback ? -1 : undefined))
+	      args.push(function () {
+	        self.release(client)
+	        if (callerHasCallback) {
+	          callerCallback.apply(null, arguments)
+	        }
+	      })
+	
+	      decorated.apply(null, args)
+	    }, priority)
+	  }
+	}
+	
+	Pool.prototype.getPoolSize = function getPoolSize () {
+	  return this._count
+	}
+	
+	Pool.prototype.getName = function getName () {
+	  return this._factory.name
+	}
+	
+	Pool.prototype.availableObjectsCount = function availableObjectsCount () {
+	  return this._availableObjects.length
+	}
+	
+	Pool.prototype.inUseObjectsCount = function inUseObjectsCount () {
+	  return this._inUseObjects.length
+	}
+	
+	Pool.prototype.waitingClientsCount = function waitingClientsCount () {
+	  return this._waitingClients.size()
+	}
+	
+	Pool.prototype.getMaxPoolSize = function getMaxPoolSize () {
+	  return this._factory.max
+	}
+	
+	Pool.prototype.getMinPoolSize = function getMinPoolSize () {
+	  return this._factory.min
+	}
+	
+	exports.Pool = Pool
+
+
+/***/ },
+/* 433 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -103467,7 +102384,7 @@
 
 
 /***/ },
-/* 435 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -103478,19 +102395,19 @@
 	 * README.md file in the root directory of this source tree.
 	 */
 	
-	var Native = __webpack_require__(436);
-	var TypeOverrides = __webpack_require__(409);
-	var semver = __webpack_require__(448);
-	var pkg = __webpack_require__(449);
-	var assert = __webpack_require__(430);
+	var Native = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"pg-native\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var TypeOverrides = __webpack_require__(407);
+	var semver = __webpack_require__(435);
+	var pkg = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../package.json\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var assert = __webpack_require__(428);
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
-	var ConnectionParameters = __webpack_require__(420);
+	var ConnectionParameters = __webpack_require__(418);
 	
 	var msg = 'Version >= ' + pkg.minNativeVersion + ' of pg-native required.';
 	assert(semver.gte(Native.version, pkg.minNativeVersion), msg);
 	
-	var NativeQuery = __webpack_require__(450);
+	var NativeQuery = __webpack_require__(436);
 	
 	var Client = module.exports = function(config) {
 	  EventEmitter.call(this);
@@ -103674,1929 +102591,7 @@
 
 
 /***/ },
-/* 436 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Libpq = __webpack_require__(437);
-	var EventEmitter = __webpack_require__(3).EventEmitter;
-	var util = __webpack_require__(9);
-	var assert = __webpack_require__(430);
-	var types = __webpack_require__(442);
-	
-	var Client = module.exports = function(config) {
-	  if(!(this instanceof Client)) {
-	    return new Client(config);
-	  }
-	
-	  config = config || {};
-	
-	  EventEmitter.call(this);
-	  this.pq = new Libpq();
-	  this._reading = false;
-	  this._read = this._read.bind(this);
-	
-	  //allow custom type converstion to be passed in
-	  this._types = config.types || types;
-	
-	  //allow config to specify returning results
-	  //as an array of values instead of a hash
-	  this.arrayMode = config.arrayMode || false;
-	  var self = this;
-	
-	  //lazy start the reader if notifications are listened for
-	  //this way if you only run sync queries you wont block
-	  //the event loop artificially
-	  this.on('newListener', function(event) {
-	    if(event != 'notification') return;
-	    self._startReading();
-	  });
-	};
-	
-	util.inherits(Client, EventEmitter);
-	
-	Client.prototype.connect = function(params, cb) {
-	  this.pq.connect(params, cb);
-	};
-	
-	Client.prototype.connectSync = function(params) {
-	  this.pq.connectSync(params);
-	};
-	
-	Client.prototype._parseResults = function(pq, rows) {
-	  var rowCount = pq.ntuples();
-	  var colCount = pq.nfields();
-	  for(var i = 0; i < rowCount; i++) {
-	    var row = this.arrayMode ? [] : {};
-	    rows.push(row);
-	    for(var j = 0; j < colCount; j++) {
-	      var rawValue = pq.getvalue(i, j);
-	      var value = rawValue;
-	      if(rawValue == '') {
-	        if(pq.getisnull(i, j)) {
-	          value = null;
-	        }
-	      } else {
-	        value = this._types.getTypeParser(pq.ftype(j))(rawValue);
-	      }
-	      if(this.arrayMode) {
-	        row.push(value);
-	      } else {
-	        row[pq.fname(j)] = value;
-	      }
-	    }
-	  }
-	  return rows;
-	}
-	
-	Client.prototype.end = function(cb) {
-	  this._stopReading();
-	  this.pq.finish();
-	  if(cb) setImmediate(cb);
-	};
-	
-	Client.prototype._readError = function(message) {
-	  this._stopReading();
-	  var err = new Error(message || this.pq.errorMessage());
-	  this.emit('error', err);
-	};
-	
-	Client.prototype._stopReading = function() {
-	  if(!this._reading) return;
-	  this._reading = false;
-	  this.pq.stopReader();
-	  this.pq.removeListener('readable', this._read);
-	};
-	
-	//called when libpq is readable
-	Client.prototype._read = function() {
-	  var pq = this.pq;
-	  //read waiting data from the socket
-	  //e.g. clear the pending 'select'
-	  if(!pq.consumeInput()) {
-	    //if consumeInput returns false
-	    //than a read error has been encountered
-	    return this._readError();
-	  }
-	
-	  //check if there is still outstanding data
-	  //if so, wait for it all to come in
-	  if(pq.isBusy()) {
-	    return;
-	  }
-	
-	  //load our result object
-	  var rows = []
-	  while(pq.getResult()) {
-	    if(pq.resultStatus() == 'PGRES_TUPLES_OK') {
-	      this._parseResults(this.pq, rows);
-	    }
-	    if(pq.resultStatus() == 'PGRES_COPY_OUT')  break;
-	  }
-	
-	
-	  var status = pq.resultStatus();
-	  switch(status) {
-	    case 'PGRES_FATAL_ERROR':
-	      return this._readError();
-	    case 'PGRES_COMMAND_OK':
-	    case 'PGRES_TUPLES_OK':
-	    case 'PGRES_COPY_OUT':
-	    case 'PGRES_EMPTY_QUERY': {
-	      this.emit('result', rows);
-	      break;
-	    }
-	    default:
-	      return this._readError('unrecognized command status: ' + status);
-	  }
-	
-	  var notice;
-	  while(notice = this.pq.notifies()) {
-	    this.emit('notification', notice);
-	  }
-	};
-	
-	//ensures the client is reading and
-	//everything is set up for async io
-	Client.prototype._startReading = function() {
-	  if(this._reading) return;
-	  this._reading = true;
-	  this.pq.on('readable', this._read);
-	  this.pq.startReader();
-	};
-	
-	var throwIfError = function(pq) {
-	  var err = pq.resultErrorMessage() || pq.errorMessage();
-	  if(err) {
-	    throw new Error(err);
-	  }
-	}
-	
-	Client.prototype._awaitResult = function(cb) {
-	  var self = this;
-	  var onError = function(e) {
-	    self.removeListener('error', onError);
-	    self.removeListener('result', onResult);
-	    cb(e);
-	  };
-	
-	  var onResult = function(rows) {
-	    self.removeListener('error', onError);
-	    self.removeListener('result', onResult);
-	    cb(null, rows);
-	  };
-	  this.once('error', onError);
-	  this.once('result', onResult);
-	  this._startReading();
-	};
-	
-	//wait for the writable socket to drain
-	Client.prototype.waitForDrain = function(pq, cb) {
-	  var res = pq.flush();
-	  //res of 0 is success
-	  if(res === 0) return cb();
-	
-	  //res of -1 is failure
-	  if(res === -1) return cb(pq.errorMessage());
-	
-	  //otherwise outgoing message didn't flush to socket
-	  //wait for it to flush and try again
-	  var self = this
-	  //you cannot read & write on a socket at the same time
-	  return pq.writable(function() {
-	    self.waitForDrain(pq, cb)
-	  });
-	};
-	
-	//send an async query to libpq and wait for it to
-	//finish writing query text to the socket
-	Client.prototype.dispatchQuery = function(pq, fn, cb) {
-	  this._stopReading();
-	  var success = pq.setNonBlocking(true);
-	  if(!success) return cb(new Error('Unable to set non-blocking to true'));
-	  var sent = fn();
-	  if(!sent) return cb(new Error(pq.errorMessage() || 'Something went wrong dispatching the query'));
-	  this.waitForDrain(pq, cb);
-	};
-	
-	Client.prototype.query = function(text, values, cb) {
-	  var queryFn;
-	
-	  if(typeof values == 'function') {
-	    cb = values;
-	    queryFn = function() { return self.pq.sendQuery(text); };
-	  } else {
-	    queryFn = function() { return self.pq.sendQueryParams(text, values); };
-	  }
-	
-	  var self = this
-	
-	  self.dispatchQuery(self.pq, queryFn, function(err) {
-	    if(err) return cb(err);
-	
-	    self._awaitResult(cb)
-	  });
-	};
-	
-	Client.prototype.prepare = function(statementName, text, nParams, cb) {
-	  var self = this;
-	  var fn = function() {
-	    return self.pq.sendPrepare(statementName, text, nParams);
-	  }
-	
-	  self.dispatchQuery(self.pq, fn, function(err) {
-	    if(err) return cb(err);
-	    self._awaitResult(cb);
-	  });
-	};
-	
-	Client.prototype.execute = function(statementName, parameters, cb) {
-	  var self = this;
-	
-	  var fn = function() {
-	    return self.pq.sendQueryPrepared(statementName, parameters);
-	  };
-	
-	  self.dispatchQuery(self.pq, fn, function(err, rows) {
-	    if(err) return cb(err);
-	    self._awaitResult(cb)
-	  });
-	};
-	
-	var CopyStream = __webpack_require__(446);
-	Client.prototype.getCopyStream = function() {
-	  this.pq.setNonBlocking(true);
-	  this._stopReading();
-	  return new CopyStream(this.pq);
-	};
-	
-	//cancel a currently executing query
-	Client.prototype.cancel = function(cb) {
-	  assert(cb, 'Callback is required');
-	  //result is either true or a string containing an error
-	  var result = this.pq.cancel();
-	  return setImmediate(function() {
-	    cb(result === true ? undefined : new Error(result));
-	  });
-	};
-	
-	Client.prototype.querySync = function(text, values) {
-	  var queryFn;
-	  var pq = this.pq;
-	  pq[values ? 'execParams' : 'exec'].call(pq, text, values);
-	  throwIfError(this.pq);
-	  return this._parseResults(pq, []);
-	};
-	
-	Client.prototype.prepareSync = function(statementName, text, nParams) {
-	  this.pq.prepare(statementName, text, nParams);
-	  throwIfError(this.pq);
-	};
-	
-	Client.prototype.executeSync = function(statementName, parameters) {
-	  this.pq.execPrepared(statementName, parameters);
-	  throwIfError(this.pq);
-	  return this._parseResults(this.pq, []);
-	};
-	
-	Client.prototype.escapeLiteral = function(value) {
-	  return this.pq.escapeLiteral(value);
-	};
-	
-	Client.prototype.escapeIdentifier = function(value) {
-	  return this.pq.escapeIdentifier(value);
-	};
-	
-	//export the version number so we can check it in node-postgres
-	module.exports.version = __webpack_require__(447).version
-
-
-/***/ },
-/* 437 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module, __dirname) {var PQ = module.exports = __webpack_require__(438)('addon.node').PQ;
-	
-	//print out the include dir
-	//if you want to include this in a binding.gyp file
-	if(!module.parent) {
-	  var path = __webpack_require__(37);
-	  console.log(path.normalize(__dirname + '/src'));
-	}
-	
-	var EventEmitter = __webpack_require__(3).EventEmitter;
-	var assert = __webpack_require__(430);
-	
-	for(var key in EventEmitter.prototype) {
-	  PQ.prototype[key] = EventEmitter.prototype[key];
-	}
-	
-	//SYNC connects to the server
-	//throws an exception in the event of a connection error
-	PQ.prototype.connectSync = function(paramString) {
-	  this.connected = true;
-	  if(!paramString) {
-	    paramString = '';
-	  }
-	  var connected = this.$connectSync(paramString);
-	  if(!connected) {
-	    var err = new Error(this.errorMessage());
-	    this.finish();
-	    throw err;
-	  }
-	};
-	
-	//connects async using a background thread
-	//calls the callback with an error if there was one
-	PQ.prototype.connect = function(paramString, cb) {
-	  this.connected = true;
-	  if(typeof paramString == 'function') {
-	    cb = paramString;
-	    paramString = '';
-	  }
-	  if(!paramString) {
-	    paramString = '';
-	  }
-	  assert(cb, 'Must provide a connection callback');
-	  if(process.domain) {
-	    cb = process.domain.bind(cb);
-	  }
-	  this.$connect(paramString, cb);
-	};
-	
-	PQ.prototype.errorMessage = function() {
-	  return this.$getLastErrorMessage();
-	};
-	
-	//returns an int for the fd of the socket
-	PQ.prototype.socket = function() {
-	  return this.$socket();
-	};
-	
-	// return server version number e.g. 90300
-	PQ.prototype.serverVersion = function () {
-	  return this.$serverVersion();
-	};
-	
-	//finishes the connection & closes it
-	PQ.prototype.finish = function() {
-	  this.connected = false;
-	  this.$finish();
-	};
-	
-	////SYNC executes a plain text query
-	//immediately stores the results within the PQ object for consumption with
-	//ntuples, getvalue, etc...
-	//returns false if there was an error
-	//consume additional error details via PQ#errorMessage & friends
-	PQ.prototype.exec = function(commandText) {
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  this.$exec(commandText);
-	};
-	
-	//SYNC executes a query with parameters
-	//immediately stores the results within the PQ object for consumption with
-	//ntuples, getvalue, etc...
-	//returns false if there was an error
-	//consume additional error details via PQ#errorMessage & friends
-	PQ.prototype.execParams = function(commandText, parameters) {
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  if(!parameters) {
-	    parameters = [];
-	  }
-	  this.$execParams(commandText, parameters);
-	};
-	
-	//SYNC prepares a named query and stores the result
-	//immediately stores the results within the PQ object for consumption with
-	//ntuples, getvalue, etc...
-	//returns false if there was an error
-	//consume additional error details via PQ#errorMessage & friends
-	PQ.prototype.prepare = function(statementName, commandText, nParams) {
-	  assert.equal(arguments.length, 3, 'Must supply 3 arguments');
-	  if(!statementName) {
-	    statementName = '';
-	  }
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  nParams = Number(nParams) || 0;
-	  this.$prepare(statementName, commandText, nParams);
-	};
-	
-	//SYNC executes a named, prepared query and stores the result
-	//immediately stores the results within the PQ object for consumption with
-	//ntuples, getvalue, etc...
-	//returns false if there was an error
-	//consume additional error details via PQ#errorMessage & friends
-	PQ.prototype.execPrepared = function(statementName, parameters) {
-	  if(!statementName) {
-	    statementName = '';
-	  }
-	  if(!parameters) {
-	    parameters = [];
-	  }
-	  this.$execPrepared(statementName, parameters);
-	};
-	
-	//send a command to begin executing a query in async mode
-	//returns true if sent, or false if there was a send failure
-	PQ.prototype.sendQuery = function(commandText) {
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  return this.$sendQuery(commandText);
-	};
-	
-	//send a command to begin executing a query with parameters in async mode
-	//returns true if sent, or false if there was a send failure
-	PQ.prototype.sendQueryParams = function(commandText, parameters) {
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  if(!parameters) {
-	    parameters = [];
-	  }
-	  return this.$sendQueryParams(commandText, parameters);
-	};
-	
-	//send a command to prepare a named query in async mode
-	//returns true if sent, or false if there was a send failure
-	PQ.prototype.sendPrepare = function(statementName, commandText, nParams) {
-	  assert.equal(arguments.length, 3, 'Must supply 3 arguments');
-	  if(!statementName) {
-	    statementName = '';
-	  }
-	  if(!commandText) {
-	    commandText = '';
-	  }
-	  nParams = Number(nParams) || 0;
-	  return this.$sendPrepare(statementName, commandText, nParams);
-	};
-	
-	//send a command to execute a named query in async mode
-	//returns true if sent, or false if there was a send failure
-	PQ.prototype.sendQueryPrepared = function(statementName, parameters) {
-	  if(!statementName) {
-	    statementName = '';
-	  }
-	  if(!parameters) {
-	    parameters = [];
-	  }
-	  return this.$sendQueryPrepared(statementName, parameters);
-	};
-	
-	//'pops' a result out of the buffered
-	//response data read during async command execution
-	//and stores it on the c/c++ object so you can consume
-	//the data from it.  returns true if there was a pending result
-	//or false if there was no pending result. if there was no pending result
-	//the last found result is not overwritten so you can call getResult as many
-	//times as you want, and you'll always have the last available result for consumption
-	PQ.prototype.getResult = function() {
-	  return this.$getResult();
-	};
-	
-	//returns a text of the enum associated with the result
-	//usually just PGRES_COMMAND_OK or PGRES_FATAL_ERROR
-	PQ.prototype.resultStatus = function() {
-	  return this.$resultStatus();
-	};
-	
-	PQ.prototype.resultErrorMessage = function() {
-	  return this.$resultErrorMessage();
-	};
-	
-	PQ.prototype.resultErrorFields = function() {
-	  return this.$resultErrorFields();
-	};
-	
-	//free the memory associated with a result
-	//this is somewhat handled for you within the c/c++ code
-	//by never allowing the code to 'leak' a result. still,
-	//if you absolutely want to free it yourself, you can use this.
-	PQ.prototype.clear = function() {
-	  this.$clear();
-	};
-	
-	//returns the number of tuples (rows) in the result set
-	PQ.prototype.ntuples = function() {
-	  return this.$ntuples();
-	};
-	
-	//returns the number of fields (columns) in the result set
-	PQ.prototype.nfields = function() {
-	  return this.$nfields();
-	};
-	
-	//returns the name of the field (column) at the given offset
-	PQ.prototype.fname = function(offset) {
-	  return this.$fname(offset);
-	};
-	
-	//returns the Oid of the type for the given field
-	PQ.prototype.ftype = function(offset) {
-	  return this.$ftype(offset);
-	};
-	
-	//returns a text value at the given row/col
-	//if the value is null this still returns empty string
-	//so you need to use PQ#getisnull to determine
-	PQ.prototype.getvalue = function(row, col) {
-	  return this.$getvalue(row, col);
-	};
-	
-	//returns true/false if the value is null
-	PQ.prototype.getisnull = function(row, col) {
-	  return this.$getisnull(row, col);
-	};
-	
-	//returns the status of the command
-	PQ.prototype.cmdStatus = function() {
-	  return this.$cmdStatus();
-	};
-	
-	//returns the tuples in the command
-	PQ.prototype.cmdTuples = function() {
-	  return this.$cmdTuples();
-	};
-	
-	//starts the 'read ready' libuv socket listener.
-	//Once the socket becomes readable, the PQ instance starts
-	//emitting 'readable' events.  Similar to how node's readable-stream
-	//works except to clear the SELECT() notification you need to call
-	//PQ#consumeInput instead of letting node pull the data off the socket
-	//http://www.postgresql.org/docs/9.1/static/libpq-async.html
-	PQ.prototype.startReader = function() {
-	  assert(this.connected, 'Must be connected to start reader');
-	  this.$startRead();
-	};
-	
-	//suspends the libuv socket 'read ready' listener
-	PQ.prototype.stopReader = function() {
-	  this.$stopRead();
-	};
-	
-	PQ.prototype.writable = function(cb) {
-	  assert(this.connected, 'Must be connected to start writer');
-	  this.$startWrite();
-	  return this.once('writable', cb);
-	};
-	
-	//returns boolean - false indicates an error condition
-	//e.g. a failure to consume input
-	PQ.prototype.consumeInput = function() {
-	  return this.$consumeInput();
-	};
-	
-	//returns true if PQ#getResult would cause
-	//the process to block waiting on results
-	//false indicates PQ#getResult can be called
-	//with an assurance of not blocking
-	PQ.prototype.isBusy = function() {
-	  return this.$isBusy();
-	};
-	
-	//toggles the socket blocking on outgoing writes
-	PQ.prototype.setNonBlocking = function(truthy) {
-	  return this.$setNonBlocking(truthy ? 1 : 0);
-	};
-	
-	//returns true if the connection is non-blocking on writes, otherwise false
-	//note: connection is always non-blocking on reads if using the send* methods
-	PQ.prototype.isNonBlocking = function() {
-	  return this.$isNonBlocking();
-	};
-	
-	//returns 1 if socket is not write-ready
-	//returns 0 if all data flushed to socket
-	//returns -1 if there is an error
-	PQ.prototype.flush = function() {
-	  return this.$flush();
-	};
-	
-	//escapes a literal and returns the escaped string
-	//I'm not 100% sure this doesn't do any I/O...need to check that
-	PQ.prototype.escapeLiteral = function(input) {
-	  if(!input) return input;
-	  return this.$escapeLiteral(input);
-	};
-	
-	PQ.prototype.escapeIdentifier = function(input) {
-	  if(!input) return input;
-	  return this.$escapeIdentifier(input);
-	};
-	
-	//Checks for any notifications which may have arrivied
-	//and returns them as a javascript object: {relname: 'string', extra: 'string', be_pid: int}
-	//if there are no pending notifications this returns undefined
-	PQ.prototype.notifies = function() {
-	  return this.$notifies();
-	};
-	
-	//Sends a buffer of binary data to the server
-	//returns 1 if the command was sent successfully
-	//returns 0 if the command would block (use PQ#writable here if so)
-	//returns -1 if there was an error
-	PQ.prototype.putCopyData = function(buffer) {
-	  assert(buffer instanceof Buffer);
-	  return this.$putCopyData(buffer);
-	};
-	
-	//Sends a command to 'finish' the copy
-	//if an error message is passed, it will be sent to the
-	//backend and signal a request to cancel the copy in
-	//returns 1 if sent succesfully
-	//returns 0 if the command would block
-	//returns -1 if there was an error
-	PQ.prototype.putCopyEnd = function(errorMessage) {
-	  if(errorMessage) {
-	    return this.$putCopyEnd(errorMessage);
-	  }
-	  return this.$putCopyEnd();
-	};
-	
-	//Gets a buffer of data from a copy out command
-	//if async is passed as true it will not block waiting
-	//for the result, otherwise this will BLOCK for a result.
-	//returns a buffer if successful
-	//returns 0 if copy is still in process (async only)
-	//returns -1 if the copy is done
-	//returns -2 if there was an error
-	PQ.prototype.getCopyData = function(async) {
-	  return this.$getCopyData(!!async);
-	};
-	
-	PQ.prototype.cancel = function() {
-	  return this.$cancel();
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(70)(module), "/"))
-
-/***/ },
-/* 438 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(__filename) {
-	/**
-	 * Module dependencies.
-	 */
-	
-	var fs = __webpack_require__(12)
-	  , path = __webpack_require__(37)
-	  , join = path.join
-	  , dirname = path.dirname
-	  , exists = fs.existsSync || path.existsSync
-	  , defaults = {
-	        arrow: process.env.NODE_BINDINGS_ARROW || ' → '
-	      , compiled: process.env.NODE_BINDINGS_COMPILED_DIR || 'compiled'
-	      , platform: process.platform
-	      , arch: process.arch
-	      , version: process.versions.node
-	      , bindings: 'bindings.node'
-	      , try: [
-	          // node-gyp's linked version in the "build" dir
-	          [ 'module_root', 'build', 'bindings' ]
-	          // node-waf and gyp_addon (a.k.a node-gyp)
-	        , [ 'module_root', 'build', 'Debug', 'bindings' ]
-	        , [ 'module_root', 'build', 'Release', 'bindings' ]
-	          // Debug files, for development (legacy behavior, remove for node v0.9)
-	        , [ 'module_root', 'out', 'Debug', 'bindings' ]
-	        , [ 'module_root', 'Debug', 'bindings' ]
-	          // Release files, but manually compiled (legacy behavior, remove for node v0.9)
-	        , [ 'module_root', 'out', 'Release', 'bindings' ]
-	        , [ 'module_root', 'Release', 'bindings' ]
-	          // Legacy from node-waf, node <= 0.4.x
-	        , [ 'module_root', 'build', 'default', 'bindings' ]
-	          // Production "Release" buildtype binary (meh...)
-	        , [ 'module_root', 'compiled', 'version', 'platform', 'arch', 'bindings' ]
-	        ]
-	    }
-	
-	/**
-	 * The main `bindings()` function loads the compiled bindings for a given module.
-	 * It uses V8's Error API to determine the parent filename that this function is
-	 * being invoked from, which is then used to find the root directory.
-	 */
-	
-	function bindings (opts) {
-	
-	  // Argument surgery
-	  if (typeof opts == 'string') {
-	    opts = { bindings: opts }
-	  } else if (!opts) {
-	    opts = {}
-	  }
-	  opts.__proto__ = defaults
-	
-	  // Get the module root
-	  if (!opts.module_root) {
-	    opts.module_root = exports.getRoot(exports.getFileName())
-	  }
-	
-	  // Ensure the given bindings name ends with .node
-	  if (path.extname(opts.bindings) != '.node') {
-	    opts.bindings += '.node'
-	  }
-	
-	  var tries = []
-	    , i = 0
-	    , l = opts.try.length
-	    , n
-	    , b
-	    , err
-	
-	  for (; i<l; i++) {
-	    n = join.apply(null, opts.try[i].map(function (p) {
-	      return opts[p] || p
-	    }))
-	    tries.push(n)
-	    try {
-	      b = opts.path ? /*require.resolve*/(__webpack_require__(439).resolve(n)) : __webpack_require__(439)(n)
-	      if (!opts.path) {
-	        b.path = n
-	      }
-	      return b
-	    } catch (e) {
-	      if (!/not find/i.test(e.message)) {
-	        throw e
-	      }
-	    }
-	  }
-	
-	  err = new Error('Could not locate the bindings file. Tried:\n'
-	    + tries.map(function (a) { return opts.arrow + a }).join('\n'))
-	  err.tries = tries
-	  throw err
-	}
-	module.exports = exports = bindings
-	
-	
-	/**
-	 * Gets the filename of the JavaScript file that invokes this function.
-	 * Used to help find the root directory of a module.
-	 * Optionally accepts an filename argument to skip when searching for the invoking filename
-	 */
-	
-	exports.getFileName = function getFileName (calling_file) {
-	  var origPST = Error.prepareStackTrace
-	    , origSTL = Error.stackTraceLimit
-	    , dummy = {}
-	    , fileName
-	
-	  Error.stackTraceLimit = 10
-	
-	  Error.prepareStackTrace = function (e, st) {
-	    for (var i=0, l=st.length; i<l; i++) {
-	      fileName = st[i].getFileName()
-	      if (fileName !== __filename) {
-	        if (calling_file) {
-	            if (fileName !== calling_file) {
-	              return
-	            }
-	        } else {
-	          return
-	        }
-	      }
-	    }
-	  }
-	
-	  // run the 'prepareStackTrace' function above
-	  Error.captureStackTrace(dummy)
-	  dummy.stack
-	
-	  // cleanup
-	  Error.prepareStackTrace = origPST
-	  Error.stackTraceLimit = origSTL
-	
-	  return fileName
-	}
-	
-	/**
-	 * Gets the root directory of a module, given an arbitrary filename
-	 * somewhere in the module tree. The "root directory" is the directory
-	 * containing the `package.json` file.
-	 *
-	 *   In:  /home/nate/node-native-module/lib/index.js
-	 *   Out: /home/nate/node-native-module
-	 */
-	
-	exports.getRoot = function getRoot (file) {
-	  var dir = dirname(file)
-	    , prev
-	  while (true) {
-	    if (dir === '.') {
-	      // Avoids an infinite loop in rare cases, like the REPL
-	      dir = process.cwd()
-	    }
-	    if (exists(join(dir, 'package.json')) || exists(join(dir, 'node_modules'))) {
-	      // Found the 'package.json' file or 'node_modules' dir; we're done
-	      return dir
-	    }
-	    if (prev === dir) {
-	      // Got to the top
-	      throw new Error('Could not find module root given file: "' + file
-	                    + '". Do you have a `package.json` file? ')
-	    }
-	    // Try the parent dir next
-	    prev = dir
-	    dir = join(dir, '..')
-	  }
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, "/index.js"))
-
-/***/ },
-/* 439 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./bindings": 438,
-		"./bindings.js": 438,
-		"./package": 441,
-		"./package.json": 441
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 439;
-
-
-/***/ },
-/* 440 */,
-/* 441 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"_args": [
-			[
-				{
-					"raw": "bindings@1.2.1",
-					"scope": null,
-					"escapedName": "bindings",
-					"name": "bindings",
-					"rawSpec": "1.2.1",
-					"spec": "1.2.1",
-					"type": "version"
-				},
-				"/Users/rebekahklemm/WebstormProjects/capstone/backend/node_modules/libpq"
-			]
-		],
-		"_from": "bindings@1.2.1",
-		"_id": "bindings@1.2.1",
-		"_inCache": true,
-		"_location": "/bindings",
-		"_npmUser": {
-			"name": "tootallnate",
-			"email": "nathan@tootallnate.net"
-		},
-		"_npmVersion": "1.4.14",
-		"_phantomChildren": {},
-		"_requested": {
-			"raw": "bindings@1.2.1",
-			"scope": null,
-			"escapedName": "bindings",
-			"name": "bindings",
-			"rawSpec": "1.2.1",
-			"spec": "1.2.1",
-			"type": "version"
-		},
-		"_requiredBy": [
-			"/libpq"
-		],
-		"_resolved": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz",
-		"_shasum": "14ad6113812d2d37d72e67b4cacb4bb726505f11",
-		"_shrinkwrap": null,
-		"_spec": "bindings@1.2.1",
-		"_where": "/Users/rebekahklemm/WebstormProjects/capstone/backend/node_modules/libpq",
-		"author": {
-			"name": "Nathan Rajlich",
-			"email": "nathan@tootallnate.net",
-			"url": "http://tootallnate.net"
-		},
-		"bugs": {
-			"url": "https://github.com/TooTallNate/node-bindings/issues"
-		},
-		"dependencies": {},
-		"description": "Helper module for loading your native module's .node file",
-		"devDependencies": {},
-		"directories": {},
-		"dist": {
-			"shasum": "14ad6113812d2d37d72e67b4cacb4bb726505f11",
-			"tarball": "https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz"
-		},
-		"gitHead": "e404152ee27f8478ccbc7122ee051246e8e5ec02",
-		"homepage": "https://github.com/TooTallNate/node-bindings",
-		"keywords": [
-			"native",
-			"addon",
-			"bindings",
-			"gyp",
-			"waf",
-			"c",
-			"c++"
-		],
-		"license": "MIT",
-		"main": "./bindings.js",
-		"maintainers": [
-			{
-				"name": "TooTallNate",
-				"email": "nathan@tootallnate.net"
-			},
-			{
-				"name": "tootallnate",
-				"email": "nathan@tootallnate.net"
-			}
-		],
-		"name": "bindings",
-		"optionalDependencies": {},
-		"readme": "ERROR: No README data found!",
-		"repository": {
-			"type": "git",
-			"url": "git://github.com/TooTallNate/node-bindings.git"
-		},
-		"scripts": {},
-		"version": "1.2.1"
-	};
-
-/***/ },
-/* 442 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var textParsers = __webpack_require__(443);
-	var binaryParsers = __webpack_require__(445);
-	var arrayParser = __webpack_require__(444);
-	
-	var typeParsers = {
-	  text: {},
-	  binary: {}
-	};
-	
-	//the empty parse function
-	var noParse = function(val) {
-	  return String(val);
-	};
-	
-	//returns a function used to convert a specific type (specified by
-	//oid) into a result javascript type
-	//note: the oid can be obtained via the following sql query:
-	//SELECT oid FROM pg_type WHERE typname = 'TYPE_NAME_HERE';
-	var getTypeParser = function(oid, format) {
-	  format = format || 'text';
-	  if (!typeParsers[format]) {
-	    return noParse;
-	  }
-	  return typeParsers[format][oid] || noParse;
-	};
-	
-	var setTypeParser = function(oid, format, parseFn) {
-	  if(typeof format == 'function') {
-	    parseFn = format;
-	    format = 'text';
-	  }
-	  typeParsers[format][oid] = parseFn;
-	};
-	
-	textParsers.init(function(oid, converter) {
-	  typeParsers.text[oid] = converter;
-	});
-	
-	binaryParsers.init(function(oid, converter) {
-	  typeParsers.binary[oid] = converter;
-	});
-	
-	module.exports = {
-	  getTypeParser: getTypeParser,
-	  setTypeParser: setTypeParser,
-	  arrayParser: arrayParser
-	};
-
-
-/***/ },
-/* 443 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayParser = __webpack_require__(444);
-	
-	//parses PostgreSQL server formatted date strings into javascript date objects
-	var parseDate = function(isoDate) {
-	  //TODO this could do w/ a refactor
-	  var dateMatcher = /(\d{1,})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})(\.\d{1,})?/;
-	
-	  var match = dateMatcher.exec(isoDate);
-	  //could not parse date
-	  if(!match) {
-	    dateMatcher = /^(\d{1,})-(\d{2})-(\d{2})$/;
-	    match = dateMatcher.test(isoDate);
-	    if(!match) {
-	      return null;
-	    } else {
-	      //it is a date in YYYY-MM-DD format
-	      //add time portion to force js to parse as local time
-	      return new Date(isoDate + ' 00:00:00');
-	    }
-	  }
-	  var isBC = /BC$/.test(isoDate);
-	  var _year = parseInt(match[1], 10);
-	  var isFirstCentury = (_year > 0) && (_year < 100);
-	  var year = (isBC ? "-" : "") + match[1];
-	
-	  var month = parseInt(match[2],10)-1;
-	  var day = match[3];
-	  var hour = parseInt(match[4],10);
-	  var min = parseInt(match[5],10);
-	  var seconds = parseInt(match[6], 10);
-	
-	  var miliString = match[7];
-	  var mili = 0;
-	  if(miliString) {
-	    mili = 1000 * parseFloat(miliString);
-	  }
-	
-	  //match timezones like the following:
-	  //Z (UTC)
-	  //-05
-	  //+06:30
-	  var tZone = /([Z|+\-])(\d{2})?:?(\d{2})?:?(\d{2})?/.exec(isoDate.split(' ')[1]);
-	  //minutes to adjust for timezone
-	  var tzAdjust = 0;
-	  var tzSign = 1;
-	  var date;
-	  if(tZone) {
-	    var type = tZone[1];
-	    switch(type) {
-	    case 'Z':
-	      break;
-	    case '-':
-	      tzSign = -1;
-	    case '+':
-	      tzAdjust = tzSign * (
-	        (parseInt(tZone[2], 10) * 3600) +
-	        (parseInt(tZone[3] || 0, 10) * 60) +
-	        (parseInt(tZone[4] || 0, 10))
-	      );
-	      break;
-	    default:
-	      throw new Error("Unidentifed tZone part " + type);
-	    }
-	
-	    var utcOffset = Date.UTC(year, month, day, hour, min, seconds, mili);
-	
-	    date = new Date(utcOffset - (tzAdjust * 1000));
-	  }
-	  //no timezone information
-	  else {
-	    date = new Date(year, month, day, hour, min, seconds, mili);
-	  }
-	
-	  if (isFirstCentury) {
-	    date.setUTCFullYear(year);
-	  }
-	
-	  return date;
-	};
-	
-	var parseBool = function(val) {
-	  if(val === null) return val;
-	  return val === 't';
-	};
-	
-	var parseBoolArray = function(val) {
-	  if(!val) { return null; }
-	  var p = arrayParser.create(val, function(entry){
-	    if(entry !== null) {
-	      entry = parseBool(entry);
-	    }
-	    return entry;
-	  });
-	
-	  return p.parse();
-	};
-	
-	var parseIntegerArray = function(val) {
-	  if(!val) { return null; }
-	  var p = arrayParser.create(val, function(entry){
-	    if(entry !== null) {
-	      entry = parseInt(entry, 10);
-	    }
-	    return entry;
-	  });
-	
-	  return p.parse();
-	};
-	
-	var parseBigIntegerArray = function(val) {
-	  if(!val) { return null; }
-	  var p = arrayParser.create(val, function(entry){
-	    if(entry !== null) {
-	      entry = parseBigInteger(entry).trim();
-	    }
-	    return entry;
-	  });
-	
-	  return p.parse();
-	};
-	
-	var parseFloatArray = function(val) {
-	  if(!val) { return null; }
-	  var p = arrayParser.create(val, function(entry) {
-	    if(entry !== null) {
-	      entry = parseFloat(entry);
-	    }
-	    return entry;
-	  });
-	
-	  return p.parse();
-	};
-	
-	var parseStringArray = function(val) {
-	  if(!val) { return null; }
-	
-	  var p = arrayParser.create(val);
-	  return p.parse();
-	};
-	
-	var parseDateArray = function(val) {
-	  if (!val) { return null; }
-	
-	  var p = arrayParser.create(val, function(entry) {
-	    if (entry !== null) {
-	      entry = parseDate(entry);
-	    }
-	    return entry;
-	  });
-	
-	  return p.parse();
-	};
-	
-	var NUM = '([+-]?\\d+)';
-	var YEAR = NUM + '\\s+years?';
-	var MON = NUM + '\\s+mons?';
-	var DAY = NUM + '\\s+days?';
-	var TIME = '([+-])?(\\d\\d):(\\d\\d):(\\d\\d)';
-	var INTERVAL = [YEAR,MON,DAY,TIME].map(function(p){
-	  return "("+p+")?";
-	}).join('\\s*');
-	
-	var parseInterval = function(val) {
-	  if (!val) { return {}; }
-	  var m = new RegExp(INTERVAL).exec(val);
-	  var i = {};
-	  if (m[2]) { i.years = parseInt(m[2], 10); }
-	  if (m[4]) { i.months = parseInt(m[4], 10); }
-	  if (m[6]) { i.days = parseInt(m[6], 10); }
-	  if (m[9]) { i.hours = parseInt(m[9], 10); }
-	  if (m[10]) { i.minutes = parseInt(m[10], 10); }
-	  if (m[11]) { i.seconds = parseInt(m[11], 10); }
-	  if (m[8] == '-'){
-	    if (i.hours) { i.hours *= -1; }
-	    if (i.minutes) { i.minutes *= -1; }
-	    if (i.seconds) { i.seconds *= -1; }
-	  }
-	  for (var field in i){
-	    if (i[field] === 0) {
-	      delete i[field];
-	    }
-	  }
-	  return i;
-	};
-	
-	var parseByteA = function(val) {
-	  if(/^\\x/.test(val)){
-	    // new 'hex' style response (pg >9.0)
-	    return new Buffer(val.substr(2), 'hex');
-	  }else{
-	    var out = "";
-	    var i = 0;
-	    while(i < val.length){
-	      if(val[i] != "\\"){
-	        out += val[i];
-	        ++i;
-	      }else{
-	        if(val.substr(i+1,3).match(/[0-7]{3}/)){
-	          out += String.fromCharCode(parseInt(val.substr(i+1,3),8));
-	          i += 4;
-	        }else{
-	          backslashes = 1;
-	          while(i+backslashes < val.length && val[i+backslashes] == "\\")
-	            backslashes++;
-	          for(k=0; k<Math.floor(backslashes/2); ++k)
-	            out += "\\";
-	          i += Math.floor(backslashes / 2) * 2;
-	        }
-	      }
-	    }
-	    return new Buffer(out,"binary");
-	  }
-	};
-	
-	var maxLen = Number.MAX_VALUE.toString().length;
-	
-	var parseInteger = function(val) {
-	  return parseInt(val, 10);
-	};
-	
-	var parseBigInteger = function(val) {
-	  var valStr = String(val);
-	  if (/^\d+$/.test(valStr)) { return valStr; }
-	  return val;
-	};
-	
-	var parseJsonArray = function(val) {
-	  var arr = parseStringArray(val);
-	
-	  if (!arr) {
-	    return arr;
-	  }
-	
-	  return arr.map(function(el) { return JSON.parse(el); });
-	};
-	
-	var init = function(register) {
-	  register(20, parseBigInteger); // int8
-	  register(21, parseInteger); // int2
-	  register(23, parseInteger); // int4
-	  register(26, parseInteger); // oid
-	  register(700, parseFloat); // float4/real
-	  register(701, parseFloat); // float8/double
-	  register(16, parseBool);
-	  register(1082, parseDate); // date
-	  register(1114, parseDate); // timestamp without timezone
-	  register(1184, parseDate); // timestamp
-	  register(1000, parseBoolArray);
-	  register(1005, parseIntegerArray); // _int2
-	  register(1007, parseIntegerArray); // _int4
-	  register(1016, parseBigIntegerArray); // _int8
-	  register(1021, parseFloatArray); // _float4
-	  register(1022, parseFloatArray); // _float8
-	  register(1231, parseFloatArray); // _numeric
-	  register(1014, parseStringArray); //char
-	  register(1015, parseStringArray); //varchar
-	  register(1008, parseStringArray);
-	  register(1009, parseStringArray);
-	  register(1115, parseDateArray); // timestamp without time zone[]
-	  register(1182, parseDateArray); // _date
-	  register(1185, parseDateArray); // timestamp with time zone[]
-	  register(1186, parseInterval);
-	  register(17, parseByteA);
-	  register(114, JSON.parse.bind(JSON));
-	  register(3802, JSON.parse.bind(JSON));
-	  register(199, parseJsonArray); // json[]
-	  register(2951, parseStringArray); // uuid[]
-	};
-	
-	module.exports = {
-	  init: init
-	};
-
-
-/***/ },
-/* 444 */
-/***/ function(module, exports) {
-
-	function ArrayParser(source, converter) {
-	  this.source = source;
-	  this.converter = converter;
-	  this.pos = 0;
-	  this.entries = [];
-	  this.recorded = [];
-	  this.dimension = 0;
-	  if (!this.converter) {
-	    this.converter = function(entry) {
-	      return entry;
-	    };
-	  }
-	}
-	
-	ArrayParser.prototype.eof = function() {
-	  return this.pos >= this.source.length;
-	};
-	
-	ArrayParser.prototype.nextChar = function() {
-	  var c;
-	  if ((c = this.source[this.pos++]) === "\\") {
-	    return {
-	      char: this.source[this.pos++],
-	      escaped: true
-	    };
-	  } else {
-	    return {
-	      char: c,
-	      escaped: false
-	    };
-	  }
-	};
-	
-	ArrayParser.prototype.record = function(c) {
-	  return this.recorded.push(c);
-	};
-	
-	ArrayParser.prototype.newEntry = function(includeEmpty) {
-	  var entry;
-	  if (this.recorded.length > 0 || includeEmpty) {
-	    entry = this.recorded.join("");
-	    if (entry === "NULL" && !includeEmpty) {
-	      entry = null;
-	    }
-	    if (entry !== null) {
-	      entry = this.converter(entry);
-	    }
-	    this.entries.push(entry);
-	    this.recorded = [];
-	  }
-	};
-	
-	ArrayParser.prototype.parse = function(nested) {
-	  var c, p, quote;
-	  if (nested === null) {
-	    nested = false;
-	  }
-	  quote = false;
-	  while (!this.eof()) {
-	    c = this.nextChar();
-	    if (c.char === "{" && !quote) {
-	      this.dimension++;
-	      if (this.dimension > 1) {
-	        p = new ArrayParser(this.source.substr(this.pos - 1), this.converter);
-	        this.entries.push(p.parse(true));
-	        this.pos += p.pos - 2;
-	      }
-	    } else if (c.char === "}" && !quote) {
-	      this.dimension--;
-	      if (this.dimension === 0) {
-	        this.newEntry();
-	        if (nested) {
-	          return this.entries;
-	        }
-	      }
-	    } else if (c.char === '"' && !c.escaped) {
-	      if (quote) {
-	        this.newEntry(true);
-	      }
-	      quote = !quote;
-	    } else if (c.char === ',' && !quote) {
-	      this.newEntry();
-	    } else {
-	      this.record(c.char);
-	    }
-	  }
-	  if (this.dimension !== 0) {
-	    throw "array dimension not balanced";
-	  }
-	  return this.entries;
-	};
-	
-	module.exports = {
-	  create: function(source, converter){
-	    return new ArrayParser(source, converter);
-	  }
-	};
-
-
-/***/ },
-/* 445 */
-/***/ function(module, exports) {
-
-	var parseBits = function(data, bits, offset, invert, callback) {
-	  offset = offset || 0;
-	  invert = invert || false;
-	  callback = callback || function(lastValue, newValue, bits) { return (lastValue * Math.pow(2, bits)) + newValue; };
-	  var offsetBytes = offset >> 3;
-	
-	  var inv = function(value) {
-	    if (invert) {
-	      return ~value & 0xff;
-	    }
-	
-	    return value;
-	  };
-	
-	  // read first (maybe partial) byte
-	  var mask = 0xff;
-	  var firstBits = 8 - (offset % 8);
-	  if (bits < firstBits) {
-	    mask = (0xff << (8 - bits)) & 0xff;
-	    firstBits = bits;
-	  }
-	
-	  if (offset) {
-	    mask = mask >> (offset % 8);
-	  }
-	
-	  var result = 0;
-	  if ((offset % 8) + bits >= 8) {
-	    result = callback(0, inv(data[offsetBytes]) & mask, firstBits);
-	  }
-	
-	  // read bytes
-	  var bytes = (bits + offset) >> 3;
-	  for (var i = offsetBytes + 1; i < bytes; i++) {
-	    result = callback(result, inv(data[i]), 8);
-	  }
-	
-	  // bits to read, that are not a complete byte
-	  var lastBits = (bits + offset) % 8;
-	  if (lastBits > 0) {
-	    result = callback(result, inv(data[bytes]) >> (8 - lastBits), lastBits);
-	  }
-	
-	  return result;
-	};
-	
-	var parseFloatFromBits = function(data, precisionBits, exponentBits) {
-	  var bias = Math.pow(2, exponentBits - 1) - 1;
-	  var sign = parseBits(data, 1);
-	  var exponent = parseBits(data, exponentBits, 1);
-	
-	  if (exponent === 0) {
-	    return 0;
-	  }
-	
-	  // parse mantissa
-	  var precisionBitsCounter = 1;
-	  var parsePrecisionBits = function(lastValue, newValue, bits) {
-	    if (lastValue === 0) {
-	      lastValue = 1;
-	    }
-	
-	    for (var i = 1; i <= bits; i++) {
-	      precisionBitsCounter /= 2;
-	      if ((newValue & (0x1 << (bits - i))) > 0) {
-	        lastValue += precisionBitsCounter;
-	      }
-	    }
-	
-	    return lastValue;
-	  };
-	
-	  var mantissa = parseBits(data, precisionBits, exponentBits + 1, false, parsePrecisionBits);
-	
-	  // special cases
-	  if (exponent == (Math.pow(2, exponentBits + 1) - 1)) {
-	    if (mantissa === 0) {
-	      return (sign === 0) ? Infinity : -Infinity;
-	    }
-	
-	    return NaN;
-	  }
-	
-	  // normale number
-	  return ((sign === 0) ? 1 : -1) * Math.pow(2, exponent - bias) * mantissa;
-	};
-	
-	var parseInt16 = function(value) {
-	  if (parseBits(value, 1) == 1) {
-	    return -1 * (parseBits(value, 15, 1, true) + 1);
-	  }
-	
-	  return parseBits(value, 15, 1);
-	};
-	
-	var parseInt32 = function(value) {
-	  if (parseBits(value, 1) == 1) {
-	    return -1 * (parseBits(value, 31, 1, true) + 1);
-	  }
-	
-	  return parseBits(value, 31, 1);
-	};
-	
-	var parseFloat32 = function(value) {
-	  return parseFloatFromBits(value, 23, 8);
-	};
-	
-	var parseFloat64 = function(value) {
-	  return parseFloatFromBits(value, 52, 11);
-	};
-	
-	var parseNumeric = function(value) {
-	  var sign = parseBits(value, 16, 32);
-	  if (sign == 0xc000) {
-	    return NaN;
-	  }
-	
-	  var weight = Math.pow(10000, parseBits(value, 16, 16));
-	  var result = 0;
-	
-	  var digits = [];
-	  var ndigits = parseBits(value, 16);
-	  for (var i = 0; i < ndigits; i++) {
-	    result += parseBits(value, 16, 64 + (16 * i)) * weight;
-	    weight /= 10000;
-	  }
-	
-	  var scale = Math.pow(10, parseBits(value, 16, 48));
-	  return ((sign === 0) ? 1 : -1) * Math.round(result * scale) / scale;
-	};
-	
-	var parseDate = function(isUTC, value) {
-	  var sign = parseBits(value, 1);
-	  var rawValue = parseBits(value, 63, 1);
-	
-	  // discard usecs and shift from 2000 to 1970
-	  var result = new Date((((sign === 0) ? 1 : -1) * rawValue / 1000) + 946684800000);
-	
-	  if (!isUTC) {
-	    result.setTime(result.getTime() + result.getTimezoneOffset() * 60000);
-	  }
-	
-	  // add microseconds to the date
-	  result.usec = rawValue % 1000;
-	  result.getMicroSeconds = function() {
-	    return this.usec;
-	  };
-	  result.setMicroSeconds = function(value) {
-	    this.usec = value;
-	  };
-	  result.getUTCMicroSeconds = function() {
-	    return this.usec;
-	  };
-	
-	  return result;
-	};
-	
-	var parseArray = function(value) {
-	  var dim = parseBits(value, 32);
-	
-	  var flags = parseBits(value, 32, 32);
-	  var elementType = parseBits(value, 32, 64);
-	
-	  var offset = 96;
-	  var dims = [];
-	  for (var i = 0; i < dim; i++) {
-	    // parse dimension
-	    dims[i] = parseBits(value, 32, offset);
-	    offset += 32;
-	
-	    // ignore lower bounds
-	    offset += 32;
-	  }
-	
-	  var parseElement = function(elementType) {
-	    // parse content length
-	    var length = parseBits(value, 32, offset);
-	    offset += 32;
-	
-	    // parse null values
-	    if (length == 0xffffffff) {
-	      return null;
-	    }
-	
-	    var result;
-	    if ((elementType == 0x17) || (elementType == 0x14)) {
-	      // int/bigint
-	      result = parseBits(value, length * 8, offset);
-	      offset += length * 8;
-	      return result;
-	    }
-	    else if (elementType == 0x19) {
-	      // string
-	      result = value.toString(this.encoding, offset >> 3, (offset += (length << 3)) >> 3);
-	      return result;
-	    }
-	    else {
-	      console.log("ERROR: ElementType not implemented: " + elementType);
-	    }
-	  };
-	
-	  var parse = function(dimension, elementType) {
-	    var array = [];
-	    var i;
-	
-	    if (dimension.length > 1) {
-	      var count = dimension.shift();
-	      for (i = 0; i < count; i++) {
-	        array[i] = parse(dimension, elementType);
-	      }
-	      dimension.unshift(count);
-	    }
-	    else {
-	      for (i = 0; i < dimension[0]; i++) {
-	        array[i] = parseElement(elementType);
-	      }
-	    }
-	
-	    return array;
-	  };
-	
-	  return parse(dims, elementType);
-	};
-	
-	var parseText = function(value) {
-	  return value.toString('utf8');
-	};
-	
-	var parseBool = function(value) {
-	  if(value === null) return null;
-	  return (parseBits(value, 8) > 0);
-	};
-	
-	var init = function(register) {
-	  register(21, parseInt16);
-	  register(23, parseInt32);
-	  register(26, parseInt32);
-	  register(1700, parseNumeric);
-	  register(700, parseFloat32);
-	  register(701, parseFloat64);
-	  register(16, parseBool);
-	  register(1114, parseDate.bind(null, false));
-	  register(1184, parseDate.bind(null, true));
-	  register(1000, parseArray);
-	  register(1007, parseArray);
-	  register(1016, parseArray);
-	  register(1008, parseArray);
-	  register(1009, parseArray);
-	  register(25, parseText);
-	};
-	
-	module.exports = {
-	  init: init
-	};
-
-
-/***/ },
-/* 446 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Duplex = __webpack_require__(59).Duplex;
-	var Writable = __webpack_require__(59).Writable;
-	var util = __webpack_require__(9);
-	
-	var CopyStream = module.exports = function(pq, options) {
-	  Duplex.call(this, options);
-	  this.pq = pq;
-	  this._reading = false;
-	};
-	
-	util.inherits(CopyStream, Duplex);
-	
-	//writer methods
-	CopyStream.prototype._write = function(chunk, encoding, cb) {
-	  var result = this.pq.putCopyData(chunk);
-	
-	  //sent successfully
-	  if(result === 1) return cb();
-	
-	  //error
-	  if(result === -1) return cb(new Error(this.pq.errorMessage()));
-	
-	  //command would block. wait for writable and call again.
-	  var self = this;
-	  this.pq.writable(function() {
-	    self._write(chunk, encoding, cb);
-	  });
-	};
-	
-	CopyStream.prototype.end = function() {
-	  var args = Array.prototype.slice.call(arguments, 0);
-	  var self = this;
-	
-	  var callback = args.pop();
-	
-	  if(args.length) {
-	    this.write(args[0]);
-	  }
-	  var result = this.pq.putCopyEnd();
-	
-	  //sent successfully
-	  if(result === 1) {
-	    //consume our results and then call 'end' on the
-	    //"parent" writable class so we can emit 'finish' and
-	    //all that jazz
-	    return consumeResults(this.pq, function(err, res) {
-	      Writable.prototype.end.call(self);
-	
-	      //handle possible passing of callback to end method
-	      if(callback) {
-	        callback();
-	      }
-	    });
-	  }
-	
-	  //error
-	  if(result === -1) {
-	    var err = new Error(this.pq.errorMessage());
-	    return this.emit('error', err);
-	  }
-	
-	  //command would block. wait for writable and call end again
-	  //don't pass any buffers to end on the second call because
-	  //we already sent them to possible this.write the first time
-	  //we called end
-	  return this.pq.writable(function() {
-	    return self.end.apply(self, callback);
-	  });
-	};
-	
-	//reader methods
-	CopyStream.prototype._consumeBuffer = function(cb) {
-	  var result = this.pq.getCopyData(true);
-	  if(result instanceof Buffer) {
-	    return setImmediate(function() {
-	      cb(null, result);
-	    })
-	  }
-	  if(result === -1) {
-	    //end of stream
-	    return cb(null, null);
-	  }
-	  if(result === 0) {
-	    var self = this;
-	    this.pq.once('readable', function() {
-	      self.pq.stopReader();
-	      self.pq.consumeInput();
-	      self._consumeBuffer(cb);
-	    });
-	    return this.pq.startReader();
-	  }
-	  cb(new Error('Unrecognized read status: ' + result))
-	};
-	
-	CopyStream.prototype._read = function(size) {
-	  if(this._reading) return;
-	  this._reading = true;
-	  //console.log('read begin');
-	  var self = this
-	  this._consumeBuffer(function(err, buffer) {
-	    self._reading = false;
-	    if(err) {
-	      return self.emit('error', err)
-	    }
-	    if(buffer === false) {
-	      //nothing to read for now, return
-	      return;
-	    }
-	    self.push(buffer);
-	  });
-	};
-	
-	var consumeResults = function(pq, cb) {
-	
-	  var cleanup = function() {
-	    pq.removeListener('readable', onReadable);
-	    pq.stopReader();
-	  }
-	
-	  var readError = function(message) {
-	    cleanup();
-	    return cb(new Error(message || pq.errorMessage()));
-	  };
-	
-	
-	  var onReadable = function() {
-	
-	    //read waiting data from the socket
-	    //e.g. clear the pending 'select'
-	    if(!pq.consumeInput()) {
-	      return readError();
-	    }
-	
-	    //check if there is still outstanding data
-	    //if so, wait for it all to come in
-	    if(pq.isBusy()) {
-	      return;
-	    }
-	
-	    //load our result object
-	    pq.getResult();
-	
-	    //"read until results return null"
-	    //or in our case ensure we only have one result
-	    if(pq.getResult() && pq.resultStatus() != 'PGRES_COPY_OUT') {
-	      return readError('Only one result at a time is accepted');
-	    }
-	
-	    if(pq.resultStatus() == 'PGRES_FATAL_ERROR') {
-	      return readError();
-	    }
-	
-	    cleanup();
-	    return cb(null);
-	  };
-	  pq.on('readable', onReadable);
-	  pq.startReader();
-	};
-
-
-/***/ },
-/* 447 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"_args": [
-			[
-				{
-					"raw": "pg-native",
-					"scope": null,
-					"escapedName": "pg-native",
-					"name": "pg-native",
-					"rawSpec": "",
-					"spec": "latest",
-					"type": "tag"
-				},
-				"/Users/rebekahklemm/WebstormProjects/capstone/backend"
-			]
-		],
-		"_from": "pg-native@latest",
-		"_id": "pg-native@1.10.0",
-		"_inCache": true,
-		"_location": "/pg-native",
-		"_nodeVersion": "5.1.0",
-		"_npmUser": {
-			"name": "brianc",
-			"email": "brian.m.carlson@gmail.com"
-		},
-		"_npmVersion": "3.3.12",
-		"_phantomChildren": {
-			"core-util-is": "1.0.2",
-			"inherits": "2.0.3",
-			"string_decoder": "0.10.31"
-		},
-		"_requested": {
-			"raw": "pg-native",
-			"scope": null,
-			"escapedName": "pg-native",
-			"name": "pg-native",
-			"rawSpec": "",
-			"spec": "latest",
-			"type": "tag"
-		},
-		"_requiredBy": [
-			"#USER",
-			"/"
-		],
-		"_resolved": "https://registry.npmjs.org/pg-native/-/pg-native-1.10.0.tgz",
-		"_shasum": "abe299214afa2be51db5f5104e14770c738230fd",
-		"_shrinkwrap": null,
-		"_spec": "pg-native",
-		"_where": "/Users/rebekahklemm/WebstormProjects/capstone/backend",
-		"author": {
-			"name": "Brian M. Carlson"
-		},
-		"bugs": {
-			"url": "https://github.com/brianc/node-pg-native/issues"
-		},
-		"dependencies": {
-			"libpq": "^1.7.0",
-			"pg-types": "1.6.0",
-			"readable-stream": "1.0.31"
-		},
-		"description": "A slightly nicer interface to Postgres over node-libpq",
-		"devDependencies": {
-			"async": "^0.9.0",
-			"concat-stream": "^1.4.6",
-			"generic-pool": "^2.1.1",
-			"lodash": "^2.4.1",
-			"mocha": "^1.21.4",
-			"okay": "^0.3.0",
-			"pg": "*",
-			"semver": "^4.1.0"
-		},
-		"directories": {},
-		"dist": {
-			"shasum": "abe299214afa2be51db5f5104e14770c738230fd",
-			"tarball": "https://registry.npmjs.org/pg-native/-/pg-native-1.10.0.tgz"
-		},
-		"gitHead": "8c60a074739aa2ed26e6d83e8dbd965ba0f2c953",
-		"homepage": "https://github.com/brianc/node-pg-native",
-		"keywords": [
-			"postgres",
-			"pg",
-			"libpq"
-		],
-		"license": "MIT",
-		"main": "index.js",
-		"maintainers": [
-			{
-				"name": "brianc",
-				"email": "brian.m.carlson@gmail.com"
-			}
-		],
-		"name": "pg-native",
-		"optionalDependencies": {},
-		"readme": "ERROR: No README data found!",
-		"repository": {
-			"type": "git",
-			"url": "git://github.com/brianc/node-pg-native.git"
-		},
-		"scripts": {
-			"test": "mocha"
-		},
-		"version": "1.10.0"
-	};
-
-/***/ },
-/* 448 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;// export the class if we are in a Node-like system.
@@ -106793,125 +103788,7 @@
 
 
 /***/ },
-/* 449 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"_args": [
-			[
-				{
-					"raw": "pg",
-					"scope": null,
-					"escapedName": "pg",
-					"name": "pg",
-					"rawSpec": "",
-					"spec": "latest",
-					"type": "tag"
-				},
-				"/Users/rebekahklemm/WebstormProjects/capstone/backend"
-			]
-		],
-		"_from": "pg@latest",
-		"_id": "pg@6.1.2",
-		"_inCache": true,
-		"_location": "/pg",
-		"_nodeVersion": "6.9.1",
-		"_npmOperationalInternal": {
-			"host": "packages-18-east.internal.npmjs.com",
-			"tmp": "tmp/pg-6.1.2.tgz_1481651646680_0.8946063662879169"
-		},
-		"_npmUser": {
-			"name": "brianc",
-			"email": "brian.m.carlson@gmail.com"
-		},
-		"_npmVersion": "3.10.8",
-		"_phantomChildren": {},
-		"_requested": {
-			"raw": "pg",
-			"scope": null,
-			"escapedName": "pg",
-			"name": "pg",
-			"rawSpec": "",
-			"spec": "latest",
-			"type": "tag"
-		},
-		"_requiredBy": [
-			"#USER",
-			"/"
-		],
-		"_resolved": "https://registry.npmjs.org/pg/-/pg-6.1.2.tgz",
-		"_shasum": "2c896a7434502e2b938c100fc085b4e974a186db",
-		"_shrinkwrap": null,
-		"_spec": "pg",
-		"_where": "/Users/rebekahklemm/WebstormProjects/capstone/backend",
-		"author": {
-			"name": "Brian Carlson",
-			"email": "brian.m.carlson@gmail.com"
-		},
-		"bugs": {
-			"url": "https://github.com/brianc/node-postgres/issues"
-		},
-		"dependencies": {
-			"buffer-writer": "1.0.1",
-			"packet-reader": "0.2.0",
-			"pg-connection-string": "0.1.3",
-			"pg-pool": "1.*",
-			"pg-types": "1.*",
-			"pgpass": "1.x",
-			"semver": "4.3.2"
-		},
-		"description": "PostgreSQL client - pure javascript & libpq with the same API",
-		"devDependencies": {
-			"async": "0.9.0",
-			"co": "4.6.0",
-			"jshint": "2.5.2",
-			"lodash": "4.13.1",
-			"pg-copy-streams": "0.3.0",
-			"promise-polyfill": "5.2.1"
-		},
-		"directories": {},
-		"dist": {
-			"shasum": "2c896a7434502e2b938c100fc085b4e974a186db",
-			"tarball": "https://registry.npmjs.org/pg/-/pg-6.1.2.tgz"
-		},
-		"engines": {
-			"node": ">= 0.8.0"
-		},
-		"gitHead": "2c636c750fb0acf7735c684403edb613b0345a93",
-		"homepage": "http://github.com/brianc/node-postgres",
-		"keywords": [
-			"postgres",
-			"pg",
-			"libpq",
-			"postgre",
-			"database",
-			"rdbms"
-		],
-		"license": "MIT",
-		"main": "./lib",
-		"maintainers": [
-			{
-				"name": "brianc",
-				"email": "brian.m.carlson@gmail.com"
-			}
-		],
-		"minNativeVersion": "1.7.0",
-		"name": "pg",
-		"optionalDependencies": {},
-		"readme": "ERROR: No README data found!",
-		"repository": {
-			"type": "git",
-			"url": "git://github.com/brianc/node-postgres.git"
-		},
-		"scripts": {
-			"changelog": "npm i github-changes && ./node_modules/.bin/github-changes -o brianc -r node-postgres -d pulls -a -v",
-			"test": "make test-all connectionString=postgres://postgres@localhost:5432/postgres"
-		},
-		"version": "6.1.2"
-	};
-
-/***/ },
-/* 450 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -106924,8 +103801,8 @@
 	
 	var EventEmitter = __webpack_require__(3).EventEmitter;
 	var util = __webpack_require__(9);
-	var utils = __webpack_require__(426);
-	var NativeResult = __webpack_require__(451);
+	var utils = __webpack_require__(424);
+	var NativeResult = __webpack_require__(437);
 	
 	var NativeQuery = module.exports = function(native) {
 	  EventEmitter.call(this);
@@ -107055,7 +103932,7 @@
 
 
 /***/ },
-/* 451 */
+/* 437 */
 /***/ function(module, exports) {
 
 	/**
@@ -107097,16 +103974,16 @@
 
 
 /***/ },
-/* 452 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _ = __webpack_require__(144)
-	  , Abstract = __webpack_require__(380)
-	  , ConnectionManager = __webpack_require__(453)
-	  , Query = __webpack_require__(455)
-	  , QueryGenerator = __webpack_require__(456)
+	  , Abstract = __webpack_require__(378)
+	  , ConnectionManager = __webpack_require__(439)
+	  , Query = __webpack_require__(441)
+	  , QueryGenerator = __webpack_require__(442)
 	  , DataTypes = __webpack_require__(143).sqlite;
 	
 	var SqliteDialect = function(sequelize) {
@@ -107147,18 +104024,18 @@
 
 
 /***/ },
-/* 453 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var AbstractConnectionManager = __webpack_require__(382)
+	var AbstractConnectionManager = __webpack_require__(380)
 	  , ConnectionManager
 	  , Utils = __webpack_require__(142)
-	  , Promise = __webpack_require__(351)
+	  , Promise = __webpack_require__(349)
 	  , dataTypes = __webpack_require__(143).sqlite
 	  , sequelizeErrors = __webpack_require__(147)
-	  , parserStore = __webpack_require__(393)('sqlite');
+	  , parserStore = __webpack_require__(391)('sqlite');
 	
 	ConnectionManager = function(dialect, sequelize) {
 	  this.sequelize = sequelize;
@@ -107171,7 +104048,7 @@
 	  if (this.sequelize.options.host === 'localhost') delete this.sequelize.options.host;
 	
 	  try {
-	    this.lib = __webpack_require__(454)(sequelize.config.dialectModulePath || 'sqlite3').verbose();
+	    this.lib = __webpack_require__(440)(sequelize.config.dialectModulePath || 'sqlite3').verbose();
 	  } catch (err) {
 	    if (err.code === 'MODULE_NOT_FOUND') {
 	      throw new Error('Please install sqlite3 package manually');
@@ -107240,22 +104117,22 @@
 
 
 /***/ },
-/* 454 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./connection-manager": 453,
-		"./connection-manager.js": 453,
-		"./data-types": 345,
-		"./data-types.js": 345,
-		"./index": 452,
-		"./index.js": 452,
-		"./query": 455,
-		"./query-generator": 456,
-		"./query-generator.js": 456,
-		"./query-interface": 374,
-		"./query-interface.js": 374,
-		"./query.js": 455
+		"./connection-manager": 439,
+		"./connection-manager.js": 439,
+		"./data-types": 343,
+		"./data-types.js": 343,
+		"./index": 438,
+		"./index.js": 438,
+		"./query": 441,
+		"./query-generator": 442,
+		"./query-generator.js": 442,
+		"./query-interface": 372,
+		"./query-interface.js": 372,
+		"./query.js": 441
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -107268,22 +104145,22 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 454;
+	webpackContext.id = 440;
 
 
 /***/ },
-/* 455 */
+/* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var Utils = __webpack_require__(142)
 	  , _ = __webpack_require__(144)
-	  , Promise = __webpack_require__(351)
-	  , AbstractQuery = __webpack_require__(387)
-	  , QueryTypes = __webpack_require__(365)
+	  , Promise = __webpack_require__(349)
+	  , AbstractQuery = __webpack_require__(385)
+	  , QueryTypes = __webpack_require__(363)
 	  , sequelizeErrors = __webpack_require__(147)
-	  , parserStore = __webpack_require__(393)('sqlite');
+	  , parserStore = __webpack_require__(391)('sqlite');
 	
 	var Query = function(database, sequelize, options) {
 	  this.database = database;
@@ -107663,19 +104540,19 @@
 
 
 /***/ },
-/* 456 */
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	/* jshint -W110 */
 	var Utils = __webpack_require__(142)
-	  , Transaction = __webpack_require__(357)
+	  , Transaction = __webpack_require__(355)
 	  , _ = __webpack_require__(144);
 	
 	var MySqlQueryGenerator = Utils._.extend(
-	  Utils._.clone(__webpack_require__(389)),
-	  Utils._.clone(__webpack_require__(388))
+	  Utils._.clone(__webpack_require__(387)),
+	  Utils._.clone(__webpack_require__(386))
 	);
 	
 	var QueryGenerator = {
@@ -108066,7 +104943,7 @@
 
 
 /***/ },
-/* 457 */
+/* 443 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -108081,7 +104958,7 @@
 					"spec": ">=3.27.0 <4.0.0",
 					"type": "range"
 				},
-				"/Users/rebekahklemm/WebstormProjects/capstone/left-you-somethin-backend"
+				"/Users/andynorth/Desktop/left-you-somethin-backend"
 			]
 		],
 		"_from": "sequelize@>=3.27.0 <4.0.0",
@@ -108115,7 +104992,7 @@
 		"_shasum": "84dfb6ed3e9a93ff6e4744deabdd3f8f878ff180",
 		"_shrinkwrap": null,
 		"_spec": "sequelize@^3.27.0",
-		"_where": "/Users/rebekahklemm/WebstormProjects/capstone/left-you-somethin-backend",
+		"_where": "/Users/andynorth/Desktop/left-you-somethin-backend",
 		"author": {
 			"name": "Sascha Depold",
 			"email": "sascha@depold.com"
@@ -108281,128 +105158,128 @@
 	};
 
 /***/ },
-/* 458 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./associations/base": 358,
-		"./associations/base.js": 358,
-		"./associations/belongs-to": 355,
-		"./associations/belongs-to-many": 359,
-		"./associations/belongs-to-many.js": 359,
-		"./associations/belongs-to.js": 355,
-		"./associations/has-many": 360,
-		"./associations/has-many.js": 360,
-		"./associations/has-one": 362,
-		"./associations/has-one.js": 362,
-		"./associations/helpers": 356,
-		"./associations/helpers.js": 356,
-		"./associations/index": 377,
-		"./associations/index.js": 377,
-		"./associations/mixin": 368,
-		"./associations/mixin.js": 368,
+		"./associations/base": 356,
+		"./associations/base.js": 356,
+		"./associations/belongs-to": 353,
+		"./associations/belongs-to-many": 357,
+		"./associations/belongs-to-many.js": 357,
+		"./associations/belongs-to.js": 353,
+		"./associations/has-many": 358,
+		"./associations/has-many.js": 358,
+		"./associations/has-one": 360,
+		"./associations/has-one.js": 360,
+		"./associations/helpers": 354,
+		"./associations/helpers.js": 354,
+		"./associations/index": 375,
+		"./associations/index.js": 375,
+		"./associations/mixin": 366,
+		"./associations/mixin.js": 366,
 		"./data-types": 143,
 		"./data-types.js": 143,
-		"./deferrable": 369,
-		"./deferrable.js": 369,
-		"./dialects/abstract/connection-manager": 382,
-		"./dialects/abstract/connection-manager.js": 382,
-		"./dialects/abstract/index": 380,
-		"./dialects/abstract/index.js": 380,
-		"./dialects/abstract/query": 387,
-		"./dialects/abstract/query-generator": 389,
-		"./dialects/abstract/query-generator.js": 389,
-		"./dialects/abstract/query.js": 387,
-		"./dialects/mariadb/index": 378,
-		"./dialects/mariadb/index.js": 378,
-		"./dialects/mssql/connection-manager": 391,
-		"./dialects/mssql/connection-manager.js": 391,
-		"./dialects/mssql/data-types": 346,
-		"./dialects/mssql/data-types.js": 346,
-		"./dialects/mssql/index": 390,
-		"./dialects/mssql/index.js": 390,
-		"./dialects/mssql/query": 395,
-		"./dialects/mssql/query-generator": 396,
-		"./dialects/mssql/query-generator.js": 396,
-		"./dialects/mssql/query-interface": 375,
-		"./dialects/mssql/query-interface.js": 375,
-		"./dialects/mssql/query.js": 395,
-		"./dialects/mssql/resource-lock": 392,
-		"./dialects/mssql/resource-lock.js": 392,
-		"./dialects/mysql/connection-manager": 381,
-		"./dialects/mysql/connection-manager.js": 381,
-		"./dialects/mysql/data-types": 344,
-		"./dialects/mysql/data-types.js": 344,
-		"./dialects/mysql/index": 379,
-		"./dialects/mysql/index.js": 379,
-		"./dialects/mysql/query": 386,
-		"./dialects/mysql/query-generator": 388,
-		"./dialects/mysql/query-generator.js": 388,
-		"./dialects/mysql/query-interface": 376,
-		"./dialects/mysql/query-interface.js": 376,
-		"./dialects/mysql/query.js": 386,
-		"./dialects/parserStore": 393,
-		"./dialects/parserStore.js": 393,
-		"./dialects/postgres/connection-manager": 398,
-		"./dialects/postgres/connection-manager.js": 398,
+		"./deferrable": 367,
+		"./deferrable.js": 367,
+		"./dialects/abstract/connection-manager": 380,
+		"./dialects/abstract/connection-manager.js": 380,
+		"./dialects/abstract/index": 378,
+		"./dialects/abstract/index.js": 378,
+		"./dialects/abstract/query": 385,
+		"./dialects/abstract/query-generator": 387,
+		"./dialects/abstract/query-generator.js": 387,
+		"./dialects/abstract/query.js": 385,
+		"./dialects/mariadb/index": 376,
+		"./dialects/mariadb/index.js": 376,
+		"./dialects/mssql/connection-manager": 389,
+		"./dialects/mssql/connection-manager.js": 389,
+		"./dialects/mssql/data-types": 344,
+		"./dialects/mssql/data-types.js": 344,
+		"./dialects/mssql/index": 388,
+		"./dialects/mssql/index.js": 388,
+		"./dialects/mssql/query": 393,
+		"./dialects/mssql/query-generator": 394,
+		"./dialects/mssql/query-generator.js": 394,
+		"./dialects/mssql/query-interface": 373,
+		"./dialects/mssql/query-interface.js": 373,
+		"./dialects/mssql/query.js": 393,
+		"./dialects/mssql/resource-lock": 390,
+		"./dialects/mssql/resource-lock.js": 390,
+		"./dialects/mysql/connection-manager": 379,
+		"./dialects/mysql/connection-manager.js": 379,
+		"./dialects/mysql/data-types": 342,
+		"./dialects/mysql/data-types.js": 342,
+		"./dialects/mysql/index": 377,
+		"./dialects/mysql/index.js": 377,
+		"./dialects/mysql/query": 384,
+		"./dialects/mysql/query-generator": 386,
+		"./dialects/mysql/query-generator.js": 386,
+		"./dialects/mysql/query-interface": 374,
+		"./dialects/mysql/query-interface.js": 374,
+		"./dialects/mysql/query.js": 384,
+		"./dialects/parserStore": 391,
+		"./dialects/parserStore.js": 391,
+		"./dialects/postgres/connection-manager": 396,
+		"./dialects/postgres/connection-manager.js": 396,
 		"./dialects/postgres/data-types": 325,
 		"./dialects/postgres/data-types.js": 325,
 		"./dialects/postgres/hstore": 340,
 		"./dialects/postgres/hstore.js": 340,
-		"./dialects/postgres/index": 397,
-		"./dialects/postgres/index.js": 397,
-		"./dialects/postgres/query": 400,
-		"./dialects/postgres/query-generator": 401,
-		"./dialects/postgres/query-generator.js": 401,
-		"./dialects/postgres/query.js": 400,
-		"./dialects/postgres/range": 343,
-		"./dialects/postgres/range.js": 343,
-		"./dialects/sqlite/connection-manager": 453,
-		"./dialects/sqlite/connection-manager.js": 453,
-		"./dialects/sqlite/data-types": 345,
-		"./dialects/sqlite/data-types.js": 345,
-		"./dialects/sqlite/index": 452,
-		"./dialects/sqlite/index.js": 452,
-		"./dialects/sqlite/query": 455,
-		"./dialects/sqlite/query-generator": 456,
-		"./dialects/sqlite/query-generator.js": 456,
-		"./dialects/sqlite/query-interface": 374,
-		"./dialects/sqlite/query-interface.js": 374,
-		"./dialects/sqlite/query.js": 455,
+		"./dialects/postgres/index": 395,
+		"./dialects/postgres/index.js": 395,
+		"./dialects/postgres/query": 398,
+		"./dialects/postgres/query-generator": 399,
+		"./dialects/postgres/query-generator.js": 399,
+		"./dialects/postgres/query.js": 398,
+		"./dialects/postgres/range": 341,
+		"./dialects/postgres/range.js": 341,
+		"./dialects/sqlite/connection-manager": 439,
+		"./dialects/sqlite/connection-manager.js": 439,
+		"./dialects/sqlite/data-types": 343,
+		"./dialects/sqlite/data-types.js": 343,
+		"./dialects/sqlite/index": 438,
+		"./dialects/sqlite/index.js": 438,
+		"./dialects/sqlite/query": 441,
+		"./dialects/sqlite/query-generator": 442,
+		"./dialects/sqlite/query-generator.js": 442,
+		"./dialects/sqlite/query-interface": 372,
+		"./dialects/sqlite/query-interface.js": 372,
+		"./dialects/sqlite/query.js": 441,
 		"./errors": 147,
 		"./errors.js": 147,
-		"./hooks": 367,
-		"./hooks.js": 367,
-		"./instance": 354,
-		"./instance-validator": 363,
-		"./instance-validator.js": 363,
-		"./instance.js": 354,
-		"./model": 353,
-		"./model-manager": 370,
-		"./model-manager.js": 370,
-		"./model.js": 353,
-		"./model/attribute": 459,
-		"./model/attribute.js": 459,
-		"./plugins/counter-cache": 361,
-		"./plugins/counter-cache.js": 361,
-		"./promise": 351,
-		"./promise.js": 351,
-		"./query-interface": 373,
-		"./query-interface.js": 373,
-		"./query-types": 365,
-		"./query-types.js": 365,
+		"./hooks": 365,
+		"./hooks.js": 365,
+		"./instance": 352,
+		"./instance-validator": 361,
+		"./instance-validator.js": 361,
+		"./instance.js": 352,
+		"./model": 351,
+		"./model-manager": 368,
+		"./model-manager.js": 368,
+		"./model.js": 351,
+		"./model/attribute": 445,
+		"./model/attribute.js": 445,
+		"./plugins/counter-cache": 359,
+		"./plugins/counter-cache.js": 359,
+		"./promise": 349,
+		"./promise.js": 349,
+		"./query-interface": 371,
+		"./query-interface.js": 371,
+		"./query-types": 363,
+		"./query-types.js": 363,
 		"./sequelize": 100,
 		"./sequelize.js": 100,
-		"./sql-string": 347,
-		"./sql-string.js": 347,
-		"./transaction": 357,
-		"./transaction.js": 357,
+		"./sql-string": 345,
+		"./sql-string.js": 345,
+		"./transaction": 355,
+		"./transaction.js": 355,
 		"./utils": 142,
 		"./utils.js": 142,
-		"./utils/parameter-validator": 348,
-		"./utils/parameter-validator.js": 348,
-		"./utils/validator-extras": 364,
-		"./utils/validator-extras.js": 364
+		"./utils/parameter-validator": 346,
+		"./utils/parameter-validator.js": 346,
+		"./utils/validator-extras": 362,
+		"./utils/validator-extras.js": 362
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -108415,11 +105292,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 458;
+	webpackContext.id = 444;
 
 
 /***/ },
-/* 459 */
+/* 445 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -108435,7 +105312,7 @@
 
 
 /***/ },
-/* 460 */
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';var Sequelize=__webpack_require__(99);
@@ -108455,11 +105332,11 @@
 	module.exports=db;
 
 /***/ },
-/* 461 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';var Sequelize=__webpack_require__(99);
-	var db=__webpack_require__(460);
+	var db=__webpack_require__(446);
 	
 	var eggSchema={
 	goHereImage:{

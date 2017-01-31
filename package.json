@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "json-loader": "^0.5.4",
+    "localtunnel": "^1.8.2",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "pg": "^6.1.2",
