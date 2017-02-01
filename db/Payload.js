@@ -2,11 +2,11 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 const payloadSchema = {
-    content: {
+    text: {
         type: Sequelize.STRING,
         allowNull: true
     },
-    link: {
+    path: {
         type: Sequelize.STRING,
         allowNull: true
     },
