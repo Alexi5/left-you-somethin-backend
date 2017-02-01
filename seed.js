@@ -1,9 +1,6 @@
-const db = require('./src/db/db');
+const db = require('./db/db');
 
-const {User, Message} = require('./src/db/index');
-
-// const Message= require('./src/db/Message');
-
+const { User, Message } = require('./db');
 
 async function newCreateSeeds() {
     const user1 = {
@@ -53,10 +50,10 @@ async function newCreateSeeds() {
 }
 
 
-db.sync({force: true})
+db.sync({ force: true })
     .then(newCreateSeeds)
     .then(users => console.log(`Seeded database OK`))
-    .catch(error => console.error(error))
+    .catch(error => console.error(error));
 
 module.exports = newCreateSeeds;
 
