@@ -12,40 +12,39 @@ const fs = require('fs');
     .then(eggs => res.send(eggs));
   });
 
-  router.post('/', (req, res, next) => {
+  // router.post('/', (req, res, next) => {
+  //   Egg.create({
+  //     goHereImage: 'http://placeholder.com',
+  //     goHereText: req.body.goHereText,
+  //     latitude: req.body.latitude,
+  //     longitude: req.body.longitude
+  //     })
+  //   .then(egg => {
+  //     egg.createPayload({
+  //       type: req.body.payloadType,
+  //       content: req.body.payload
+  //     })
+  //     .then(egg => res.send(egg));
+  //   });
+  // });
+
+router.post('/', (req, res, next) => {
+console.log('-----------------------> got into add egg route')
     Egg.create({
-      goHereImage: 'http://placeholder.com',
-      goHereText: req.body.goHereText,
-      latitude: req.body.latitude,
-      longitude: req.body.longitude
-      })
-    .then(egg => {
-      egg.createPayload({
-        type: req.body.payloadType,
-        content: req.body.payload
-      })
-      .then(egg => res.send(egg));
-    }); 
-  });
-
-// router.post('/', (req, res, next) => {
-
-//     Egg.create({
-//         goHereText: req.body.goHereText,
-//         payloadType: req.body.payloadType,
-//         latitude: req.body.latitude,
-//         longitude: req.body.longitude,
-//         goHereImage: null,
-//     })
-//         .then(egg => {
-//             const path = ''+ egg.id + '.txt'
-//             const writeStream = fs.createWriteStream(path);
-//                     writeStream.write(req.body.goHereImageBuffer);
-//                     writeStream.end();
-//                     egg.goHereImage = 'hello';
-//             return egg;
-//         })
-//         .then(egg => res.send(egg));
-// });
+        goHereImage: null,
+        goHereText: req.body.goHereText,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        payloadType: req.body.payloadType,
+    })
+        .then(egg => {
+            const path = 'images/goHereImage/'+ egg.id + '.txt';
+            const writeStream = fs.createWriteStream(path);
+                    writeStream.write(req.body.goHereImageBuffer);
+                    writeStream.end();
+            return egg;
+        })
+        .then(egg => res.send(egg));
+});
 
 module.exports = router;
