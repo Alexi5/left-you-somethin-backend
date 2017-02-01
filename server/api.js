@@ -7,7 +7,7 @@ api
 // Send along any errors
 api.use((err, req, res, next) => {
   console.error(err, err.stack);
-  res.status(500).send(err);
+  res.status(err.status | 500).send(err.message);
 });
 
 api.use((req, res) => res.status(404).end());
