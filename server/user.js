@@ -12,7 +12,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  console.log('hey hey hey');
   User.findOrCreate({
     where: { id: req.body.uid },
     defaults: { name: req.body.displayName, email: req.body.email },
