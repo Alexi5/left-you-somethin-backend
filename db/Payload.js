@@ -11,7 +11,7 @@ const payloadSchema = {
         allowNull: true
     },
     type: {
-        type: Sequelize.ENUM('Text', 'Audio', 'Video'),
+        type: Sequelize.ENUM('Text', 'Image', 'Audio', 'Video'),
         defaultValue: 'Text',
         allowNull: false
     }
