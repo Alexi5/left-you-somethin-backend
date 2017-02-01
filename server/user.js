@@ -12,11 +12,12 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+  console.log('hey hey hey');
   User.findOrCreate({
-    where: { email: req.body.email },
-    defaults: { name: req.body.displayName },
+    where: { id: req.body.uid },
+    defaults: { name: req.body.displayName, email: req.body.email },
   })
-    .then(([user, created]) => res.send(user.id))
+    .then(() => res.status(200).send())
     .catch(next);
 });
 

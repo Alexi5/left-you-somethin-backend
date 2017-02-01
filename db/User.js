@@ -2,11 +2,18 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 const userSchema = {
+  id: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    allowNull: false
+  },
   name: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   },
   email: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false
   }
 };
 
