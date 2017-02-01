@@ -1,4 +1,4 @@
-const { Egg } = require('../db/index.js');
+const { Egg, Payload } = require('../db/index.js');
 const router = require('express').Router();
 const fs = require('fs');
 
@@ -8,38 +8,44 @@ const fs = require('fs');
   });
 
   router.get('/user/:userId', (req, res, next) => {
-    Egg.findAll({ where: { receiverId: req.params.userId }})
+    Egg.findAll({ where: { receiverId: req.params.userId }, include: [ Payload ] })
     .then(eggs => res.send(eggs));
   });
 
-  // router.post('/', (req, res, next) => {
-  //     Egg.create({
-  //       goHereText: req.body.goHereText,
-  //       payloadType: req.body.payloadType,
-  //       latitude: req.body.latitude,
-  //       longitude: req.body.longitude
-  //     })
-  //         .then(egg => res.send(egg));
-  // });
-
-router.post('/', (req, res, next) => {
-
+  router.post('/', (req, res, next) => {
     Egg.create({
-        goHereText: req.body.goHereText,
-        payloadType: req.body.payloadType,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        goHereImage: null,
-    })
-        .then(egg => {
-            const path = ''+ egg.id + '.txt'
-            const writeStream = fs.createWriteStream(path);
-                    writeStream.write(req.body.goHereImageBuffer);
-                    writeStream.end();
-                    egg.goHereImage = 'hello';
-            return egg;
-        })
-        .then(egg => res.send(egg));
-});
+      goHereImage: 'http://placeholder.com',
+      goHereText: req.body.goHereText,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude
+      })
+    .then(egg => {
+      egg.createPayload({
+        type: req.body.payloadType,
+        content: req.body.payload
+      })
+      .then(egg => res.send(egg));
+    }); 
+  });
+
+// router.post('/', (req, res, next) => {
+
+//     Egg.create({
+//         goHereText: req.body.goHereText,
+//         payloadType: req.body.payloadType,
+//         latitude: req.body.latitude,
+//         longitude: req.body.longitude,
+//         goHereImage: null,
+//     })
+//         .then(egg => {
+//             const path = ''+ egg.id + '.txt'
+//             const writeStream = fs.createWriteStream(path);
+//                     writeStream.write(req.body.goHereImageBuffer);
+//                     writeStream.end();
+//                     egg.goHereImage = 'hello';
+//             return egg;
+//         })
+//         .then(egg => res.send(egg));
+// });
 
 module.exports = router;
