@@ -1,4 +1,4 @@
-const { Egg, Payload } = require('../db/index.js');
+const { Egg, Payload, User } = require('../db/index.js');
 const router = require('express').Router();
 const fs = require('fs');
 
@@ -30,18 +30,22 @@ const fs = require('fs');
 
 router.post('/', (req, res, next) => {
 console.log('-----------------------> got into add egg route')
-    Egg.create({
-        goHereImage: null,
-        goHereText: req.body.goHereText,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        payloadType: req.body.payloadType,
-    })
-        .then(egg => {
+    Promise.all([
+        User.findOne({where:{id: req.body.senderId}}),
+        Egg.create({
+            goHereImage: null,
+            goHereText: req.body.goHereText,
+            latitude: req.body.latitude,
+            longitude: req.body.longitude,
+            payloadType: req.body.payloadType,
+        })
+    ])
+        .then(([user, egg]) => {
             const path = 'images/goHereImage/'+ egg.id + '.txt';
             const writeStream = fs.createWriteStream(path);
                     writeStream.write(req.body.goHereImageBuffer);
                     writeStream.end();
+                    egg.setSender(1);
             return egg;
         })
         .then(egg => res.send(egg));
