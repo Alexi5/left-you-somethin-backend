@@ -4,21 +4,21 @@ const { User, Egg, Payload } = require('./db');
 
 async function newCreateSeeds() {
     const user1 = {
-        id: '10154346204722379',
+        id: 10154346204722379,
         firstName: 'Rebekah',
         lastName: 'Klemm',
         email: 'rebekah_klemm@yahoo.com',
     }
 
     const user2 = {
-        id: '10209420763697676',
+        id: 10209420763697676,
         firstName: 'Jean',
         lastName: 'Chung',
         email: "jxchung@gmail.com",
     }
 
     const user3 = {
-        id: '10201419031655447',
+        id: 10201419031655447,
         firstName: 'Alexis',
         lastName: 'Jennings',
         email: "alexis.m.jenn@gmail.com",
@@ -38,6 +38,13 @@ async function newCreateSeeds() {
         longitude: -87.63665,
     }
 
+    const egg3 = {
+        goHereImage: 'Image 3, I did not load a real image',
+        goHereText: 'Find me 3',
+        latitude: 41.888763,
+        longitude: -87.63665,
+    }
+
     const pay1 = {
         text: 'cool, you got your first egg'
     }
@@ -46,9 +53,14 @@ async function newCreateSeeds() {
         text: 'cool, you got your second egg'
     }
 
-    const [u1, u2] = await Promise.all([
+    const pay3 = {
+        text: 'message from Alexis'
+    }
+
+    const [u1, u2, u3] = await Promise.all([
         User.create(user1),
-        User.create(user2)
+        User.create(user2),
+        User.create(user3)
     ])
 
 
@@ -58,15 +70,37 @@ async function newCreateSeeds() {
 
     const e2 = await Egg.create(egg2);
     e2.setSender(u2);
-    e2.setReceiver(u1);
+    e2.setReceiver(u3);
 
-    //sets payload_id in egg table
+    const e3 = await Egg.create(egg3);
+    e3.setSender(u3);
+    e3.setReceiver(u1);
+
+
+    //OLD
+    // //sets payload_id in egg table
+    // const p1 = await Payload.create(pay1)
+    // e1.setPayload(p1)
+
+    // const p2 = await Payload.create(pay2)
+    // e2.setPayload(p2)
+
+
+    // // const p1 = await Payload.create(pay1)
+    // // p1.setEgg(e1)
+
+    // // const p2 = await Payload.create(pay2)
+    // // p2.setEgg(e2)
+
+    //new
     const p1 = await Payload.create(pay1)
     e1.setPayload(p1)
 
     const p2 = await Payload.create(pay2)
     e2.setPayload(p2)
 
+    const p3 = await Payload.create(pay3)
+    e3.setPayload(p3)
 
     // const p1 = await Payload.create(pay1)
     // p1.setEgg(e1)
@@ -74,7 +108,9 @@ async function newCreateSeeds() {
     // const p2 = await Payload.create(pay2)
     // p2.setEgg(e2)
 
-    return [u1, u2];
+    return [u1, u2, u3];
+
+
 }
 
 
