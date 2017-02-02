@@ -7,17 +7,25 @@ const userSchema = {
     primaryKey: true,
     allowNull: false
   },
-  name: {
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
+    allowNull: true
+  },
 };
 
-const userConfig = {};
+const userConfig = {
+  getterMethods: {
+    fullName: () => this.firstname + ' ' + this.lastname
+  }
+};
 
 const User = db.define('user', userSchema, userConfig);
 
