@@ -8,7 +8,9 @@ const fs = require('fs');
   });
 
   router.get('/user/:userId', (req, res, next) => {
-    Egg.findAll({ where: { receiverId: req.params.userId }, include: [ Payload ] })
+    Egg.findAll({ 
+    where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
+    include: [Payload] })
     .then(eggs => res.send(eggs));
   });
 

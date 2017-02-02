@@ -2,16 +2,16 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 const payloadSchema = {
-    content: {
+    text: {
         type: Sequelize.STRING,
         allowNull: true
     },
-    link: {
+    path: {
         type: Sequelize.STRING,
         allowNull: true
     },
     type: {
-        type: Sequelize.ENUM('Text', 'Audio', 'Video'),
+        type: Sequelize.ENUM('Text', 'Image', 'Audio', 'Video'),
         defaultValue: 'Text',
         allowNull: false
     }
