@@ -26,24 +26,36 @@ const fs = require('fs');
 
 router.post('/', (req, res, next) => {
     Promise.all([
-        User.findAll({where:{id: req.body.senderId}}),
         Egg.create({
-            goHereText: req.body.goHereText,
-            latitude: req.body.latitude,
-            longitude: req.body.longitude,
-            payloadType: req.body.payloadType,
+          goHereText: req.body.goHereText,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          senderId: req.body.senderId
+        }),
+        Payload.create({
+          text: req.body.payloadText,
+          type: req.body.payloadType,
         })
     ])
-        .then(([user, egg]) => {
-            const path = 'images/goHereImage/'+ egg.id + '.txt';
-            const writeStream = fs.createWriteStream(path);
-                    writeStream.write(req.body.goHereImageBuffer);
-                    writeStream.end();
-                    egg.setSender(1);
-            return egg;
-        })
-        .then(egg => res.send(egg))
-        .catch(err => res.send(err))
+    .then(([egg, payload]) => {
+        egg.setPayload(payload.dataValues.id);
+
+        //for saving goHere image
+        const eggPath = 'images/goHereImage/'+ egg.dataValues.id + '.txt';
+        const writeStream = fs.createWriteStream(eggPath);
+              writeStream.write(req.body.goHereImageBuffer);
+              writeStream.end();
+
+        //for saving payload image
+        const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
+        const writeStream2 = fs.createWriteStream(payloadPath);
+              writeStream2.write(req.body.payloadImageBuffer);
+              writeStream2.end();
+
+        return egg;
+    })
+    .then(newEgg => res.send(newEgg))
+    .catch(err => res.send(err))
 });
 
 module.exports = router;

@@ -25,6 +25,9 @@ const eggConfig = {
     getterMethods: {
         goHereImage: function () {
             return 'images/goHereImage/'+this.id+'.txt';
+        },
+        payloadImage: function() {
+            return 'images/payloadImage/'+this.payloadId+'.txt.';
         }
     }
 
