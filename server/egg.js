@@ -12,28 +12,20 @@ const fs = require('fs');
     .then(eggs => res.send(eggs));
   });
 
-  // router.post('/', (req, res, next) => {
-  //   Egg.create({
-  //     goHereImage: 'http://placeholder.com',
-  //     goHereText: req.body.goHereText,
-  //     latitude: req.body.latitude,
-  //     longitude: req.body.longitude
-  //     })
-  //   .then(egg => {
-  //     egg.createPayload({
-  //       type: req.body.payloadType,
-  //       content: req.body.payload
-  //     })
-  //     .then(egg => res.send(egg));
-  //   });
-  // });
+  //this route returns the base64 encoded image, ready to plunk into the source tag of an Image
+  router.get('/goHereImage/:eggId', (req, res, next) =>{
+      const readPath='images/goHereImage/'+ req.params.eggId + '.txt';
+      fs.readFile(readPath, 'utf8', (err, data) => {
+          if (err) throw err;
+          const formattedData = data.slice(8, -2);
+          res.json({uri: formattedData});
+      });
+  })
 
 router.post('/', (req, res, next) => {
-console.log('-----------------------> got into add egg route')
     Promise.all([
-        User.findOne({where:{id: req.body.senderId}}),
+        User.findAll({where:{id: req.body.senderId}}),
         Egg.create({
-            goHereImage: null,
             goHereText: req.body.goHereText,
             latitude: req.body.latitude,
             longitude: req.body.longitude,
@@ -48,7 +40,8 @@ console.log('-----------------------> got into add egg route')
                     egg.setSender(1);
             return egg;
         })
-        .then(egg => res.send(egg));
+        .then(egg => res.send(egg))
+        .catch(err => res.send(err))
 });
 
 module.exports = router;
