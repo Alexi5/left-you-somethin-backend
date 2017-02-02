@@ -2,12 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 const eggSchema = {
-    // A image will not be stored as a string. Unless this is supposed to be a file path to an image
-     // Probably should be a foreign key to another model that contains a file path.
-    goHereImage: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
     goHereText: {
         type: Sequelize.STRING,
         allowNull: true
@@ -27,7 +21,14 @@ const eggSchema = {
     }
 };
 
-const eggConfig = {};
+const eggConfig = {
+    getterMethods: {
+        goHereImage: function () {
+            return 'images/goHereImage/'+this.id+'.txt';
+        }
+    }
+
+};
 
 const Egg = db.define('egg', eggSchema, eggConfig);
 

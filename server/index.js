@@ -6,7 +6,8 @@ const db = require('../db/db');
 
 app
   .use(bodyParser.raw())
-  .use(bodyParser.json({ limit: '50mb' }));
+  .use(bodyParser.json({limit: '50mb'}))
+    .use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
 app.use(express.static('public'));
 app.use('/api', require('./api'));
@@ -22,6 +23,7 @@ db.sync()
     console.log('Server is listening on port 1333');
   })
   .catch(console.error);
+
 
 
 module.exports = app;
