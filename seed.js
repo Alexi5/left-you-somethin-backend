@@ -4,12 +4,16 @@ const { User, Egg, Payload } = require('./db');
 
 async function newCreateSeeds() {
     const user1 = {
-        name: 'Bob Smith',
+        id: '123456',
+        firstName: 'Bob',
+        lastName: 'Smith',
         email: 'bob@bob.com',
     }
 
     const user2 = {
-        name: 'Sarah Johnson',
+        id: '654321',
+        firstName: 'Sarah',
+        lastName: 'Johnson',
         email: "sarah@sarah.com",
     }
 
