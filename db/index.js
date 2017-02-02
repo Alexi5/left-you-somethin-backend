@@ -5,9 +5,16 @@ const Payload = require('./Payload');
 Egg.belongsTo(User, { as: 'sender' });
 Egg.belongsTo(User, { as: 'receiver' });
 
-Egg.belongsTo(Payload);
+// Egg.belongsTo(Payload, {as: 'payloadId'});
+// Payload.belongsTo(Egg, {as: 'payloadId' });
 
-// Payload.belongsTo(Egg, { as: 'eggId' });
+// sets eggId in payload table
+// Payload.belongsTo(Egg, {as: 'eggId' });
 // Egg.hasOne(Payload)
+
+// sets payload_Id in egg table
+Egg.belongsTo(Payload, { as: 'payload'});
+// Payload.belongsTo(Egg);
+
 
 module.exports = { User, Egg, Payload };
