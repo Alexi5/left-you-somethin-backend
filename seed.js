@@ -4,17 +4,24 @@ const { User, Egg, Payload } = require('./db');
 
 async function newCreateSeeds() {
     const user1 = {
-        id: '123456',
-        firstName: 'Bob',
-        lastName: 'Smith',
-        email: 'bob@bob.com',
+        id: '10154346204722379',
+        firstName: 'Rebekah',
+        lastName: 'Klemm',
+        email: 'rebekah_klemm@yahoo.com',
     }
 
     const user2 = {
-        id: '654321',
-        firstName: 'Sarah',
-        lastName: 'Johnson',
-        email: "sarah@sarah.com",
+        id: '10209420763697676',
+        firstName: 'Jean',
+        lastName: 'Chung',
+        email: "jxchung@gmail.com",
+    }
+
+    const user3 = {
+        id: '10201419031655447',
+        firstName: 'Alexis',
+        lastName: 'Jennings',
+        email: "alexis.m.jenn@gmail.com",
     }
 
     const egg1 = {
@@ -32,11 +39,11 @@ async function newCreateSeeds() {
     }
 
     const pay1 = {
-        content: 'cool, you got your first egg'
+        text: 'cool, you got your first egg'
     }
 
     const pay2 = {
-        content: 'cool, you got your second egg'
+        text: 'cool, you got your second egg'
     }
 
     const [u1, u2] = await Promise.all([
@@ -53,11 +60,13 @@ async function newCreateSeeds() {
     e2.setSender(u2);
     e2.setReceiver(u1);
 
+    //sets payload_id in egg table
     const p1 = await Payload.create(pay1)
     e1.setPayload(p1)
 
     const p2 = await Payload.create(pay2)
     e2.setPayload(p2)
+
 
     // const p1 = await Payload.create(pay1)
     // p1.setEgg(e1)
@@ -66,7 +75,6 @@ async function newCreateSeeds() {
     // p2.setEgg(e2)
 
     return [u1, u2];
-
 }
 
 
