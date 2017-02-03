@@ -3,7 +3,7 @@ const db = require('./db');
 
 const userSchema = {
   id: {
-    type: Sequelize.STRING,
+    type: Sequelize.BIGINT,
     primaryKey: true,
     allowNull: false
   },
