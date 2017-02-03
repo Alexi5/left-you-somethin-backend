@@ -12,9 +12,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const { firstName, lastName, id, email } = req.body;
+  const { firstName, lastName, fbId, email } = req.body;
   User.findOrCreate({
-    where: { id },
+    where: { fbId },
     defaults: { firstName, lastName, email },
   })
     .then(() => res.status(200).send())

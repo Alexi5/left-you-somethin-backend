@@ -4,15 +4,16 @@ const db = require('./db');
 const eggSchema = {
     goHereText: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false,
+        defaultValue: "Go here to find your Egg!"
     },
     latitude: {
         type: Sequelize.DECIMAL,
-        allowNull: true
+        allowNull: false
     },
     longitude: {
         type: Sequelize.DECIMAL,
-        allowNull: true
+        allowNull: false
     },
     payloadType: {
         type: Sequelize.ENUM('Text', 'Audio', 'Video'),
@@ -21,15 +22,18 @@ const eggSchema = {
     },
     pickedUp: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: false
     },
     deletedBySender: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: false
     },
     deletedByReceiver: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
+        allowNull: false
     }
 };
 
