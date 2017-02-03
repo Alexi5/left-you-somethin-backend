@@ -4,19 +4,20 @@ const db = require('./db');
 const userSchema = {
   fbId: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: true,
+    unique: true,
   },
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: true
+    allowNull: true,
   },
 };
 
