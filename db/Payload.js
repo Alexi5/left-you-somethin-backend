@@ -17,7 +17,21 @@ const payloadSchema = {
     }
 };
 
-const payloadConfig = {};
+//need to change type according to path (instance method?)
+//make sure the path is loading correctly and saving to payload images folder
+const payloadConfig = {
+    getterMethods: {
+        // : function () {
+        //     if(this.path){
+        //         this.type = 'Image'
+        //     }
+        //     return this;
+        // },
+        payloadImage: function() {
+            return 'images/payloadImage/'+this.id+'.txt.';
+        }
+    }
+};
 
 const Payload = db.define('payload', payloadSchema, payloadConfig);
 
