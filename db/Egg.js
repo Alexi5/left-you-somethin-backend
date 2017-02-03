@@ -18,6 +18,18 @@ const eggSchema = {
         type: Sequelize.ENUM('Text', 'Audio', 'Video'),
         defaultValue: 'Text',
         allowNull: false
+    },
+    pickedUp: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    deletedBySender: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+    },
+    deletedByReceiver: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 };
 
