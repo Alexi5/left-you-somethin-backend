@@ -70,4 +70,12 @@ router.post('/', (req, res, next) => {
     .catch(err => res.send(err))
 });
 
+ //this route updates egg when picked up
+router.put('/picked/:eggId', (req, res, next) =>{
+  Egg.findOne({where: {id: req.params.eggId}})
+    .then(egg => {
+      egg.update({pickedUp: 'true'})
+      res.send(egg)})
+})
+
 module.exports = router;
