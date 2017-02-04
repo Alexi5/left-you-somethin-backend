@@ -16,7 +16,7 @@ const eggSchema = {
     allowNull: false
   },
   payloadType: {
-    type: Sequelize.ENUM('Text', 'Audio', 'Video'),
+    type: Sequelize.ENUM('Text', 'Image', 'Audio', 'Video'),
     defaultValue: 'Text',
     allowNull: false
   },
@@ -43,7 +43,7 @@ const eggConfig = {
       return 'images/goHereImage/'+this.id+'.txt';
     },
     payloadImage: function() {
-      return 'images/payloadImage/'+this.payloadId+'.txt.';
+      return 'images/payloadImage/'+this.payloadId+'.txt';
     }
   }
 

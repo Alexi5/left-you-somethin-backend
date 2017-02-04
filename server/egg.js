@@ -31,7 +31,7 @@ router.post('/', (req, res, next) => {
           latitude: req.body.latitude,
           longitude: req.body.longitude,
           senderId: req.body.senderId,
-            receiverId: req.body.recipient,
+          receiverId: req.body.recipient,
         }),
         Payload.create({
           text: req.body.payloadText,
@@ -53,6 +53,16 @@ router.post('/', (req, res, next) => {
               writeStream2.write(req.body.payloadImageBuffer);
               writeStream2.end();
 
+        //Add path to payload -- is this the path to add????
+        // Also -- is this kinda Hack-y? can be a sequlize hook ??
+        payload.update({
+          path: payloadPath,
+          type: 'Image'
+        })
+
+        egg.update({
+          payloadType: 'Image'
+        })
 
         return egg;
     })
