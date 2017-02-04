@@ -27,34 +27,48 @@ async function newCreateSeeds() {
   const egg1 = {
     goHereImage: 'http://www.lampertlumber.com/wp-content/uploads/2015/03/Blog.png',
     goHereText: 'Find me',
-    latitude: 41.888523,
+    latitude: 41.888423,
     longitude: -87.634369,
   };
 
   const egg2 = {
     goHereImage: 'Image 2, I did not load a real image',
     goHereText: 'Find me 2',
-    latitude: 41.888763,
-    longitude: -87.63662,
+    latitude: 41.888563,
+    longitude: -87.634369,
   };
 
   const egg3 = {
     goHereImage: 'Image 3, I did not load a real image',
     goHereText: 'Find me 3',
-    latitude: 41.888763,
-    longitude: -87.63665,
+    latitude: 41.888623,
+    longitude: -87.638369,
+  };
+
+  const egg4 = {
+    goHereImage: 'Image 3, I did not load a real image',
+    goHereText: 'Find me 4',
+    latitude: 41.888663,
+    longitude: -87.635369,
+    payloadType: 'Image'
   };
 
   const pay1 = {
-    text: 'cool, you got your first egg'
+    text: 'cool, you got your first egg Jean'
   };
 
   const pay2 = {
-    text: 'cool, you got your second egg'
+    text: 'cool, you got your second egg Alexis'
   };
 
   const pay3 = {
-    text: 'message from Alexis'
+    text: 'message to Alexis'
+  };
+
+  const pay4 = {
+    text: 'image payload test',
+    path: 'images/payloadImage/4.txt',
+    type: 'Image'
   };
 
   const [u1, u2, u3] = await Promise.all([
@@ -74,6 +88,10 @@ async function newCreateSeeds() {
   const e3 = await Egg.create(egg3);
   e3.setSender(u3);
   e3.setReceiver(u1);
+
+  const e4 = await Egg.create(egg4);
+  e4.setSender(u2);
+  e4.setReceiver(u3);
 
 
   //OLD
@@ -100,6 +118,9 @@ async function newCreateSeeds() {
 
   const p3 = await Payload.create(pay3);
   e3.setPayload(p3);
+
+  const p4 = await Payload.create(pay4);
+  e4.setPayload(p4);
 
   // const p1 = await Payload.create(pay1)
   // p1.setEgg(e1)
