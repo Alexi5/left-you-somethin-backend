@@ -30,7 +30,8 @@ router.post('/', (req, res, next) => {
           goHereText: req.body.goHereText,
           latitude: req.body.latitude,
           longitude: req.body.longitude,
-          senderId: req.body.senderId
+          senderId: req.body.senderId,
+            receiverId: req.body.recipient,
         }),
         Payload.create({
           text: req.body.payloadText,
@@ -51,6 +52,7 @@ router.post('/', (req, res, next) => {
         const writeStream2 = fs.createWriteStream(payloadPath);
               writeStream2.write(req.body.payloadImageBuffer);
               writeStream2.end();
+
 
         return egg;
     })
