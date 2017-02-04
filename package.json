@@ -34,6 +34,7 @@
     "pg-native": "^1.10.0",
     "react": "^15.4.2",
     "sequelize": "^3.27.0",
+    "volleyball": "^1.4.1",
     "webpack": "^1.14.0"
   },
   "devDependencies": {
