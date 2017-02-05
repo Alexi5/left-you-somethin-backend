@@ -7,6 +7,19 @@ const fs = require('fs');
     .then(egg => res.send(egg))
   });
 
+  router.put('/:eggId', (req, res, next) => {
+    Egg.findOne({where: {id: req.params.eggId}})
+    .then(egg => {
+      egg.update({
+        pickedUp: req.body.pickedUp,
+        deletedBySender: req.body.deletedBySender,
+        deletedByReceiver: req.body.deletedByReceiver
+      }, 
+      { fields: ['pickedUp','deletedBySender', 'deletedByReceiver']})
+      .then(() => res.send('egg updated'));
+    });
+  });
+
   router.get('/user/:userId', (req, res, next) => {
     Egg.findAll({ 
     where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
