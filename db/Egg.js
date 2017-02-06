@@ -15,11 +15,6 @@ const eggSchema = {
     type: Sequelize.DECIMAL,
     allowNull: false
   },
-  // payloadType: {
-  //   type: Sequelize.ENUM('Text', 'Image', 'Audio', 'Video'),
-  //   defaultValue: 'Text',
-  //   allowNull: false
-  // },
   pickedUp: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
