@@ -23,7 +23,7 @@ const fs = require('fs');
   router.get('/user/:userId', (req, res, next) => {
     Egg.findAll({ 
     where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
-    include: [Payload] })
+    include: [{all: true}] })   // include: [{all: true}] //==> eagerly loads ALL user information 
     .then(eggs => res.send(eggs));
   });
 
@@ -78,14 +78,6 @@ router.post('/', (req, res, next) => {
         const writeStream2 = fs.createWriteStream(payloadPath);
               writeStream2.write(req.body.payloadImageBuffer);
               writeStream2.end();
-
-        //Add path to payload -- is this the path to add????
-        // Also -- is this kinda Hack-y? can be a sequlize hook ??
-
-        // payload.update({
-        //   path: payloadPath,
-        //   type: 'Image'
-        // })
 
         return egg;
     })
