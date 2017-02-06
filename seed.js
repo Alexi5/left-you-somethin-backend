@@ -65,11 +65,11 @@ async function newCreateSeeds() {
     text: 'message to Alexis'
   };
 
-  const pay4 = {
-    text: 'image payload test',
-    path: 'images/payloadImage/4.txt',
-    type: 'Image'
-  };
+  // const pay4 = {
+  //   text: 'image payload test',
+  //   path: 'images/payloadImage/4.txt',
+  //   type: 'Image'
+  // };
 
   const [u1, u2, u3] = await Promise.all([
     User.create(user1),
@@ -89,9 +89,9 @@ async function newCreateSeeds() {
   e3.setSender(u3);
   e3.setReceiver(u1);
 
-  const e4 = await Egg.create(egg4);
-  e4.setSender(u2);
-  e4.setReceiver(u3);
+  // const e4 = await Egg.create(egg4);
+  // e4.setSender(u2);
+  // e4.setReceiver(u3);
 
 
   //OLD
@@ -119,8 +119,8 @@ async function newCreateSeeds() {
   const p3 = await Payload.create(pay3);
   e3.setPayload(p3);
 
-  const p4 = await Payload.create(pay4);
-  e4.setPayload(p4);
+  // const p4 = await Payload.create(pay4);
+  // e4.setPayload(p4);
 
   // const p1 = await Payload.create(pay1)
   // p1.setEgg(e1)
