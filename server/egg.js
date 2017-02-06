@@ -81,15 +81,11 @@ router.post('/', (req, res, next) => {
 
         //Add path to payload -- is this the path to add????
         // Also -- is this kinda Hack-y? can be a sequlize hook ??
-        //Yes, the path can/should be a sequelize virtual the way I did for the egg so we don't have to save the path in the database.  I (Rebekah) didn't want to mess with this though because frankly, I don't understand how/why it isn't setting every single payload type and egg payload type to be equal to image.  But somehow, even if I send only text, it somehow recognizes that and stores the type as text.  Let's discuss on Monday.
-        payload.update({
-          path: payloadPath,
-          type: 'Image'
-        })
 
-        egg.update({
-          payloadType: 'Image'
-        })
+        // payload.update({
+        //   path: payloadPath,
+        //   type: 'Image'
+        // })
 
         return egg;
     })
