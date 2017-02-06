@@ -11,7 +11,7 @@ app
   .use(bodyParser.json({limit: '50mb'}))
     .use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use(express.static('public'));
+app.use(express.static('server/public'));
 app.use('/api', require('./api'));
 
 app.get('/', (req, res, next) => {
