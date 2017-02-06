@@ -23,7 +23,7 @@ const fs = require('fs');
   router.get('/user/:userId', (req, res, next) => {
     Egg.findAll({ 
     where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
-    include: [Payload] })
+    include: [{all: true}] })   // include: [{all: true}] //==> eagerly loads ALL user information 
     .then(eggs => res.send(eggs));
   });
 
@@ -87,9 +87,9 @@ router.post('/', (req, res, next) => {
           type: 'Image'
         })
 
-        egg.update({
-          payloadType: 'Image'
-        })
+        // egg.update({
+        //   payloadType: 'Image'
+        // })
 
         return egg;
     })
