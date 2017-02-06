@@ -24,6 +24,13 @@ async function newCreateSeeds() {
     email: 'alexis.m.jenn@gmail.com',
   };
 
+  const user4 = {
+    fbId: '132571497257037',
+    firstName: 'Chump',
+    lastName: 'Bumpsley',
+    email: 'north.andy@gmail.com',
+  };
+
   const egg1 = {
     goHereImage: 'http://www.lampertlumber.com/wp-content/uploads/2015/03/Blog.png',
     goHereText: 'Find me',
@@ -49,8 +56,14 @@ async function newCreateSeeds() {
     goHereImage: 'Image 3, I did not load a real image',
     goHereText: 'Find me 4',
     latitude: 41.888663,
-    longitude: -87.635369,
-    payloadType: 'Image'
+    longitude: -87.635369
+  };
+
+  const egg5 = {
+    goHereImage: 'Not an image',
+    goHereText: 'Find me 5',
+    latitude: 41.888323,
+    longitude: -87.635469
   };
 
   const pay1 = {
@@ -71,10 +84,15 @@ async function newCreateSeeds() {
     type: 'Image'
   };
 
-  const [u1, u2, u3] = await Promise.all([
+  const pay5 = {
+    text: 'egg for Chump'
+  };
+
+  const [u1, u2, u3, u4] = await Promise.all([
     User.create(user1),
     User.create(user2),
-    User.create(user3)
+    User.create(user3),
+    User.create(user4)
   ]);
 
   const e1 = await Egg.create(egg1);
@@ -92,6 +110,10 @@ async function newCreateSeeds() {
   const e4 = await Egg.create(egg4);
   e4.setSender(u2);
   e4.setReceiver(u3);
+
+  const e5 = await Egg.create(egg5);
+  e5.setSender(u3);
+  e5.setReceiver(u4);
 
 
   //OLD
@@ -122,13 +144,16 @@ async function newCreateSeeds() {
   const p4 = await Payload.create(pay4);
   e4.setPayload(p4);
 
+  const p5 = await Payload.create(pay5);
+  e5.setPayload(p5);
+
   // const p1 = await Payload.create(pay1)
   // p1.setEgg(e1)
 
   // const p2 = await Payload.create(pay2)
   // p2.setEgg(e2)
 
-  return [u1, u2, u3];
+  return [u1, u2, u3, u4];
 }
 
 db.sync({ force: true })
