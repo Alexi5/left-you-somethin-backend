@@ -19,10 +19,11 @@ app.get('/', (req, res, next) => {
 });
 
 // What about serving through a static file server? Maybe have a views folder
+const port = process.env.PORT || 1333;
 db.sync()
   .then(() => {
-    app.listen(process.env.PORT || 1333);
-    console.log('Server is listening on port 1333');
+    app.listen(port);
+    console.log('Server is listening on port ' + port);
   })
   .catch(console.error);
 
