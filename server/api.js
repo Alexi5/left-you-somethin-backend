@@ -1,8 +1,10 @@
 const api = require('express').Router();
+const express = require('express');
 
 api
   .use('/user', require('./user'))
-  .use('/egg', require('./egg'));
+  .use('/egg', require('./egg'))
+  // .use(express.static('public'))
 
 // Send along any errors
 api.use((err, req, res, next) => {

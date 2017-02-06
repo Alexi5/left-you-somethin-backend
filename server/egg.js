@@ -23,11 +23,11 @@ const fs = require('fs');
   router.get('/user/:userId', (req, res, next) => {
     Egg.findAll({ 
     where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
-    include: [Payload] })
+    include: [{all: true}] })   // include: [{all: true}] //==> eagerly loads ALL user information 
     .then(eggs => res.send(eggs));
   });
 
-  //this route returns the base64 encoded image, ready to plunk into the source tag of an Image
+  //this route returns the base64 encoded goHereImage, ready to plunk into the source tag of an Image
   router.get('/goHereImage/:eggId', (req, res, next) =>{
       const readPath='images/goHereImage/'+ req.params.eggId + '.txt';
       fs.readFile(readPath, 'utf8', (err, data) => {
@@ -36,6 +36,18 @@ const fs = require('fs');
           res.json({uri: formattedData});
       });
   })
+
+//this route returns the base64 encoded payloadImage, ready to plunk into the source tag of an Image
+router.get('/payloadImage/:payloadId', (req, res, next) =>{
+    const readPath='images/payloadImage/'+ req.params.payloadId + '.txt';
+    fs.readFile(readPath, 'utf8', (err, data) => {
+        if (err) throw err;
+        const formattedData = data.slice(8, -2);
+        res.json({uri: formattedData});
+    });
+})
+
+
 
 router.post('/', (req, res, next) => {
     Promise.all([
@@ -52,6 +64,7 @@ router.post('/', (req, res, next) => {
         })
     ])
     .then(([egg, payload]) => {
+
         egg.setPayload(payload.dataValues.id);
 
         //for saving goHere image
@@ -65,17 +78,6 @@ router.post('/', (req, res, next) => {
         const writeStream2 = fs.createWriteStream(payloadPath);
               writeStream2.write(req.body.payloadImageBuffer);
               writeStream2.end();
-
-        //Add path to payload -- is this the path to add????
-        // Also -- is this kinda Hack-y? can be a sequlize hook ??
-        payload.update({
-          path: payloadPath,
-          type: 'Image'
-        })
-
-        egg.update({
-          payloadType: 'Image'
-        })
 
         return egg;
     })

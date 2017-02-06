@@ -11,7 +11,7 @@ app
   .use(bodyParser.json({limit: '50mb'}))
     .use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
-app.use(express.static('public'));
+app.use(express.static('server/public'));
 app.use('/api', require('./api'));
 
 app.get('/', (req, res, next) => {
@@ -19,10 +19,11 @@ app.get('/', (req, res, next) => {
 });
 
 // What about serving through a static file server? Maybe have a views folder
+const port = process.env.PORT || 1333;
 db.sync()
   .then(() => {
-    app.listen(1333);
-    console.log('Server is listening on port 1333');
+    app.listen(port);
+    console.log('Server is listening on port ' + port);
   })
   .catch(console.error);
 
