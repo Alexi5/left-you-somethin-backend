@@ -32,8 +32,9 @@ const fs = require('fs');
       const readPath='images/goHereImage/'+ req.params.eggId + '.txt';
       fs.readFile(readPath, 'utf8', (err, data) => {
           if (err) throw err;
-          const formattedData = data.slice(8, -2);
-          res.json({uri: formattedData});
+          // const formattedData = data.slice(8, -2);
+          // res.json({uri: formattedData});
+          res.json({uri: data});
       });
   })
 
@@ -42,8 +43,9 @@ router.get('/payloadImage/:payloadId', (req, res, next) =>{
     const readPath='images/payloadImage/'+ req.params.payloadId + '.txt';
     fs.readFile(readPath, 'utf8', (err, data) => {
         if (err) throw err;
-        const formattedData = data.slice(8, -2);
-        res.json({uri: formattedData});
+        // const formattedData = data.slice(8, -2);
+        // res.json({uri: formattedData});
+        res.json({uri: data});
     });
 })
 
@@ -67,16 +69,18 @@ router.post('/', (req, res, next) => {
 
         egg.setPayload(payload.dataValues.id);
 
+        console.log('req.body.goHereImage.uri', req.body.goHereImage.uri)
+
         //for saving goHere image
         const eggPath = 'images/goHereImage/'+ egg.dataValues.id + '.txt';
         const writeStream = fs.createWriteStream(eggPath);
-              writeStream.write(req.body.goHereImageBuffer);
+              writeStream.write(req.body.goHereImage.uri);
               writeStream.end();
 
-        //for saving payload image
+              //for saving payload image
         const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
         const writeStream2 = fs.createWriteStream(payloadPath);
-              writeStream2.write(req.body.payloadImageBuffer);
+              writeStream2.write(req.body.payloadImage.uri);
               writeStream2.end();
 
         return egg;
