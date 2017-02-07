@@ -32,7 +32,7 @@ async function newCreateSeeds() {
   };
 
   const egg1 = {
-    goHereImage: 'http://www.lampertlumber.com/wp-content/uploads/2015/03/Blog.png',
+    goHereImage: '',
     goHereText: 'Find me',
     latitude: 41.888423,
     longitude: -87.634369,
