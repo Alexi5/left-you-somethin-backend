@@ -65,34 +65,35 @@ router.post('/', (req, res, next) => {
       Payload.create({
         text: req.body.payloadText,
         type: req.body.payloadType,
+        path: req.body.path,
       })
     ])
     .then(([egg, payload]) => {
-        egg.setPayload(payload.dataValues.id);
+      egg.setPayload(payload.dataValues.id);
 
-        console.log('req.body.goHereImage.uri', req.body.goHereImage.uri);
+      console.log('req.body.goHereImage.uri', req.body.goHereImage.uri);
 
-        // For saving goHere image
-        const eggPath = 'images/goHereImage/'+ egg.dataValues.id + '.txt';
-        const writeStream = fs.createWriteStream(eggPath);
-              writeStream.write(req.body.goHereImage.uri);
-              writeStream.end();
+      // For saving goHere image
+      const eggPath = 'images/goHereImage/'+ egg.dataValues.id + '.txt';
+      const writeStream = fs.createWriteStream(eggPath);
+            writeStream.write(req.body.goHereImage.uri);
+            writeStream.end();
 
-        // For payload audio
-        if (payload.type === 'Audio') {
-          path = req.body.audioPath;
-        }
-        // For saving payload image
-        const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
-        const writeStream2 = fs.createWriteStream(payloadPath);
-              writeStream2.write(req.body.payloadImage.uri);
-              writeStream2.end();
+      // For payload audio
+      if (payload.type === 'Audio') {
+        path = req.body.audioPath;
+      }
+      // For saving payload image
+      const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
+      const writeStream2 = fs.createWriteStream(payloadPath);
+            writeStream2.write(req.body.payloadImage.uri);
+            writeStream2.end();
 
-        return Egg.findOne({
-            where: {id: egg.id},
-            include: [{all: true}] })
+      return Egg.findOne({
+          where: {id: egg.id},
+          include: [{all: true}] })
 
-        // return egg;
+      // return egg;
     })
     .then(newEgg => res.send(newEgg))
     .catch(err => res.send(err));
