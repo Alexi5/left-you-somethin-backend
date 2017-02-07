@@ -5,7 +5,7 @@ const eggSchema = {
   goHereText: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: "Go here to find your Egg!"
+    defaultValue: 'Go here to find your Egg!'
   },
   latitude: {
     type: Sequelize.DECIMAL,
@@ -35,16 +35,14 @@ const eggSchema = {
 const eggConfig = {
   getterMethods: {
     goHereImage: function() {
-      return 'images/goHereImage/'+this.id+'.txt';
+      return `images/goHereImage/${this.id}.txt`;
     },
     payloadImage: function() {
-      return 'images/payloadImage/'+this.payloadId+'.txt';
+      return `images/payloadImage/${this.payloadId}.txt`;
     }
   }
-
 };
 
 const Egg = db.define('egg', eggSchema, eggConfig);
-
 
 module.exports = Egg;
