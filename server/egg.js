@@ -8,15 +8,19 @@ const fs = require('fs');
   });
 
   router.put('/:eggId', (req, res, next) => {
+    console.log('RE BODY: ', req.body.deletedByReceiver)
     Egg.findOne({where: {id: req.params.eggId}})
     .then(egg => {
       egg.update({
         pickedUp: req.body.pickedUp,
         deletedBySender: req.body.deletedBySender,
         deletedByReceiver: req.body.deletedByReceiver
-      },
-      { fields: ['pickedUp','deletedBySender', 'deletedByReceiver']})
-      .then(() => res.send('egg updated'));
+      }
+        , {fields: ['pickedUp','deletedBySender', 'deletedByReceiver'] }
+      )
+      .then( updatedEgg => {
+        res.send(updatedEgg)
+      })
     });
   });
 
@@ -48,8 +52,6 @@ router.get('/payloadImage/:payloadId', (req, res, next) =>{
         res.json({uri: data});
     });
 })
-
-
 
 router.post('/', (req, res, next) => {
     Promise.all([
