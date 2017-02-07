@@ -83,7 +83,11 @@ router.post('/', (req, res, next) => {
               writeStream2.write(req.body.payloadImage.uri);
               writeStream2.end();
 
-        return egg;
+        return Egg.findOne({
+            where: {id: egg.id},
+            include: [{all: true}] })
+
+        // return egg;
     })
     .then(newEgg => res.send(newEgg))
     .catch(err => res.send(err))
