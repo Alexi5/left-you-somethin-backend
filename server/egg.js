@@ -79,21 +79,22 @@ router.post('/', (req, res, next) => {
             writeStream.write(req.body.goHereImage.uri);
             writeStream.end();
 
-      // For payload audio
-      if (payload.type === 'Audio') {
-        path = req.body.audioPath;
+      // For payload images
+      if (payload.type === 'Image') {
+        // For saving payload image
+        const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
+        const writeStream2 = fs.createWriteStream(payloadPath);
+              writeStream2.write(req.body.payloadImage.uri);
+              writeStream2.end();
+        // TO DO
+        // I don't think the payload image path is getting saved?
+        // If it is, I can't figure out how/where
       }
-      // For saving payload image
-      const payloadPath = 'images/payloadImage/'+ payload.dataValues.id + '.txt';
-      const writeStream2 = fs.createWriteStream(payloadPath);
-            writeStream2.write(req.body.payloadImage.uri);
-            writeStream2.end();
 
+      // Return egg
       return Egg.findOne({
-          where: {id: egg.id},
-          include: [{all: true}] })
-
-      // return egg;
+        where: { id: egg.id },
+        include: [{ all: true }] });
     })
     .then(newEgg => res.send(newEgg))
     .catch(err => res.send(err));
