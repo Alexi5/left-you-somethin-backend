@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 router.get('/', (req, res, next) => {
   res.send('Hit Users Page')
-  .catch(next);
+  // .catch(next);
   // User.findAll()
   // .then( users => {
   //   res.json(users)
