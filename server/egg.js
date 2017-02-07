@@ -7,16 +7,20 @@ const fs = require('fs');
     .then(egg => res.send(egg))
   });
 
-  router.put('/:eggId', (req, res, next) => {
+  router.put('/:eggId', (req, res, next) => {    
+    console.log('RE BODY: ', req.body.deletedByReceiver)
     Egg.findOne({where: {id: req.params.eggId}})
     .then(egg => {
       egg.update({
-        pickedUp: req.body.pickedUp,
-        deletedBySender: req.body.deletedBySender,
-        deletedByReceiver: req.body.deletedByReceiver
-      }, 
-      { fields: ['pickedUp','deletedBySender', 'deletedByReceiver']})
-      .then(() => res.send('egg updated'));
+          pickedUp: req.body.pickedUp,
+          deletedBySender: req.body.deletedBySender,
+          deletedByReceiver: req.body.deletedByReceiver
+        }
+        , {fields: ['pickedUp','deletedBySender', 'deletedByReceiver'] }
+      )
+      .then( updatedEgg => {
+        res.send(updatedEgg) 
+      })
     });
   });
 
@@ -49,8 +53,6 @@ router.get('/payloadImage/:payloadId', (req, res, next) =>{
     });
 })
 
-
-
 router.post('/', (req, res, next) => {
     Promise.all([
         Egg.create({
@@ -69,7 +71,7 @@ router.post('/', (req, res, next) => {
 
         egg.setPayload(payload.dataValues.id);
 
-        console.log('req.body.goHereImage.uri', req.body.goHereImage.uri)
+       console.log('req.body.goHereImage.uri', req.body.goHereImage.uri)
 
         //for saving goHere image
         const eggPath = 'images/goHereImage/'+ egg.dataValues.id + '.txt';
