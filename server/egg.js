@@ -33,15 +33,15 @@ const fs = require('fs');
   });
 
   //this route returns the base64 encoded goHereImage, ready to plunk into the source tag of an Image
-  router.get('/goHereImage/:eggId', (req, res, next) =>{
-      const readPath='images/goHereImage/'+ req.params.eggId + '.txt';
-      fs.readFile(readPath, 'utf8', (err, data) => {
-          if (err) throw err;
-          // const formattedData = data.slice(8, -2);
-          // res.json({uri: formattedData});
-          res.json({uri: data});
-      });
-  })
+  // router.get('/goHereImage/:eggId', (req, res, next) =>{
+  //     const readPath='images/goHereImage/'+ req.params.eggId + '.txt';
+  //     fs.readFile(readPath, 'utf8', (err, data) => {
+  //         if (err) throw err;
+  //         // const formattedData = data.slice(8, -2);
+  //         // res.json({uri: formattedData});
+  //         res.json({uri: data});
+  //     });
+  // })
 
 //this route returns the base64 encoded payloadImage, ready to plunk into the source tag of an Image
 router.get('/payloadImage/:payloadId', (req, res, next) =>{
@@ -86,15 +86,13 @@ router.post('/', (req, res, next) => {
     .then(([egg, payload]) => {
         return Promise.all([
           egg,
-          writeFile(`images/goHereImage/${egg.dataValues.id}.txt`, req.body.goHereImage.uri),
           writeFile(`images/payloadImage/${egg.dataValues.id}.txt`, req.body.payloadImage.uri)
         ]);
-
     })
     .then(([egg]) =>
         Egg.findOne({
-            where: {id: egg.id},
-            include: [{all: true}]
+            where: { id: egg.id },
+            include: [{ all: true }]
         })
     )
     .then(newEgg => res.send(newEgg))
