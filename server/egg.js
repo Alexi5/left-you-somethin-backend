@@ -8,15 +8,15 @@ const fs = require('fs');
   });
 
   router.put('/:eggId', (req, res, next) => {
-    console.log('RE BODY: ', req.body.deletedByReceiver)
     Egg.findOne({where: {id: req.params.eggId}})
     .then(egg => {
       egg.update({
         pickedUp: req.body.pickedUp,
         deletedBySender: req.body.deletedBySender,
-        deletedByReceiver: req.body.deletedByReceiver
+        deletedByReceiver: req.body.deletedByReceiver,
+        newEgg: req.body.newEgg
       }
-        , {fields: ['pickedUp','deletedBySender', 'deletedByReceiver'] }
+        , {fields: ['pickedUp','deletedBySender', 'deletedByReceiver', 'newEgg'] }
       )
       .then( updatedEgg => {
         res.send(updatedEgg)
@@ -61,6 +61,7 @@ router.post('/', (req, res, next) => {
         longitude: req.body.longitude,
         senderId: req.body.senderId,
         receiverId: req.body.recipient,
+        visibleOutsideFence: req.body.visibleOutsideFence
       }),
       Payload.create({
         text: req.body.payloadText,
