@@ -20,7 +20,7 @@ app.get('/', (req, res, next) => {
 
 // What about serving through a static file server? Maybe have a views folder
 const port = process.env.PORT || 1333;
-db.sync({force: true})
+db.sync()
   .then(() => {
     app.listen(port);
     console.log('Server is listening on port ' + port);
