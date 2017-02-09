@@ -32,15 +32,6 @@ const payloadConfig = {
       }
     }
   }
-  //convert/store the recieved payload as a path
-  // hooks: {
-  //     beforeCreate: function(){
-  //         if(this.path === null){
-  //             this.path = 'images/payloadImage/'+this.id+'.txt'
-  //         }
-
-  //     }
-  // }
 };
 
 const Payload = db.define('payload', payloadSchema, payloadConfig);
