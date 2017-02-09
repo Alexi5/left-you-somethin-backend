@@ -7,27 +7,28 @@ const fs = require('fs');
     .then(egg => res.send(egg))
   });
 
-  router.put('/:eggId', (req, res, next) => {    
-    console.log('RE BODY: ', req.body)
+
+  router.put('/:eggId', (req, res, next) => {
+    console.log('RE BODY: ', req.body.deletedByReceiver)
     Egg.findOne({where: {id: req.params.eggId}})
     .then(egg => {
       egg.update({
-          pickedUp: req.body.pickedUp,
-          deletedBySender: req.body.deletedBySender,
-          deletedByReceiver: req.body.deletedByReceiver
-        }
+        pickedUp: req.body.pickedUp,
+        deletedBySender: req.body.deletedBySender,
+        deletedByReceiver: req.body.deletedByReceiver
+      }
         , {fields: ['pickedUp','deletedBySender', 'deletedByReceiver'] }
       )
       .then( updatedEgg => {
-        res.send(updatedEgg) 
+        res.send(updatedEgg)
       })
     });
   });
 
   router.get('/user/:userId', (req, res, next) => {
-    Egg.findAll({ 
+    Egg.findAll({
     where: {$or: [{ receiverId: req.params.userId }, {senderId: req.params.userId}]},
-    include: [{all: true}] })   // include: [{all: true}] //==> eagerly loads ALL user information 
+    include: [{all: true}] })   // include: [{all: true}] //==> eagerly loads ALL user information
     .then(eggs => res.send(eggs));
   });
 
@@ -64,20 +65,21 @@ function writeFile(path, data) {
 
 router.post('/', (req, res, next) => {
     Promise.all([
-        Egg.create({
-          goHereText: req.body.goHereText,
-          latitude: req.body.latitude,
-          longitude: req.body.longitude,
-          senderId: req.body.senderId,
-          receiverId: req.body.recipient,
-        }),
-        Payload.create({
-          text: req.body.payloadText,
-          type: req.body.payloadType,
-        })
+      Egg.create({
+        goHereText: req.body.goHereText,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        senderId: req.body.senderId,
+        receiverId: req.body.recipient,
+      }),
+      Payload.create({
+        text: req.body.payloadText,
+        type: req.body.payloadType,
+        path: req.body.path,
+      })
     ])
     .then(([egg, payload]) => {
-
+      egg.setPayload(payload.dataValues.id);
        return Promise.all([egg.setPayload(payload.dataValues.id), payload]);
     })
     .then(([egg, payload]) => {
@@ -86,6 +88,7 @@ router.post('/', (req, res, next) => {
           writeFile(`images/goHereImage/${egg.dataValues.id}.txt`, req.body.goHereImage.uri),
           writeFile(`images/payloadImage/${egg.dataValues.id}.txt`, req.body.payloadImage.uri)
         ]);
+
     })
     .then(([egg]) =>
         Egg.findOne({
