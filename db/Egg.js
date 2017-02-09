@@ -29,6 +29,16 @@ const eggSchema = {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
     allowNull: false
+  },
+  newEgg: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+    allowNull: false
+  },
+  visibleOutsideFence: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
+    allowNull: false
   }
 };
 
